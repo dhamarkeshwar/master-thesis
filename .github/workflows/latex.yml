@@ -1,0 +1,29 @@
+name: Build LaTeX document
+
+on:
+  push:
+    branches: [main]  # or 'master' depending on your branch name
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up TeX Live
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: thesis.tex  # Change this if your main file is named differently
+        env:
+          TEXINPUTS: "./texmf/tex/latex/kulemt:"
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v3
+        with:
+          name: thesis-pdf
+          path: thesis.pdf
+
