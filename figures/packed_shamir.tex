@@ -1,0 +1,33 @@
+\begin{figure}[ht]
+    \centering
+    \begin{tcolorbox}[title=\textbf{Packed Shamir Secret Sharing}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        Given $\ell$ secrets to share amongst $n$ parties, where at most $t$ of them can
+        be \textit{(passively)} corrupt, the $(n,t,\ell)$-Packed Shamir secret sharing scheme description is as
+        follows:
+        
+        \vspace{0.5em}
+        \textbf{Sharing Algorithm:}
+        \begin{itemize}
+            \item Dealer constructs the secret polynomial $f\in\mathbb{Z}_q[X]_{t+l-1}$
+                  via the lagrange interpolation by choosing $t+\ell$ elements in 
+                  $\mathbb{Z}_q$ where $\ell$ of them are secrets, $\{s_i\}_{i=0}^{\ell-1}$, with
+                  $f(-i)=s_i$ for all $i$ and remaining $t$ are chosen uniformly 
+                  at random in $\mathbb{Z}_q$.
+            \item Each party $P_i$ receives their share $f(i)$ from the Dealer
+                  for each $i\in\{1,\dots,n\}$
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Reconstruction Algorithm:}
+        \begin{itemize}
+            \item Any $Q$ set containing at least $t+\ell$ parties can use the 
+            lagrange interpolation to compute $\{s_i\}_{i=0}^{\ell-1}$ as follows:
+            \begin{align*}
+                s_m &= \sum_{i\in Q} f(i) \left[\prod_{j\in Q, j\neq i}\frac{-m-j}{i-j}\right] &&, m\in\{0,\dots,\ell-1\} \\
+            \end{align*}
+            \item The secrets $\{s_i\}_{i=0}^{\ell-1}$ are outputted as the result.
+        \end{itemize}
+    \end{tcolorbox}
+    \caption{Packed Shamir Secret Sharing}
+    \label{fig:packed-shamir}
+\end{figure}

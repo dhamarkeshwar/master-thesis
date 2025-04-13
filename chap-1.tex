@@ -1,10 +1,88 @@
-\chapter{The First Chapter}
+\chapter{Literature Review}
 \label{cha:1}
-A chapter is a logical unit. It normally starts with an introduction, which
-you are reading now. The last topic of the chapter holds the conclusion.
+In this chapter we sequently recall Packed Shamir secret sharing, 
+Sigma ($\sum$) Protocols and Publicly Verifiable Secret Sharing (PVSS) followed by
+the recent scheme introduced in \cite{cryptoeprint:2025/576}, namely, 
+Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) which has versatile 
+applications and also improves efficiency in existing applications.
+The agenda of this chapter is to give enough background before describing our Packed PPVSS (PPPVSS) scheme 
+and its corresponding security guarantees in the next chapter.
+
+\section{Introduction}
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+\subsection{Notation}
+Let $\mathbb{G}$ be a cyclic subgroup of prime order $q$ with its generator being 
+$g$, isomorphic to a subgroup of the multiplicative modular group $\mathbb{Z}_p^*$, 
+where $p$ is prime. Also, we write $Z_{q}[X]_d$ to denote the set of all $d$ degree 
+polynomials univariate in $X$ with coefficients in the finite field $\mathbb{Z}_q$. 
+
+\subsection{Packed Shamir Secret Sharing}
+\label{sec:packed-shamir}
+$(n,t,\ell)$-Packed Shamir secret sharing (\cite{10.1145/129712.129780},\cite{crypto-1984-905})
+ scheme is a threshold secret sharing scheme which is a variant of $(n,t)$-Shamir's 
+ secret sharing scheme \cite{10.1145/359168.359176}. In a nutshell, the $t+\ell-1$ 
+ degree secret polynomial with coefficients in $\mathbb{Z}_q$ which evaluates to $\ell$ 
+ secrets is secret shared amongst $n$ parties such that any $t+\ell$ parties can 
+ reconstruct back the secret polynomial. Recall that Shamir's secret sharing scheme 
+ requires at least $t+1$ parties to reconstruct the secret polynomial in contrast to 
+ the $t+\ell$ parties in the Packed Shamir secret sharing scheme. The scheme is
+ summarized in the Figure \ref{fig:packed-shamir}.
+ \input{figures/packed_shamir.tex}
+
+\subsection{Sigma Protocols}
+\label{sec:sigma-protocols}
+The agenda of this subsection is to give a brief formal background about some important primitives 
+used in the PVSS ,$\Pi_S$ \cite{cryptoeprint:2023/1669}, and the PPVSS ,$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, schemes.
+Let $X$ and $W$ be two sets with $R$ being a relation on $X\times W$, and $L=\{x\in X :\exists w\in W, xRw\}$
+be the language defined by $R$ where $xRw$ says that $w$ is a witness for a given $x\in L$. 
+Also, let $\mathcal{R}$ be a PPT algorithm such that $\mathcal{R}(1^\lambda)$ outputs pairs 
+$(x,w)$ with $x\in L$ and $xRw$ where $\lambda$ is a security parameter.\par
+
+Given a relation $R$ and its corresponding language $L$, a \textbf{Sigma ($\sum$) Protocol} 
+is a $3$-round \textit{interactive} protocol between two Probabilistic Polynomial Time (PPT) algorithms, 
+a prover $P$ 
+and a verifier $V$. For some $x\in L$ with $xRw$, in the first round $P$ sends a 
+commitment $a$ to $V$. To which $V$ sends a challenge $d$ to $P$ in the second round 
+and finally $P$ responds back with the response $z$ to $V$ in the third round. 
+$V$ outputs \textbf{true} or \textbf{false} upon the proof verification on transcript
+$trans := (a, d, z)$. 
+Informally, with a $\sum-$protocol a prover $P$ tries to convince
+a verifier $V$ that they know a witness $w$ for a given statement $x\in L$ without 
+revealing any information about $w$. To state it formally, a $\sum-$protocol is 
+supposed to satisfy \textit{completeness}, \textit{Honest Verifier Zero Knowledge} (HVZK)
+and \textit{Special Soundness} which are defined as follows.
+
+\begin{definition}[Completeness]
+  A $\sum-$protocol is said to be \textbf{complete} for $\mathcal{R}$ if
+  the verifier $V$ always accepts the honest prover $P$ for any $x\in L$.
+\end{definition}
+
+\begin{definition}[HVZK]
+  A $\sum-$protocol is said to be \textbf{HVZK} for $\mathcal{R}$ if there exist a PPT algorithm $S$ 
+  that simulates $trans$ of the scheme corresponding to a given $x\in L$ with any witness $w$ of $x$. 
+  That is, given $x\in L$,
+  \begin{align*}
+    trans(P(x,w)\leftrightarrow V(x)) &\approx trans(S(x) \leftrightarrow V(x))&& \text{, for any witness $w$ of $x$.}
+  \end{align*}
+  Where $trans(P(\cdot)\leftrightarrow V(\cdot))$ is the transcript of the $\sum-$protocol amongst 
+  $P$ and $V$ and $\approx$ denotes the indistinguishability of the two transcripts.
+\end{definition}
+
+\begin{definition}[Special Soundness]
+  A $\sum-$protocol is said to satisfy \textbf{Special Soundness} for $\mathcal{R}$, 
+  if there exists a PPT extractor $\mathcal{E}$ for any two valid transcripts, $(a,d,z)$ and 
+  $(a,d',z')$, corresponding to a given $x\in L$ with only a unique witness $w$ and $d\neq d'$ such that $\mathcal{E}(a,d,z,d',z')$ outputs the 
+  witness $w$. 
+\end{definition}
+
+It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protocol can be made 
+Non Interactive in the Random Oracle($RO$) model using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}. 
+
 
 \section{The First Topic of the Chapter}
-First comes the introduction to this topic.
+First comes the introduction to this topic.ufyufty
 
 \lipsum[55]
 

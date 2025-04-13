@@ -12,10 +12,25 @@
 %\setup{frontpagesonly}
 
 % If you want to include other LaTeX packages, do it here. 
-
+\usepackage{amssymb} % Add this line for \mathbb{}
+\usepackage{amsmath} % Add this line for \begin{equation}
+\usepackage{amsthm} % Add this line for \begin{theorem}
+% \usepackage{amsfonts} % Add this line for \mathbb{}
+% \usepackage{graphicx} % Add this line for \includegraphics
+\usepackage{caption} % Add this line for \captionof
+\usepackage{tcolorbox} % Add this line for \tcolorbox
+% \usepackage{graphicx} % Add this line for \includegraphics
+% \usepackage{algorithmic}
+% \usepackage{algorithmicx}
+% \usepackage{algorithm}
+\usepackage{float} % Required for [H] specifier
+\usepackage{tabularx}
 % Finally the hyperref package is used for pdf files.
 % This can be commented out for printed versions.
 \usepackage[pdfusetitle,colorlinks,plainpages=false]{hyperref}
+
+% \newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
 
 %%%%%%%
 % The lipsum package is used to generate random text.
@@ -56,21 +71,26 @@
 \begin{flushleft}
   \renewcommand{\arraystretch}{1.1}
   \begin{tabularx}{\textwidth}{@{}p{12mm}X@{}}
-    LoG   & Laplacian-of-Gaussian \\
-    MSE   & Mean Square error \\
-    PSNR  & Peak Signal-to-Noise ratio \\
+    PPT & Probabilistic Polynomial Time \\
+    NIZK   & Non-Interactive Zero Knowledge \\
+    PoK   & Proof of Knowledge \\
+    AoK  & Arguement of Knowledge \\
+    PSSS & Packed Shamir Secret Sharing \\
+    PVSS & Publicly Verifiable Secret Sharing \\
+    PPVSS & Pre-Constructed Publicly Verifiable Secret Sharing \\
+    PPPVSS & Packed Pre-Constructed Publicly Verifiable Secret Sharing \\
   \end{tabularx}
 \end{flushleft}
 \section*{Symbols}
 \begin{flushleft}
   \renewcommand{\arraystretch}{1.1}
   \begin{tabularx}{\textwidth}{@{}p{12mm}X@{}}
-    42    & ``The Answer to the Ultimate Question of Life, the Universe,
-            and Everything'' according to \cite{h2g2} \\
-    $c$   & Speed of light \\
-    $E$   & Energy \\
-    $m$   & Mass \\
-    $\pi$ & The number pi \\
+    $q$ & prime number \\
+    $\mathbb{G}$   & Cyclic group of order $q$ \\
+    $\mathbb{Z}_q$   & Modular ring with $q$ elements \\
+    $\lambda$   & Security Parameter \\
+    $negl$ & Negligible function \\
+    $O$ & Big-O notation \\
   \end{tabularx}
 \end{flushleft}
 
@@ -78,18 +98,18 @@
 \mainmatter
 
 \include{intro}
-\include{chapter-1}
-\include{chapter-2}
+\include{chap-1}
+\include{chap-2}
 % ... and so on until
-\include{chapter-n}
+\include{chap-n}
 \include{conclusion}
 
 % If you have appendices:
 \appendixpage*          % if wanted
 \appendix
-\include{appendix-1}
+\include{app-A}
 % ... and so on until
-\include{appendix-n}
+\include{app-n}
 
 \backmatter
 % The bibliography comes after the appendices.

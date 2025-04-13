@@ -18,3 +18,80 @@
   title =        {Thesis or dissertation},
   howpublished = {URL: \url{http://en.wikipedia.org/wiki/Thesis_or_dissertation},
                   last checked on 2010-01-07}}
+@misc{cryptoeprint:2025/576,
+      author = {Karim Baghery and Noah Knapen and Georgio Nicolas and Mahdi Rahimi},
+      title = {Pre-Constructed Publicly Verifiable Secret Sharing and Applications},
+      howpublished = {Cryptology {ePrint} Archive, Paper 2025/576},
+      year = {2025},
+      url = {https://eprint.iacr.org/2025/576}
+}
+@misc{cryptoeprint:2023/1669,
+      author = {Karim Baghery},
+      title = {$\Pi$: A Unified Framework for Computational Verifiable Secret Sharing},
+      howpublished = {Cryptology {ePrint} Archive, Paper 2023/1669},
+      year = {2023},
+      url = {https://eprint.iacr.org/2023/1669}
+}
+
+@article{10.1145/359168.359176,
+author = {Shamir, Adi},
+title = {How to share a secret},
+year = {1979},
+issue_date = {Nov. 1979},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {22},
+number = {11},
+issn = {0001-0782},
+url = {https://doi.org/10.1145/359168.359176},
+doi = {10.1145/359168.359176},
+abstract = {In this paper we show how to divide data D into n pieces in such a way that D is easily reconstructable from any k pieces, but even complete knowledge of k - 1 pieces reveals absolutely no information about D. This technique enables the construction of robust key management schemes for cryptographic systems that can function securely and reliably even when misfortunes destroy half the pieces and security breaches expose all but one of the remaining pieces.},
+journal = {Commun. ACM},
+month = nov,
+pages = {612–613},
+numpages = {2},
+keywords = {cryptography, interpolation, key management}
+}
+
+@inproceedings{crypto-1984-905,
+  title={Security of Ramp Schemes},
+  booktitle={Advances in Cryptology, Proceedings of CRYPTO '84, Santa Barbara, California, USA, August 19-22, 1984, Proceedings},
+  series={Lecture Notes in Computer Science},
+  publisher={Springer},
+  volume={196},
+  pages={242-268},
+  doi={10.1007/3-540-39568-7_20},
+  author={G. R. Blakley and Catherine Meadows},
+  year=1984
+}
+
+@inproceedings{10.1145/129712.129780,
+author = {Franklin, Matthew and Yung, Moti},
+title = {Communication complexity of secure computation (extended abstract)},
+year = {1992},
+isbn = {0897915119},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/129712.129780},
+doi = {10.1145/129712.129780},
+abstract = {A secret-ballot vote for a single proposition is an example of a secure distributed computation. The goal is for m participants to jointly compute the output of some n-ary function (in this case, the sum of the votes), while protecting their individual inputs against some form of misbehavior.In this paper, we initiate the investigation of the communication complexity of unconditionally secure multi-party computation, and its relation with various fault-tolerance models. We present upper and lower bounds on communication, as well as tradeoffs among resources.First, we consider the “direct sum problem” for communications complexity of perfectly secure protocols: Can the communication complexity of securely computing   a single function f : Fn → F at k sets of inputs be smaller if all are computed simultaneously than if each is computed individually? We show that the answer depends on the failure model. A factor of O(n/log n) can be gained in the privacy model (where processors are curious but correct); specifically, when f is n-ary addition (mod 2), we show a lower bound of Ω(n2 log n) for computing f O(n) times simultaneously. No gain is possible in a slightly stronger fault model (fail-stop mode); specifically, when f is n-ary  addition over  GF(q), we show an exact bound of Θ(kn2 log q) for computing f at k sets of inputs simultaneously (for any k ≥ 1).However, if one is willing to pay an additive cost in fault tolerance (from t to t-k+1), then a variety of known non-cryptographic protocols (including “provably unparallelizable” protocols from above!) can be systematically compiled to compute one function at k sets of inputs with no increase in communication complexity. Our compilation technique is based on a new compression idea of polynomial-based  multi-secret  sharing.Lastly, we show how to compile private protocols into error-detecting protocols at a big savings of a factor of O(n3) (up to a log factor) over the best known error-correcting protocols. This is a new notion of fault-tolerant protocols, and is especially useful when malicious behavior is infrequent, since error-detection implies error-correction in this case.},
+booktitle = {Proceedings of the Twenty-Fourth Annual ACM Symposium on Theory of Computing},
+pages = {699–710},
+numpages = {12},
+location = {Victoria, British Columbia, Canada},
+series = {STOC '92}
+}
+
+@InProceedings{10.1007/3-540-47721-7_12,
+author="Fiat, Amos
+and Shamir, Adi",
+editor="Odlyzko, Andrew M.",
+title="How To Prove Yourself: Practical Solutions to Identification and Signature Problems",
+booktitle="Advances in Cryptology --- CRYPTO' 86",
+year="1987",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="186--194",
+abstract="In this paper we describe simple identification and signature schemes which enable any user to prove his identity and the authenticity of his messages to any other user without shared or public keys. The schemes are provably secure against any known or chosen message attack if factoring is difficult, and typical implementations require only 1{\%} to 4{\%} of the number of modular multiplications required by the RSA scheme. Due to their simplicity, security and speed, these schemes are ideally suited for microprocessor-based devices such as smart cards, personal computers, and remote control systems.",
+isbn="978-3-540-47721-1"
+}

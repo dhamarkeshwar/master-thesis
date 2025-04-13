@@ -1,0 +1,27 @@
+\begin{figure}[ht]
+    \centering
+    \begin{tcolorbox}[title=\textbf{Sigma ($\sum$) Protocol}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        Let $x\in L$ be a statement with its corresponding witness being $w$.
+        
+        \vspace{0.5em}
+        \textbf{Prover}
+        \begin{itemize}
+            \item Samples $r$
+            \item Each party $P_i$ receives their share $f(i)$ from the Dealer
+                  for each $i\in\{1,\dots,n\}$
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Reconstruction Algorithm:}
+        \begin{itemize}
+            \item Any $Q$ set containing at least $t+\ell$ parties can use the 
+            lagrange interpolation to compute $\{s_i\}_{i=0}^{\ell-1}$ as follows:
+            \begin{align*}
+                s_m &= \sum_{i\in Q} f(i) \left[\prod_{j\in Q, j\neq i}\frac{-m-j}{i-j}\right] &&, m\in\{0,\dots,\ell-1\} \\
+            \end{align*}
+            \item The secrets $\{s_i\}_{i=0}^{\ell-1}$ are outputted as the result.
+        \end{itemize}
+    \end{tcolorbox}
+    \caption{Packed Shamir Secret Sharing}
+    \label{fig:packed-shamir}
+\end{figure}
