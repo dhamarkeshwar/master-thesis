@@ -29,7 +29,7 @@ $(n,t,\ell)$-Packed Shamir secret sharing (\cite{10.1145/129712.129780},\cite{cr
  requires at least $t+1$ parties to reconstruct the secret polynomial in contrast to 
  the $t+\ell$ parties in the Packed Shamir secret sharing scheme. The scheme is
  summarized in the Figure \ref{fig:packed-shamir}.
- \input{figures/packed_shamir.tex}
+\input{figures/packed_shamir.tex}
 
 \subsection{Sigma Protocols}
 \label{sec:sigma-protocols}
@@ -77,9 +77,24 @@ and \textit{Special Soundness} which are defined as follows.
   witness $w$. 
 \end{definition}
 
-It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protocol can be made 
-Non Interactive in the Random Oracle($RO$) model using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}. 
+It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protocol can be made into a
+Non Interactive Zero Knowledge (NIZK) Proof of Knowledge (PoK) or Argument of Knowledge (AoK) in the 
+Random Oracle($RO$) model using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}. 
+In the following subsections, we recall two important NIZK PoK schemes which are used in $\Pi_S$ and 
+$\Lambda_{RO}$ schemes.
 
+\subsection{Chaum-Pedersen Protocol for DL Equality}
+Consider $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL). 
+For some $g,h\in \mathbb{G}$ consider the following relation:
+\begin{align*}
+  R_{DLEQ} &= \{(g,h,a,b),x : a=g^x, b=h^x\}.
+\end{align*}
+In \cite{10.1007/3-540-48071-4_7}, Chaum and Pedersen proposed a NIZK PoK scheme for the DL Equality 
+relation, $R_{DLEQ}$. Informally, a prover $P$ can convince a verifier $V$ that they know $x$ such that
+it can be used with both $g$ and $h$ to obtain $a$ and $b$ respectively. This protocol is widely used in
+many cryptographic applications like threshold decryption, e-voting and Randomness Beacons. 
+We summarize the protocol in Figure \ref{fig:chaum-pedersen}.
+\input{figures/chaum-pedersen.tex}
 
 \section{The First Topic of the Chapter}
 First comes the introduction to this topic.ufyufty

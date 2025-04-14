@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{h2g2}
 D.~Adams.
@@ -20,6 +20,11 @@ K.~Baghery, N.~Knapen, G.~Nicolas, and M.~Rahimi.
 G.~R. Blakley and C.~Meadows.
 \newblock Security of ramp schemes.
 \newblock In {\em Advances in Cryptology, Proceedings of CRYPTO '84, Santa Barbara, California, USA, August 19-22, 1984, Proceedings}, volume 196 of {\em Lecture Notes in Computer Science}, pages 242--268. Springer, 1984.
+
+\bibitem{10.1007/3-540-48071-4_7}
+D.~Chaum and T.~P. Pedersen.
+\newblock Wallet databases with observers.
+\newblock In E.~F. Brickell, editor, {\em Advances in Cryptology --- CRYPTO' 92}, pages 89--105, Berlin, Heidelberg, 1993. Springer Berlin Heidelberg.
 
 \bibitem{10.1007/3-540-47721-7_12}
 A.~Fiat and A.~Shamir.
