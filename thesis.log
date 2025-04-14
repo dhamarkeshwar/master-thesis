@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  14 APR 2025 02:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  14 APR 2025 02:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -908,7 +908,7 @@ Package hyperref Info: Link coloring ON on input line 44.
 \@outlinefile=\write5
 \openout5 = `thesis.out'.
 
-<logokuleng-en.pdf, id=119, 216.81pt x 99.9735pt>
+<logokuleng-en.pdf, id=79, 216.81pt x 99.9735pt>
 File: logokuleng-en.pdf Graphic file (type pdf)
 <use logokuleng-en.pdf>
 Package pdftex.def Info: logokuleng-en.pdf  used on input line 44.
@@ -1000,108 +1000,81 @@ Underfull \vbox (badness 1748) has occurred while \output is active []
 
 
 
-[2{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] (./figures/chaum-pedersen.tex)
+[2{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] (./figures/chaum-pedersen.tex))
 
 [3]
 
-[4])
-
-[5]
+[4]
 \openout2 = `chap-2.aux'.
 
- (./chap-2.tex
+ (./chap-2.tex)
+
+[5
+
+
+
+
+]
+\openout2 = `chap-n.aux'.
+
+ (./chap-n.tex
 
 [6
 
 
 
 
-]
-File: logokuleng-en.pdf Graphic file (type pdf)
-<use logokuleng-en.pdf>
-Package pdftex.def Info: logokuleng-en.pdf  used on input line 18.
-(pdftex.def)             Requested size: 216.80946pt x 99.97324pt.
-
+])
 
 [7]
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 59.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmss.fd
-File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-
-[8]
-
-[9])
-
-[10]
-\openout2 = `chap-n.aux'.
-
- (./chap-n.tex
-
-[11
-
-
-
-
-]
-Underfull \vbox (badness 1796) has occurred while \output is active []
-
-
-
-[12])
-
-[13]
 \openout2 = `conclusion.aux'.
 
  (./conclusion.tex
 
-[14
+[8
 
 
 
 
-]
-Underfull \vbox (badness 1308) has occurred while \output is active []
+])
 
+[9]
 
-
-[15])
-
-[16]
-
-[17
+[10
 
 
 
 ]
 
-[18]
+[11]
+
+[12]
 \openout2 = `app-A.aux'.
 
  (./app-A.tex
 
-[19
+[13
 
 
 ])
 
-[20]
+[14]
 \openout2 = `app-n.aux'.
 
  (./app-n.tex
 
-[21
+[15
 
 
 
 
 ])
 
-[22] (./thesis.bbl
+[16] (./thesis.bbl
 bibitemlist
 )
 
-[23
+[17
 
 
 
@@ -1122,21 +1095,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 3C424E1AB1D6BB53C60952B251361D7B;3656.
+(rerunfilecheck)             Checksum: 5B71DCBCADFD43AD54E6DB0AD6EE5AA5;2216.
  ) 
 Here is how much of TeX's memory you used:
- 29839 strings out of 473190
- 564941 string characters out of 5715800
- 1073391 words of memory out of 5000000
- 52478 multiletter control sequences out of 15000+600000
- 639017 words of font info for 83 fonts, out of 8000000 for 9000
+ 29747 strings out of 473190
+ 563405 string characters out of 5715800
+ 1073140 words of memory out of 5000000
+ 52422 multiletter control sequences out of 15000+600000
+ 636247 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,14n,107p,589b,682s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
-Output written on thesis.pdf (31 pages, 414256 bytes).
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
+Output written on thesis.pdf (25 pages, 368243 bytes).
 PDF statistics:
- 486 PDF objects out of 1000 (max. 8388607)
- 405 compressed objects within 5 object streams
- 103 named destinations out of 1000 (max. 500000)
- 242 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 371 PDF objects out of 1000 (max. 8388607)
+ 300 compressed objects within 3 object streams
+ 71 named destinations out of 1000 (max. 500000)
+ 162 words of extra memory for PDF output out of 10000 (max. 10000000)
 

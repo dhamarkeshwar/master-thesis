@@ -16,38 +16,17 @@
 \contentsline {subsection}{\numberline {1.2.2}Packed Shamir Secret Sharing}{1}{subsection.1.2.2}%
 \contentsline {subsection}{\numberline {1.2.3}Sigma Protocols}{2}{subsection.1.2.3}%
 \contentsline {subsection}{\numberline {1.2.4}Chaum-Pedersen Protocol for DL Equality}{3}{subsection.1.2.4}%
-\contentsline {section}{\numberline {1.3}The First Topic of the Chapter}{3}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}An item}{4}{subsection.1.3.1}%
-\contentsline {section}{\numberline {1.4}A Second Topic}{5}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Another item}{5}{subsection.1.4.1}%
-\contentsline {section}{\numberline {1.5}Conclusion}{5}{section.1.5}%
-\contentsline {chapter}{\chapternumberline {2}The Next Chapter}{7}{chapter.2}%
-\contentsline {section}{\numberline {2.1}The First Topic of this Chapter}{7}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}An item}{7}{subsection.2.1.1}%
-\contentsline {section}{\numberline {2.2}Figures}{7}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Tables}{8}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Lorem Ipsum}{8}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Lorem ipsum dolor sit amet, consectetur adipiscing elit}{8}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Praesent auctor venenatis posuere}{9}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Cras vulputate ultricies venenatis}{9}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}Donec nibh ante, consectetur et posuere id, tempus nec arcu}{10}{subsection.2.4.4}%
-\contentsline {subsection}{\numberline {2.4.5}Morbi et mauris tempus purus ornare vehicula}{10}{subsection.2.4.5}%
-\contentsline {section}{\numberline {2.5}Conclusion}{10}{section.2.5}%
-\contentsline {chapter}{\chapternumberline {3}The Final Chapter}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}The First Topic of this Chapter}{11}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Item 1}{11}{subsection.3.1.1}%
-\contentsline {subsubsection}{Sub-item 1}{11}{section*.17}%
-\contentsline {subsubsection}{Sub-item 2}{11}{section*.18}%
-\contentsline {subsection}{\numberline {3.1.2}Item 2}{12}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}The Second Topic}{12}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Conclusion}{13}{section.3.3}%
-\contentsline {chapter}{\chapternumberline {4}Conclusion}{15}{chapter.4}%
-\contentsline {appendix}{\chapternumberline {A}The First Appendix}{19}{appendix.A}%
-\contentsline {section}{\numberline {A.1}More Lorem}{19}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{19}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{20}{subsection.A.1.2}%
-\contentsline {section}{\numberline {A.2}Lorem 51}{20}{section.A.2}%
-\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{21}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Lorem 20-24}{21}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Lorem 25-27}{22}{section.B.2}%
-\contentsline {chapter}{Bibliography}{23}{appendix*.19}%
+\contentsline {subsection}{\numberline {1.2.5}NIZK PoK for Polynomial DL}{3}{subsection.1.2.5}%
+\contentsline {section}{\numberline {1.3}Conclusion}{4}{section.1.3}%
+\contentsline {chapter}{\chapternumberline {2}The Next Chapter}{5}{chapter.2}%
+\contentsline {chapter}{\chapternumberline {3}The Final Chapter}{7}{chapter.3}%
+\contentsline {chapter}{\chapternumberline {4}Conclusion}{9}{chapter.4}%
+\contentsline {appendix}{\chapternumberline {A}The First Appendix}{13}{appendix.A}%
+\contentsline {section}{\numberline {A.1}More Lorem}{13}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{13}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{14}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}Lorem 51}{14}{section.A.2}%
+\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{15}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Lorem 20-24}{15}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Lorem 25-27}{16}{section.B.2}%
+\contentsline {chapter}{Bibliography}{17}{appendix*.14}%

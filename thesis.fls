@@ -405,14 +405,6 @@ OUTPUT chap-2.aux
 INPUT ./chap-2.tex
 INPUT ./chap-2.tex
 INPUT chap-2.tex
-INPUT /usr/local/texlive/texmf-local/tex/latex/kulemt/logokuleng-en.pdf
-INPUT /usr/local/texlive/texmf-local/tex/latex/kulemt/logokuleng-en.pdf
-INPUT /usr/local/texlive/texmf-local/tex/latex/kulemt/logokuleng-en.pdf
-INPUT /usr/local/texlive/texmf-local/tex/latex/kulemt/logokuleng-en.pdf
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmss.fd
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmss.fd
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmss.fd
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmss10.tfm
 INPUT ./chap-n.tex
 INPUT ./chap-n.tex
 OUTPUT chap-n.aux
@@ -481,7 +473,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmss10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb
