@@ -1,0 +1,27 @@
+\begin{figure}[ht]
+    \centering
+    \begin{tcolorbox}[title=\textbf{Randomness Beacon using PPPVSS (cont.)}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        \begin{enumerate}
+            \item [3.]\textbf{Recovery:} Let $\mathcal{C}_a$ be the set containing at most $t$ malicious shareholders(as Dealers) who did not open the exponents corresponding to their $l$ secrets, $\{h^{s_i^k}\}_{i=0}^{-(l-1)}$ for each $P_k\in\mathcal{C}_a$, in \textit{Reveal} phase.
+            \begin{itemize}
+                \item Every shareholder $P_j$ should decrypt the secret share of each malicious shareholder(Dealer) in $\mathcal{C}_a$, and give a DLEQ NIZK PoK which asserts that the decryption is performed correctly, $h^{s_j^k}$ and NIZK PoK for $(g, h^{s_j^k}, pk_j, y_j^k)\in L$ for each $P_k\in\mathcal{C}_a$, i.e., each shareholder should perform the \textit{pessimistic} reconstruction phase of PPPVSS for every shareholder(Dealer) who has not revealed the exponents corresponding to their secrets.
+            \end{itemize}
+            
+            \item [4]\textbf{Output:}  Let $T$ be the $(n - t) \times l$ matrix with rows indexed by the shareholders in $\mathcal{C}$ and where the row corresponding to $P_a \in \mathcal{C}$ is $(h^{s_0^a} , . . . , h^{s_{-(l-1)}^a})$.
+            \begin{itemize}
+                \item Each computes the $l \times l$-matrix $R = M \circ T$ by applying FFTE to each column $T^{(j)}$ of $T$, resulting in column $R^{(j)}$ of $R$ (since $R^{(j)} = M \circ T^{(j)}$ and $M$ is Vandermonde) for $j \in [0, l - 1]$.
+                \item Shareholders output the $l^2$ elements of $R$ as final randomness.
+            \end{itemize}
+        
+            \item [4']\textbf{Alternative Output:}  if every party in $\mathcal{C}$ has opened her secrets correctly in step \textit{Reveal}, then:
+            \begin{itemize}
+                \item Shareholders compute $R = M \circ T$ in the following way:\\
+                    Let $S$ be the $(n - t) \times l$ matrix with rows indexed by the shareholders in $\mathcal{C}$ and where the row
+                    corresponding to $P_a \in\mathcal{C}$ is $(s_0^a,...,s_{-(l-1)}^a )$. Then each party computes $U = M \circ S \in\mathbb{Z}_q^{l\times l}$ (using the standard FFT in $\mathbb{Z}_q$ to compute each column) and $R = h^U$ .
+                \item Shareholders output the $l^2$ elements of $R$ as final randomness.
+            \end{itemize}
+        \end{enumerate}
+    \end{tcolorbox}
+    \caption{Recovery and Output phase of the Randomness Beacon using PPPVSS}
+    \label{fig:randomness_beacon_cont}
+\end{figure}

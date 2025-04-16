@@ -419,6 +419,14 @@ OUTPUT chap-n.aux
 INPUT ./chap-n.tex
 INPUT ./chap-n.tex
 INPUT chap-n.tex
+INPUT ./figures/commit_reveal.tex
+INPUT ./figures/commit_reveal.tex
+INPUT figures/commit_reveal.tex
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr8.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
+INPUT ./figures/recovery_output.tex
+INPUT ./figures/recovery_output.tex
+INPUT figures/recovery_output.tex
 INPUT ./tables/no_group_mul.tex
 INPUT ./tables/no_group_mul.tex
 INPUT tables/no_group_mul.tex
@@ -481,6 +489,7 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb

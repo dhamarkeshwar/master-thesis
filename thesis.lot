@@ -13,8 +13,8 @@
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {table}{\numberline {4.1}{\ignorespaces Computational cost of dealer and shareholders, $\mathbb {E}_x=$group exponentiation and $\mathbb {P}_e=$polynomial evaluation in group $G$ with order $q$, where $q$ is a large prime}}{12}{table.caption.15}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Communication cost of dealer and (each) shareholder, $R_o$ being the random oracle, $G = $group of order $q$ and $\mathbb {Z}_q =$ modular group of order $q$, where $q$ is a large prime}}{14}{table.caption.16}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Computational cost of dealer and shareholders, $\mathbb {E}_x=$group exponentiation and $\mathbb {P}_e=$polynomial evaluation in group $G$ with order $q$, where $q$ is a large prime}}{12}{table.caption.17}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Communication cost of dealer and (each) shareholder, $R_o$ being the random oracle, $G = $group of order $q$ and $\mathbb {Z}_q =$ modular group of order $q$, where $q$ is a large prime}}{14}{table.caption.18}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

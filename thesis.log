@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  16 APR 2025 12:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  16 APR 2025 15:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1043,7 +1043,14 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-] (./tables/no_group_mul.tex
+] (./figures/commit_reveal.tex
+
+LaTeX Warning: Reference `fig:9' on page 11 undefined on input line 25.
+
+
+LaTeX Warning: Reference `fig:9' on page 11 undefined on input line 25.
+
+) (./figures/recovery_output.tex) (./tables/no_group_mul.tex
 Overfull \hbox (6.09802pt too wide) in paragraph at lines 5--5
 []|\T1/lmr/bx/n/10.95 Output
  []
@@ -1074,16 +1081,18 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [11]
-Overfull \vbox (15.64291pt too high) has occurred while \output is active []
+Overfull \vbox (547.64516pt too high) has occurred while \output is active []
 
 
 
 [12])
-Overfull \hbox (8.18344pt too wide) in paragraph at lines 15--16
+Overfull \hbox (8.18344pt too wide) in paragraph at lines 16--27
 \T1/lmr/m/n/10.95 share-holder who has not opened the se-cret poly-no-mial, each shareholder/re-
  []
 
-(./tables/communication.tex
+
+
+[13] (./tables/communication.tex
 Underfull \hbox (badness 4072) in paragraph at lines 5--5
 []|\T1/lmr/bx/n/10.95 Recovery \T1/lmr/m/it/10.95 (by share-
  []
@@ -1093,55 +1102,46 @@ Overfull \hbox (64.56491pt too wide) in paragraph at lines 3--10
  [][] 
  []
 
-)
-
-[13])
+))
 
 [14]
+
+[15]
 \openout2 = `conclusion.aux'.
 
- (./conclusion.tex)
-
-[15
-
-
-
-
-]
+ (./conclusion.tex
 
 [16
 
 
 
-]
+
+])
 
 [17]
 
-[18]
+[18
+
+
+
+]
+
+[19]
+
+[20]
 \openout2 = `app-A.aux'.
 
  (./app-A.tex
 
-[19
-
-
-])
-
-[20]
-\openout2 = `app-n.aux'.
-
- (./app-n.tex
-
 [21
 
 
-
-
 ])
 
-[22] (./thesis.bbl
-bibitemlist
+[22]
+\openout2 = `app-n.aux'.
 
+ (./app-n.tex
 
 [23
 
@@ -1150,7 +1150,18 @@ bibitemlist
 
 ])
 
-[24]
+[24] (./thesis.bbl
+bibitemlist
+
+
+[25
+
+
+
+
+])
+
+[26]
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
 
@@ -1165,22 +1176,26 @@ bibitemlist
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: B565C8330CDE6C76985786F8CFCE4062;5044.
+(rerunfilecheck)             Checksum: 93DBDDACC698DB1C6D9756675069F44B;5044.
  ) 
 Here is how much of TeX's memory you used:
- 29881 strings out of 473190
- 565672 string characters out of 5715800
- 1087395 words of memory out of 5000000
- 52516 multiletter control sequences out of 15000+600000
- 636247 words of font info for 82 fonts, out of 8000000 for 9000
+ 29913 strings out of 473190
+ 566373 string characters out of 5715800
+ 1102587 words of memory out of 5000000
+ 52536 multiletter control sequences out of 15000+600000
+ 642227 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 98i,14n,107p,826b,682s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
-Output written on thesis.pdf (32 pages, 413519 bytes).
+ 98i,14n,107p,678b,682s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
+Output written on thesis.pdf (34 pages, 432185 bytes).
 PDF statistics:
- 515 PDF objects out of 1000 (max. 8388607)
- 433 compressed objects within 5 object streams
- 99 named destinations out of 1000 (max. 500000)
+ 533 PDF objects out of 1000 (max. 8388607)
+ 447 compressed objects within 5 object streams
+ 103 named destinations out of 1000 (max. 500000)
  274 words of extra memory for PDF output out of 10000 (max. 10000000)
 
