@@ -1,0 +1,40 @@
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3cm}|p{1.2cm}|p{2cm}|p{6.5cm}|p{2.5cm}|}
+\hline
+\textbf{Protocol}    & \textbf{Output size}    & 
+\textbf{Commit}\textit{(by Dealer)} & \textbf{Reveal}\textit{(by 
+shareholder)} & \textbf{Recovery} \textit{(by shareholder)}                                                           
+\\ \hline
+\textbf{ALBATROSS}, \textit{best case}    & $l^2$ & $(2n+l)\mathbb{E}_x$ & 
+\textit{Public Verification - }$2(n-1)n\mathbb{E}_x$ & \\
+& & & \textit{Reveal Verification - } $n(n+l)\mathbb{E}_x$&- \\ \hline
+\textbf{with PPPVSS}, \textit{best case}    & $l^2$  & 
+$2(n+l)\mathbb{E}_x$ & \textit{Public Verification - 
+}$2(n-1)(n+l)\mathbb{E}_x$ &  \\
+& & & \textit{Reveal Verification - } $nl\mathbb{E}_x$ & -  \\ \hline
+\textbf{ALBATROSS}, \textit{worst case}    & $l^2$ & $(2n+l)\mathbb{E}_x$ 
+& \textit{Public Verification - }$2(n-1)n\mathbb{E}_x$   &  \\
+& & & \textit{Reveal Verification - }$(n-t)(n+l)\mathbb{E}_x$ & 
+$[3+4(n-t)]t\mathbb{E}_{x}$\\ \hline
+\textbf{with PPPVSS}, \textit{worst case}    & $l^2$  & 
+$2(n+l)\mathbb{E}_x$ & \textit{Public Verification - 
+}$2(n-1)(n+l)\mathbb{E}_x$ &  \\ 
+& & & \textit{Reveal Verification - } $(n-t)l\mathbb{E}_x$ &  
+$[3+4(n-t)]t\mathbb{E}_{x}$ \\ \hline
+
+%The app requires users to enable data sharing with a third party without 
+a choice.   \\ \hline
+% {U.2.2}   & Access                                 & There is no 
+information on which data the app can track apart from the regulars. \\ 
+\hline
+% {U.2.3}   & Rectification/erasure & No possibility to edit possible 
+wrong or unwanted data. \\ \hline
+
+\end{tabular}
+\caption{Computational cost of dealer and shareholders, 
+$\mathbb{E}_x=$group exponentiation in group $G$ with $|G|=q$ where $q$ is 
+a large prime}
+\label{tab:comp_alba_pppvss_exp}
+\end{table}
+

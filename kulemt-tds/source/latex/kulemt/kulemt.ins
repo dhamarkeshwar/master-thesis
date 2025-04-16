@@ -1,0 +1,68 @@
+%%
+%% Copyright (C) 2010-2025 by Luc Van Eycken
+%%
+%% It may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License (LPPL), either version 1.3c of
+%% this license or (at your option) any later version.  The latest
+%% version of this license is in the file:
+%%
+%%    http://www.latex-project.org/lppl.txt
+%%
+
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+
+\preamble
+
+Copyright (C) 2025 by Luc Van Eycken
+
+It may be distributed and/or modified under the conditions of
+the LaTeX Project Public License (LPPL), either version 1.3c of
+this license or (at your option) any later version.  The latest
+version of this license is in the file:
+
+   https://www.latex-project.org/lppl.txt
+
+\endpreamble
+
+\generate{%
+  \file{kulemt.cls}{%
+    \from{kulemt-start.dtx}{initial}%
+    \from{kulemt-version.dtx}{fileinfo}%
+    \from{kulemt-start.dtx}{class}%
+    \from{kulemt-cfg.dtx}{class}%
+    \from{kulemt-opt.dtx}{class}%
+    \from{kulemt-load.dtx}{class}%
+    \from{kulemt-layout.dtx}{class}%
+    \from{kulemt-front.dtx}{class}%
+    \from{kulemt-extra.dtx}{class}%
+    \from{kulemt-load.dtx}{atend}%
+  }%
+  \file{kulemtx.sty}{\from{kulemtx.dtx}{style}}%
+}
+
+\obeyspaces
+\Msg{***************************************************************}
+\Msg{*                                                             *}
+\Msg{* To finish the installation you have to move the following   *}
+\Msg{* files into a directory searched by TeX:                     *}
+\Msg{*                                                             *}
+\Msg{*     kulemt.cls                                              *}
+\Msg{*     kulemt.ini                                              *}
+\Msg{*     kulemtx.sty                                             *}
+\Msg{*     logokul*.eps                                            *}
+\Msg{*     logokul*.pdf                                            *}
+\Msg{*                                                             *}
+\Msg{* To produce the documentation available in kulemt-code.pdf:  *}
+\Msg{*  > pdflatex kulemt-code.tex                                 *}
+\Msg{*  > pdflatex kulemt-code.tex                                 *}
+\Msg{*  > makeindex -s gind.ist kulemt-code.idx                    *}
+\Msg{*  > pdflatex kulemt-code.tex                                 *}
+\Msg{*  > pdflatex kulemt-code.tex                                 *}
+\Msg{*                                                             *}
+\Msg{* Happy TeXing!                                               *}
+\Msg{*                                                             *}
+\Msg{***************************************************************}
+
+\endbatchfile

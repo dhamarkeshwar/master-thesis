@@ -1,24 +1,67 @@
-\chapter{Literature Review}
-\label{cha:1}
-In this chapter we sequently recall Packed Shamir secret sharing, 
-Sigma ($\sum$) Protocols and Publicly Verifiable Secret Sharing (PVSS) followed by
-the recent scheme introduced in \cite{cryptoeprint:2025/576}, namely, 
-Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) which has versatile 
-applications and also improves efficiency in existing applications.
-The agenda of this chapter is to give enough background before describing our Packed PPVSS (PPPVSS) scheme 
-and its corresponding security guarantees in the next chapter.
-
-\section{Introduction}
-
-\section{Preliminaries}
-\label{sec:preliminaries}
-\subsection{Notation}
-Let $\mathbb{G}$ be a cyclic subgroup of prime order $q$ with its generator being 
-$g$, isomorphic to a subgroup of the multiplicative modular group $\mathbb{Z}_p^*$, 
-where $p$ is prime. Also, we write $Z_{q}[X]_d$ to denote the set of all $d$ degree 
+\chapter{Preliminaries}
+\label{chap:preliminaries}
+\section{Notation}
+Let $\mathbb{G}$ be a cyclic group of prime order $q$ with hard Discrete Log (DL) and its generator 
+being $g$. 
+% isomorphic to a subgroup of the multiplicative modular group $\mathbb{Z}_p^*$, where $p$ is prime. 
+Also, we write $\mathbb{Z}_{q}[X]_d$ to denote the set of all $d$ degree 
 polynomials univariate in $X$ with coefficients in the finite field $\mathbb{Z}_q$. 
 
-\subsection{Packed Shamir Secret Sharing}
+\section{Coding Theory}
+\label{sec:linear-codes}
+This subsection is a brief recall of linear codes and their properties.
+
+\begin{definition}[Linear Code]
+  If $\mathcal{C}$ be a vector subspace of $\mathbb{Z}_q^n$ with dimension $k$, then $\mathcal{C}$ is 
+  said to be a \textbf{linear code}(/ linear $q-$ary code) of length $n$ and dimension $k$.
+\end{definition}
+
+In the remainder of the subsection, we let $\mathcal{C}$ be a linear $q-$ary code of length $n$ and 
+dimension $k$.
+
+\begin{definition}[Dual Code]
+  The vector subspace $\mathcal{C}^{\perp}$ is called a Dual (Code) of $\mathcal{C}$ if it is 
+  orthogonal to $\mathcal{C}$.
+\end{definition}
+
+\begin{definition}[Generating Matrix]
+  The $k\times n-$matrix $\mathcal{G}$ is said to be a generating matrix of $\mathcal{C}$ if it 
+  generates $\mathcal{C}$, more precisely, the rows of $G$ form a basis for $\mathcal{C}$. Also, $\mathcal{G}$ is said to be in its 
+  \textbf{standard form} if it is of the form
+  \begin{align*}
+    \mathcal{G} = \begin{bmatrix}
+      I_k & P
+    \end{bmatrix},
+  \end{align*}
+  where $I_k$ is the $k\times k$ identity matrix and $P$ is some $k\times (n-k)$ matrix.
+\end{definition}
+
+\begin{definition}[Parity Check Matrix]
+  Consider the linear transformation $\phi$ as follows:
+  \begin{align*}
+    \phi:& \mathbb{Z}_q^n \rightarrow \mathbb{Z}_q^{n-k},
+  \end{align*}
+  where kernel of $\phi$ is $\mathcal{C}$. Then the matrix associated to $\phi$, $\mathcal{H}$, 
+  is called the \textbf{parity check matrix} of $\mathcal{C}$.
+\end{definition}
+
+\begin{lemma}
+  If $\mathcal{G}$ being a generating matrix of $\mathcal{C}$ and say it is in its standard form, i.e., $\mathcal{G} = \begin{bmatrix}
+    I_k & P
+  \end{bmatrix}$, then $\mathcal{H}$ being a parity check matrix of $\mathcal{C}$ is given by
+  \begin{align*}
+    \mathcal{H} = \begin{bmatrix}
+      -P^T & I_{n-k}
+    \end{bmatrix},
+  \end{align*}
+  where $I_{n-k}$ is the $(n-k)\times (n-k)$ identity matrix and $P^T$ is the transpose of $P$.
+\end{lemma}
+
+\subsection{Reed Solomon Codes}
+\label{subsec:reed-solomon}
+
+
+\section{Packed Shamir Secret Sharing}
 \label{sec:packed-shamir}
 $(n,t,\ell)$-Packed Shamir secret sharing (\cite{10.1145/129712.129780},\cite{crypto-1984-905})
  scheme is a threshold secret sharing scheme which is a variant of $(n,t)$-Shamir's 
@@ -31,7 +74,7 @@ $(n,t,\ell)$-Packed Shamir secret sharing (\cite{10.1145/129712.129780},\cite{cr
  summarized in the Figure \ref{fig:packed-shamir}.
 \input{figures/packed_shamir.tex}
 
-\subsection{Sigma Protocols}
+\section{Sigma Protocols}
 \label{sec:sigma-protocols}
 The agenda of this subsection is to give a brief formal background about some important primitives 
 used in the PVSS ,$\Pi_S$ \cite{cryptoeprint:2023/1669}, and the PPVSS ,$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, schemes.
@@ -84,7 +127,8 @@ In the following subsections, we recall two important NIZK PoK schemes which are
 $\Lambda_{RO}$ schemes.
 
 \subsection{Chaum-Pedersen Protocol for DL Equality}
-Consider $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL). 
+\label{subsec:chaum-pedersen}
+Recall $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL). 
 For some $g,h\in \mathbb{G}$ consider the following relation:
 \begin{align*}
   R_{DLEQ} &= \{(g,h,a,b),x : a=g^x, b=h^x\}.
@@ -97,7 +141,38 @@ We summarize the protocol in Figure \ref{fig:chaum-pedersen}.
 \input{figures/chaum-pedersen.tex}
 
 \subsection{NIZK PoK for Polynomial DL}
-Consider $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL). 
+\label{subsec:polynomial-dl}
+Recall $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL) and $g$ 
+being its generator. Consider the following relation for some polynomial $f\in\mathbb{Z}_q[X]_t$ with
+degree $t<n$:
+\begin{align*}
+  R_{PDL} &= \{(g,x_1,\dots,x_n,F(x_1),\dots,F(x_n)),f(X) : F(x_i)=g^{f(x_i)}, 1\leq i\leq n\}.
+\end{align*}
+In \cite{cryptoeprint:2023/1669}, Baghery formally introduced a NIZK PoK scheme for the Polynomial DL 
+relation, $R_{PDL}$, which is a generalization of Schnorr's ID protocol \cite{crypto-1989-1727}. Informally, 
+a prover $P$ can convince a verifier $V$ that they know a $t$ degree polynomial $f$ such that 
+it can be used with $g$ to obtain $F(x_i)$ for $1\leq i\leq n$. This protocol is used to construct the PPVSS 
+$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, which was essential in building an efficient e-voting protocol. 
+We summarize the protocol in Figure \ref{fig:polynomial-dl}.
+\input{figures/polynomial-dl.tex}
+
+\section{Publicly Verifiable Secret Sharing (PVSS)}
+\label{sec:pvss}
+Publicly Verifiable Secret Sharing (PVSS) is an extension of Non-Interactive Verifiable Secret Sharing 
+(NI-VSS) scheme. Unlike NI-VSS where only the parties who possess the secret shares can verify the 
+correctness of the secret sharing, anyone including external entities can verify the correctness of 
+the secret sharing in PVSS. 
+
+\section{Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS)}
+\label{sec:ppvss}
+PPVSS was first introduced in \cite{cryptoeprint:2025/576}, which is used as a building block to 
+construct a new e-voting protocol based on Schoenmakers' PVSS \cite{5581ccd9530540479539d21d1d39ae96}. 
+Interestingly, the authors in \cite{cryptoeprint:2025/576} observed that the original e-voting protocol 
+published in 1999 by Schoenmakers is unusually efficient to be just based on a PVSS, which led them to 
+discover that Schoenmakers PVSS is actually a PPVSS. What sets PPVSS apart from standard PVSS schemes 
+is that it can be used to construct versatile applications, such as e-voting, and can also improve 
+efficiency of some existing protocols. The subtle difference between PPVSS and PVSS is that the secret 
+itself is committed by the prover along with all its corresponding secret shares.
 
 \section{Conclusion}
 The final section of the chapter gives an overview of the important results

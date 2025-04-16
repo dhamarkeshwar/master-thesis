@@ -1,0 +1,248 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Starting the preamble}
+% \maketitle
+% 
+% \DoNotIndex{\AddToHook, \ClassError, \DeclareCurrentRelease, \DeclareRelease,
+%   \ExplFileDate, \MessageBreak, \NeedsTeXFormat, \NewDocumentCommand,
+%   \ProcessKeysOptions, \ProvidesExplClass, \RequirePackage}
+% \DoNotIndex{\document, \fmtversion}
+% \DoNotIndex{\@currname, \@ifl@t@r, \@ifpackageloaded, \@ifundefined}
+% \DoNotIndex{\cs:w, \cs_end:, \cs_if_exist:NF, \cs_if_exist_use:NF,
+%   \cs_if_free:NT, \cs_new:Nn, \cs_new:Npn, \cs_new_protected:Nn,
+%   \cs_set_eq:NN, \else:, \exp_after:wN, \exp_args:No, \fi:, \group_begin:,
+%   \group_end:, \prg_new_conditional:Npnn, \prg_return_false:,
+%   \prg_return_true:, \reverse_if:N, \tl_new:N, \tl_put_left:Nn,
+%   \tl_put_right:Nn, \tl_to_str:V}
+% \DoNotIndex{\l_keys_key_str, \l_keys_key_tl}
+% \DoNotIndex{\endinput, \ignorespaces}
+% \DoNotIndex{\legacy_if:n}
+%
+% \begin{documentation}
+% We require at least the LaTeX version of TeX\,Live~2019 (LaTeX 2018-12-01)
+% to ensure that the default input encoding is \textsc{utf-8} and all `pdfTeX
+% utilities' (incuding |\expanded|) are available in pdfTeX, LuaTeX and XeTeX.
+% It also makes the rollback concept available for packages and classes. As a
+% consequence, we assume that the required packages are not older than their
+% TeX\,Live~2019 version (\pkg{expl3} version 2019-04-06).
+% ^^A UTF-8 as default input encoding: LaTeX 2018-04-01 (TeX Live 2018)
+% ^^A 'pdftex utilities': TeX Live 2019 (LaTeX 2018-12-01)
+% ^^A A recent luaotfload also requires TeX Live 2019.
+%
+% A rollback to the previous version of \cls{kulemt} (dated 2022) is possible.
+% However this also means that the configuration file of that version is used,
+% which is no longer updated to the current situation.
+%
+% \begin{function}{\legacy_if:nTF}
+%   This useful function seems to be missing from the 2019-04-06 kernel, so it
+%   is provided here.
+% \end{function}
+% 
+% \DescribeLaTeXCmd{\IfFormatAtLeastTF}
+% \DescribeLaTeXCmd{\IfPackageLoadedTF}
+% \DescribeLaTeXCmd{\ProcessKeyOptions}
+% Apart from starting the preamble, some compatibility functions are
+% provided. These functions are present in recent LaTeX versions, but not yet
+% in the 2019 version.
+% 
+% \begin{function}{\kulemt_at_end_preamble:n, \kulemt_after_begin_document:n}
+%   Also hooks were defined later. We need the ones to postpone execution of
+%   commands to just before or after `|\begin{document}|'. So we provide our
+%   own emulation for older LaTeX versions.
+% \end{function}
+%
+% \begin{function}[EXP]{\kulemt_keys_key:}
+%   Since August 2020 the variable |\l_keys_key_str| replaces |\l_keys_key_tl|.
+%   The function |\kulemt_keys_key:| always expands to the key as a string.
+% \end{function}
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Starting the \cls{kulemt} preamble}
+% The class starts with checking that the LaTeX is recent enough.
+%    \begin{macrocode}
+%<*initial>
+\NeedsTeXFormat{LaTeX2e}[2018/12/01]
+%    \end{macrocode}
+%
+% Next, we allow a rollback to version~$1$. Version 1.0 has been made available
+% in March 2010. The current version 2 should be used from 2025 on.
+%    \begin{macrocode}
+\DeclareRelease{v1}{2010-03-02}{kulemt-v1.cls}
+\DeclareCurrentRelease{}{2025-01-01}
+%    \end{macrocode}
+%
+% The class then loads \pkg{expl3} and \pkg{xparse} if needed. We also check
+% the minimal release date of \pkg{l3kernel}. Since these packages are
+% preloaded in recent LaTeX formats, |\ExplFileDate| must be used.\\
+% The minimal version of the L3~programming layer is the one where also the
+% e-type argument is supported.
+%    \begin{macrocode}
+\@ifundefined{ExplFileDate}{\RequirePackage{expl3}}{}
+\@ifl@t@r\ExplFileDate{2019-04-06}{}{%
+  \ClassError{kulemt}%
+    {The L3 programming layer is too old}%
+    {You need to update your installation of 'l3kernel'.\MessageBreak
+     Loading 'kulemt' will abort.}%
+  \endinput}
+\@ifundefined{NewDocumentCommand}{\RequirePackage{xparse}}{}
+%</initial>
+%    \end{macrocode}
+%
+% Then the class is identified. At this point the file info (from
+% \hyperref[file:version]{\file{kulemt-version.dtx}}) must be known.
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt>
+\ProvidesExplClass{kulemt}{\filedate}{\fileversion}{\fileinfo}
+%    \end{macrocode}
+%
+% \section{Compatibility with more recent kernel versions}
+% \begin{macro}{\legacy_if:nTF}
+%   This function seems to be missing from the TeX~Live~2019 version of
+%   \pkg{expl3}.
+%    \begin{macrocode}
+\cs_if_free:NT \legacy_if:nTF
+  {
+    \prg_new_conditional:Npnn \legacy_if:n #1 { TF }
+      {
+        \exp_after:wN \reverse_if:N
+          \cs:w if#1 \cs_end:
+          \prg_return_false:
+        \else:
+          \prg_return_true:
+        \fi:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_keys_key:}
+%   Since February 2020 the string |\l_keys_key_str| replaces the token list
+%   |\l_keys_key_tl|. The function |\kulemt_keys_key:| expands to the newer
+%   |\l_keys_key_str| or the older |\l_keys_key_tl|, whichever is available.
+%    \begin{macrocode}
+\cs_new:Nn \kulemt_keys_key:
+  {
+    \cs_if_exist_use:NF \l_keys_key_str
+      { \tl_to_str:V \l_keys_key_tl }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% The October 2023 version switches from x- to e-type variants, although for
+% some functions the x-type variants are kept. For no longer existing x-type
+% variants we prefer to generate the e-type variant because this is more
+% future-proof. To ease maintenance, it is done in each \file{.dtx} file as
+% needed.
+%
+% \section{Compatibility with more recent LaTeX versions}
+% \begin{latexcmd}{\IfFormatAtLeastTF}
+%   This command is available in LaTeX since October 2020.
+%    \begin{macrocode}
+\cs_if_exist:NF \IfFormatAtLeastTF
+  { \cs_new:Npn \IfFormatAtLeastTF { \@ifl@t@r \fmtversion } }
+%    \end{macrocode}
+% \end{latexcmd}
+% 
+% \begin{latexcmd}{\IfPackageLoadedTF}
+%   This command is available in LaTeX since October 2021.
+%    \begin{macrocode}
+\cs_if_exist:NF \IfPackageLoadedTF
+  { \cs_set_eq:NN \IfPackageLoadedTF \@ifpackageloaded }
+%    \end{macrocode}
+% \end{latexcmd}
+% 
+% \begin{latexcmd}{\ProcessKeyOptions}
+%   This command is available in LaTeX since June 2022.
+%   If not available, use the equivalent command from \pkg{l3keys2e}.
+%    \begin{macrocode}
+\cs_if_exist:NF \ProcessKeyOptions
+  {
+    \RequirePackage{l3keys2e}
+    \NewDocumentCommand \ProcessKeyOptions { O{\@currname} }
+      { \exp_args:No \ProcessKeysOptions {#1} }
+  }
+%    \end{macrocode}
+% \end{latexcmd}
+%
+% \section{Using hooks}
+% Since October 2020 a hook management system was added to LaTeX. For older
+% versions of LaTeX we provide an emulation.
+% 
+% \begin{macro}{\kulemt_at_end_preamble:n, \l_@@_begindocument_before_tl}
+%   This function appends information to the hook `|begindocument/before|'.
+%   For older LaTeX versions we provide our own hook
+%   \cs{l_@@_begindocument_before_tl} at the beginning of the |\document|
+%   command.
+%    \begin{macrocode}
+\IfFormatAtLeastTF {2020-10-01}
+  {
+    \cs_new_protected:Nn \kulemt_at_end_preamble:n
+      { \AddToHook {begindocument/before} {#1} }
+  }
+  {
+    \tl_new:N \l_@@_begindocument_before_tl
+    \cs_new_protected:Nn \kulemt_at_end_preamble:n
+      { \tl_put_right:Nn \l_@@_begindocument_before_tl {#1} }
+    \tl_put_left:Nn \document
+      {
+        \group_end:
+        \l_@@_begindocument_before_tl
+        \group_begin:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_after_begin_document:n, \l_@@_begindocument_end_tl}
+%   This function appends information to the hook `|begindocument/end|'. For
+%   older LaTeX versions we provide our own hook \cs{l_@@_begindocument_end_tl}
+%   at the end of the |\document| command.
+%    \begin{macrocode}
+\IfFormatAtLeastTF {2020-10-01}
+  {
+    \cs_new_protected:Nn \kulemt_after_begin_document:n
+      { \AddToHook {begindocument/end} {#1} }
+  }
+  {
+    \tl_new:N \l_@@_begindocument_end_tl
+    \cs_new_protected:Nn \kulemt_after_begin_document:n
+      { \tl_put_right:Nn \l_@@_begindocument_end_tl {#1} }
+    \tl_put_right:Nn \document
+      {
+        \l_@@_begindocument_end_tl
+        \ignorespaces
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+% 
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

@@ -1,0 +1,40 @@
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+
+\begin{document}
+\title{The source of the \cls{kulemt} class%
+  \thanks{This document corresponds to \cls{kulemt}~v\fileversion,
+    dated \filedate.}}
+\date{}
+\maketitle
+
+\tableofcontents
+\clearpage
+
+%% The rest is inspired by siunitx-code.tex
+\makeatletter
+\NewDocumentCommand{\docInput}{m}{%
+  \renewcommand*\maketitle{%
+    \clearpage
+    \part[#1: \@title]{#1\\ \@title}%
+  }%
+  \DocInput{#1}%
+}
+\renewcommand*\thanks[1]{}
+\@removefromreset{CodelineNo}{part}
+\makeatother
+
+% Load the files
+\docInput{kulemt-version.dtx}
+\docInput{kulemt-start.dtx}
+\docInput{kulemt-cfg.dtx}
+\docInput{kulemt-opt.dtx}
+\docInput{kulemt-load.dtx}
+\docInput{kulemt-layout.dtx}
+\docInput{kulemt-front.dtx}
+\docInput{kulemt-extra.dtx}
+
+\clearpage
+\PrintIndex
+
+\end{document}

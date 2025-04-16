@@ -1,0 +1,42 @@
+% ^^A  No driver is included because otherwise this file cannot be input
+% ^^A  as a regular TeX file in other files.
+%
+% \title{The version}
+% \maketitle \label{file:version}
+%
+% \DoNotIndex{\\, \cls, \def, \edef, \space}
+%
+% \begin{documentation}
+% The \cls{kulemt} file info is stored in a separate file so it can be input
+% in style files, code descriptions and manuals.
+%
+% \begin{variable}{\filename, \filedate, \fileversion, \fileinfo}
+%   These variables store the information one normally gets from
+%   |\GetFileInfo|. Make sure you don't use |\GetFileInfo| in your
+%   \file{.dtx} files or their contents will be overridden.
+% \end{variable}
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{The \texttt{kulemt.cls} file info}
+% \begin{variable}{\filename, \filedate, \fileversion, \fileinfo}
+%   Since we don't use the \cls{kulemt} document class for typesetting the
+%   code, we can't use |\GetFileInfo|. Therefore we simply provide the
+%   information one normally gets from it. Plain TeX and LaTeX commands are
+%   used to make sure it always works.
+%    \begin{macrocode}
+%<*fileinfo>
+\def\filename{kulemt.cls}
+\def\filedate{2025-04-03}
+\def\fileversion{2.0.0}
+\edef\fileinfo{KU\space Leuven\space Engineering\space Master's\space
+  Thesis\space document\space class}
+%</fileinfo>
+%    \end{macrocode}
+% \end{variable}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

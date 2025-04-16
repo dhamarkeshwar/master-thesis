@@ -1,0 +1,492 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Front pages}
+% \maketitle
+%
+% \DoNotIndex{\\, \centering, \clearpage, \end, \includegraphics,
+%   \medskip, \nobreakspace, \par, \raggedleft, \raggedright,
+%   \setcounter, \small, \textcopyright, \textendash, \thispagestyle}
+% \DoNotIndex{\AtEndDocument, \RequirePackage}
+% \DoNotIndex{\bool_if:NF, \bool_if:NT, \bool_if:NTF, \bool_set:Nn,
+%   \bool_set_false:N, \bool_xor:nnT, \cs_generate_variant:Nn, \cs_gset_eq:NN,
+%   \cs_if_exist:NT, \cs_new:Nn, \cs_new_protected:Nn, \dim_set:Nn,
+%   \dim_zero:N, \exp_args:NV, \file_if_exist:nTF, \group_begin:, \group_end:,
+%   \hbox:n, \hbox_to_wd:nn, \int_eval:n, \int_use:N, \msg_new:nnn,
+%   \msg_error:nnn, \msg_warning:nnn, \msg_warning:nne, \prg_do_nothing:,
+%   \quark_if_no_value:NF, \seq_if_empty:NF, \seq_if_empty:cF, \seq_use:Nn,
+%   \seq_use:Nnnn, \seq_use:cn, \skip_horizontal:n, \skip_set:Nn,
+%   \skip_vertical:n, \skip_zero:N, \str_case:VnF, \str_if_eq:VnF,
+%   \str_if_eq:VnT, \str_if_eq_p:Vn, \tl_if_empty:NF, \tl_put_left:Nn,
+%   \tl_set_eq:NN, \token_to_str:N, \vbox:n, \vbox_to_ht:nn, \vbox_to_zero:n}
+% \DoNotIndex{\c_false_bool, \c_space_tl, \c_true_bool, \l_tmpa_bool,
+%   \l_tmpa_tl, \q_no_value}
+% \DoNotIndex{\tex_hfill:D, \tex_hss:D, \tex_noindent:D, \tex_vfill:D,
+%   \tex_vss:D}
+% \DoNotIndex{\tex_baselineskip:D, \tex_hsize:D, \tex_lineskip:D,
+%   \tex_parindent:D, \tex_parskip:D, \tex_topskip:D}
+%
+% \groupIndex{babel}{\languagename}
+% \groupIndex{latexcmd}{\DeclareFontFamily, \DeclareFontShape,
+%   \IfPackageLoadedTF, \fontencoding, \fontfamily, \fontseries, \fontshape,
+%   \fontsize, \selectfont}
+% \groupIndex{latexvar}{\bfdefault, \encodingdefault, \itdefault, \textwidth}
+% \groupIndex{memoircmd}{\frontmatter, \mainmatter}
+% \groupIndex{memoirvar}{\spinemargin, \uppermargin}
+% 
+% \begin{documentation}
+% The front material consists of the cover page and the front pages (the title
+% page, and the copyright page). The cover page and the title page have exactly
+% the same layout.
+%
+% An Helvetica font must be used on the front material. The best look-alike in
+% LaTeX is ``\texttt{TeX~Gyre~Heros}''. It is available in OpenType as well as
+% Postscript font format. Note that math is not supported on the front pages,
+% so try to avoid it.
+%
+% \begin{function}{\kulemt_front_font:}
+%   The command |\kulemt_front_font:| selects the appropiate font for a front
+%   page, taking into account the TeX engine used. It sets the font family and
+%   if needed the encoding.
+% \end{function}
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt_front>
+%    \end{macrocode}
+% 
+% Some x-variants are since October 2023 version no longer available. We
+% generate here the e-type variants for functions which don't exist yet and are
+% used in this file.
+%    \begin{macrocode}
+\cs_generate_variant:Nn \msg_warning:nnn { nne }
+%    \end{macrocode}
+%
+% \subsection{Front page font}
+% If possible, the font ``\texttt{TeX~Gyre~Heros}'' is used, in OpenType or as
+% a Postscript font format, depending on the font encoding.
+%
+% If possible, we prefer the |TU| font encoding, which is the most complete one.
+% Otherwise the |T1| font encoding is preferred over |OT1| because languages
+% such as Dutch often use accented characters. 
+%
+% \begin{macro}{\@@_define_font:, \kulemt_front_font:}
+%   The function \cs[no-index]{@@_define_font:} defines
+%   \cs{kulemt_front_font:}, which changes the font family and encoding to the
+%   appropriate ones for a front page. To avoid collisions with scaled
+%   Helvetica body fonts, a specific front page font is defined based on
+%   unscaled Helvetica. Since \cs[no-index]{@@_define_font:} declares a font
+%   and depends on possible preamble settings, it can only be used at the end
+%   of the preamble.\\
+%   Even in the article layout, which prints no front pages,
+%   |\kulemt_front_font:| is defined, in case you want it.\\
+%   When |T1| encoding is used, the |TS1| encoding is also provided for some
+%   special symbols, such as |\textcopyright|, but only for the regular font
+%   shape. If more font shapes are needed, please submit a feature request.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_define_font:
+  {
+    \file_if_exist:nTF {tgheros.sty}
+      {
+        \bool_set:Nn \l_tmpa_bool { \str_if_eq_p:Vn \encodingdefault {TU} }
+        \bool_if:NT \l_tmpa_bool
+          {
+            \IfPackageLoadedTF {fontspec}
+              {}
+              {
+                \file_if_exist:nTF {fontspec.sty}
+                  { \RequirePackage{fontspec} }
+                  { \bool_set_false:N \l_tmpa_bool }
+              }
+          }
+        \bool_if:NTF \l_tmpa_bool
+          {
+%    \end{macrocode}
+%   When \pkg{fontspec} is used, the front page font is loaded by file name,
+%   not by font name. This way it should work in LuaTeX as well as in XeTeX.
+%    \begin{macrocode}
+            \newfontfamily \kulemt_front_font: {texgyreheros}
+              [ Extension = .otf,
+                UprightFont = *-regular, BoldFont = *-bold,
+                ItalicFont = *-italic, BoldItalicFont = *-bolditalic ]
+          }
+          {
+            \str_case:VnF \encodingdefault { {T1} {} {OT1} {} }
+              { \msg_warning:nne {kulemt} {front/encoding} { \encodingdefault } }
+            \DeclareFontFamily{TS1}{kulemtfpf}{}
+            \DeclareFontShape{TS1}{kulemtfpf}{m}{n}{<-> ts1-qhvr}{}
+            \DeclareFontFamily{T1}{kulemtfpf}{}
+            \DeclareFontShape{T1}{kulemtfpf}{m} {n}   {<-> ec-qhvr}{}
+            \DeclareFontShape{T1}{kulemtfpf}{m} {it}  {<-> ec-qhvri}{}
+            \DeclareFontShape{T1}{kulemtfpf}{m} {sc}  {<-> ec-qhvr-sc}{}
+            \DeclareFontShape{T1}{kulemtfpf}{m} {scit}{<-> ec-qhvri-sc}{}
+            \DeclareFontShape{T1}{kulemtfpf}{b} {it}  {<-> ec-qhvbi}{}
+            \DeclareFontShape{T1}{kulemtfpf}{b} {n}   {<-> ec-qhvb}{}
+            \DeclareFontShape{T1}{kulemtfpf}{b} {scit}{<-> ec-qhvbi-sc}{}
+            \DeclareFontShape{T1}{kulemtfpf}{b} {sc}  {<-> ec-qhvb-sc}{}
+            \DeclareFontShape{T1}{kulemtfpf}{m} {sl}  {<-> ssub*kulemtfpf/m/it}{}
+            \DeclareFontShape{T1}{kulemtfpf}{m} {scsl}{<-> ssub*kulemtfpf/m/scit}{}
+            \DeclareFontShape{T1}{kulemtfpf}{b} {sl}  {<-> ssub*kulemtfpf/b/it}{}
+            \DeclareFontShape{T1}{kulemtfpf}{b} {scsl}{<-> ssub*kulemtfpf/b/scit}{}
+            \DeclareFontShape{T1}{kulemtfpf}{bx}{it}  {<-> ssub*kulemtfpf/b/it}{}
+            \DeclareFontShape{T1}{kulemtfpf}{bx}{n}   {<-> ssub*kulemtfpf/b/n}{}
+            \DeclareFontShape{T1}{kulemtfpf}{bx}{scit}{<-> ssub*kulemtfpf/b/scit}{}
+            \DeclareFontShape{T1}{kulemtfpf}{bx}{sc}  {<-> ssub*kulemtfpf/b/sc}{}
+            \cs_new:Nn \kulemt_front_font:
+              { \fontencoding{T1} \fontfamily{kulemtfpf} \selectfont }
+          }
+      }
+      {
+        \str_case:VnF \encodingdefault { {T1} {} {OT1} {} }
+          { \msg_warning:nne {kulemt} {front/encoding} { \encodingdefault } }
+        \DeclareFontFamily{TS1}{kulemtfpf}{}
+        \DeclareFontShape{TS1}{kulemtfpf}{m}{n}{<-> phvr8c}{}
+        \DeclareFontFamily{T1}{kulemtfpf}{}
+        \DeclareFontShape{T1}{kulemtfpf}{m} {n}   {<-> phvr8t}{}
+        \DeclareFontShape{T1}{kulemtfpf}{m} {sc}  {<-> phvrc8t}{}
+        \DeclareFontShape{T1}{kulemtfpf}{m} {sl}  {<-> phvro8t}{}
+        \DeclareFontShape{T1}{kulemtfpf}{bx}{n}   {<-> phvb8t}{}
+        \DeclareFontShape{T1}{kulemtfpf}{bx}{sc}  {<-> phvbc8t}{}
+        \DeclareFontShape{T1}{kulemtfpf}{bx}{sl}  {<-> phvbo8t}{}
+        \DeclareFontShape{T1}{kulemtfpf}{m} {scsl}{<-> sub* kulemtfpf/m/sl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{m} {it}  {<-> ssub*kulemtfpf/m/sl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{m} {scit}{<-> ssub*kulemtfpf/m/scsl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{bx}{scsl}{<-> sub* kulemtfpf/bx/sl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{bx}{it}  {<-> ssub*kulemtfpf/bx/sl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{bx}{scit}{<-> ssub*kulemtfpf/bx/scsl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{b} {n}   {<-> ssub*kulemtfpf/bx/n}{}
+        \DeclareFontShape{T1}{kulemtfpf}{b} {it}  {<-> ssub*kulemtfpf/bx/sl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{b} {sc}  {<-> ssub*kulemtfpf/bx/sc}{}
+        \DeclareFontShape{T1}{kulemtfpf}{b} {scit}{<-> ssub*kulemtfpf/bx/scit}{}
+        \DeclareFontShape{T1}{kulemtfpf}{b} {scsl}{<-> ssub*kulemtfpf/bx/scsl}{}
+        \DeclareFontShape{T1}{kulemtfpf}{b} {sl}  {<-> ssub*kulemtfpf/bx/sl}{}
+        \cs_new:Nn \kulemt_front_font:
+          { \fontencoding{T1} \fontfamily{kulemtfpf} \selectfont }
+      }
+  }
+\msg_new:nnn {kulemt} {front/encoding}
+  {
+    The~ front~ page~ cannot~ use~ encoding~ '#1'.\\
+    Font~ encoding~ 'T1'~ is~ used~ instead.
+  }
+\kulemt_at_end_preamble:n { \@@_define_font: }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Typesetting the title page}
+% \begin{macro}{\@@_print_title_page:}
+%   The title page contains no header or footer. It starts in the front matter
+%   as page~$-1$\@. Since the title page is followed by the copyright page
+%   (page~$0$), the first real page can start at~$1$. The page number of the
+%   cover page is irrelevant.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_print_title_page:
+  {
+    \clearpage
+    \setcounter {page} {-1}
+    \thispagestyle {empty}
+%    \end{macrocode}
+%   The text on the title page starts 1\,cm below the upper page edge.
+%    \begin{macrocode}
+    \hbox:n {}
+    \skip_vertical:n
+      { 1cm - \uppermargin - \tex_topskip:D - \tex_baselineskip:D }
+%    \end{macrocode}
+%   The typeset area on the title page is different from the rest of the
+%   text. It is always centered horizontally, also with two side printing.
+%   The margins are 2\,cm, resulting in a text width of 17\,cm on A4 paper.
+%    \begin{macrocode}
+    \hbox_to_wd:nn { \tex_hsize:D }
+      {
+        \skip_horizontal:n { 2cm - \spinemargin }
+        \vbox_to_zero:n
+          {
+            \dim_set:Nn \tex_hsize:D { 17cm }
+%    \end{macrocode}
+%   All elements on the title page are positioned, so avoid inserting
+%   automatic glue. 
+%    \begin{macrocode}
+            \skip_zero:N \tex_lineskip:D
+            \skip_zero:N \tex_parskip:D
+%    \end{macrocode}
+%   Micro-typography is disabled on the title page, so we make sure that the
+%   typesetting of the title page doesn't depend on the presence of the
+%   \pkg{microtype} package.
+%    \begin{macrocode}
+            \cs_if_exist:NT \microtypesetup
+              { \microtypesetup { activate=false } }
+%    \end{macrocode}
+%   The title page text is typeset ragged right in Helvetica using the master's
+%   program language.
+%    \begin{macrocode}
+            \fontsize{12}{14} \kulemt_front_font:
+            \raggedright
+            \kulemt_selectlanguage:V \l_kulemt_master_language_tl
+%    \end{macrocode}
+%   The first line contains the KU~Leuven logo on the left, eventually
+%   combined with a faculty logo. The height of this logo line is 3\,cm, which
+%   corresponds to the height of the combined KU~Leuven and faculty logo. The
+%   KU~Leuven logo (without attached faculty logo) has fixed dimensions
+%   (56\,mm, 2\,cm).
+%   The combined logo image is used at its natural dimensions, so it is up to
+%   the provider of the combined logo to make sure the KU~Leuven rules are
+%   obeyed.
+%   The left margin of the KU~Leuven logo is 1\,cm, so it enters 1\,cm into the
+%   left margin of the typeblock.
+%    \begin{macrocode}
+            \tex_noindent:D
+            \skip_horizontal:n { -1cm }
+            \vbox_to_ht:nn { 3cm }
+              {
+                \kulemt_master_get_item_or_fallback:nnN
+                  {faculty.logo} {logokul} \l_tmpa_tl
+                \exp_args:NV \includegraphics \l_tmpa_tl
+                \tex_vss:D
+              }
+%    \end{macrocode}
+%   The minimal space before the title is 40\,pt but it stretches twice as
+%   fast as the space below the author.\\
+%   The title and the subtitle are printed in the main text language.
+%    \begin{macrocode}
+            \skip_vertical:n { 40pt plus 2fill }
+            \group_begin:
+              \kulemt_selectlanguage:V \l_kulemt_language_tl
+              \fontsize {24.88} {30} \selectfont
+              \l_kulemt_opt_title_tl
+              \par
+%    \end{macrocode}
+%   If a subtitle is given, it is typeset at the appropriate size and at a
+%   fixed distance below the title.
+%    \begin{macrocode}
+              \tl_if_empty:NF \l_kulemt_opt_subtitle_tl
+                {
+                  \skip_vertical:n { 1em }
+                  \fontsize {17.28} {22} \selectfont
+                  \l_kulemt_opt_subtitle_tl
+                  \par
+                }
+            \group_end:
+%    \end{macrocode}
+%   The minimal space before the authors is again 40\,pt but with a very
+%   limited stretching. The space after it is 30\,pt with the standard
+%   stretching.
+%    \begin{macrocode}
+            \skip_vertical:n { 40pt plus .3fill }
+            \group_begin:
+              \fontsize {14.4} {18} \selectfont
+              \seq_use:Nn \l_kulemt_opt_author_seq { \\ }
+              \par
+            \group_end:
+            \skip_vertical:n { 30pt plus 1fill }
+%    \end{macrocode}
+%   The rest is ordinary text which is typeset ragged left, occupying at most
+%   half of the text body. First comes the degree, including the option or
+%   major topic. Multiple options are separated by ``and'' (or ``en'' in
+%   Dutch). It is followed by the promoter(s). On the title page, the assessors
+%   and the assistants are also listed. The space below this text is 20\,pt
+%   with the same stretching as above the title.
+%    \begin{macrocode}
+            \tex_noindent:D
+            \tex_hfill:D
+            \vbox:n
+              {
+                \dim_set:Nn \tex_hsize:D { .5\textwidth }
+                \raggedleft
+                \kulemt_cfg_print_text_ucfirst:n {title.pre} ~
+                \kulemt_master_print_required_item:n {name}
+                \seq_if_empty:NF \l_kulemt_opt_masteroption_seq
+                  {
+                    ,~
+                    \seq_use:Nn \l_kulemt_opt_masteroption_seq
+                      { ~ \kulemt_cfg_print_text:n {and} ~ }
+                  }
+                \par
+                \@@_print_people:n {promoter}
+                \@@_print_people:n {assessor}
+                \@@_print_people:n {assistant}
+              }
+            \skip_vertical:n { 20pt plus 2fill }
+%    \end{macrocode}
+%   The academic year is printed below the text and centered on the page,
+%   with a space of 15\,pt below it.
+%    \begin{macrocode}
+            \centering
+            \fontsize{14.4}{18} \selectfont
+            \kulemt_cfg_print_text_ucfirst:n {acyear.pre} ~
+            \int_use:N \l_kulemt_opt_acyear_int
+            \c_space_tl \textendash \c_space_tl
+            \int_eval:n { \l_kulemt_opt_acyear_int + 1 }
+            \par
+            \skip_vertical:n {15pt}
+%    \end{macrocode}
+%   A bottom margin of 1\,cm results on A4 paper in a body height of 27.7\,cm.
+%    \begin{macrocode}
+            \skip_vertical:n {-277mm}
+          }
+        \tex_hss:D
+      }
+    \clearpage
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_print_people:n}
+%   Print the items of option |#1| on the title page, preceded by an heading.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_print_people:n
+  {
+    \seq_if_empty:cF { l_kulemt_opt_ #1 _seq }
+      {
+        \medskip
+        \group_begin:
+          \fontsize{12}{14.5} \fontshape\itdefault \selectfont
+          \kulemt_cfg_print_text_from_opt_ucfirst:n {#1} \par
+          \skip_vertical:n {2pt}
+        \group_end:
+        \seq_use:cn { l_kulemt_opt_ #1 _seq } { \\ }
+        \par
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Typesetting the copyright page}
+% The copyright page is based on the one used for a PhD thesis of the Arenberg
+% Doctoral School of Science, Engineering \& Technology.
+% 
+% \begin{macro}{\@@_print_copyright_page:}
+%   The copyright page contains no header or footer, with copyright notices for
+%   the \meta{master language} as well as for the \meta{document language} at
+%   the bottom of the page. The copyright notice for a \meta{language} is
+%   printed by \cs[no-index]{@@_print_copyright_notice_\meta{language}:}.
+%   Paragraphs in the copyright notice are typeset without indentation and half
+%   a line of spacing between them.
+%   If the text and the master's program language are the same, a copyright
+%   notice is printed in that language. If they differ, the English version
+%   comes first. If no copyright notice is defined for the \meta{language}, one
+%   for English is printed.\\
+%   To avoid hyphenation, |\raggedright| is used and a smaller font size.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_print_copyright_page:
+  {
+    \clearpage
+    \thispagestyle {empty}
+    \hbox:n {}
+    \tex_vfill:D
+    \group_begin:
+      \fontsize{10}{12} \kulemt_front_font:
+      \raggedright
+      \dim_zero:N \tex_parindent:D
+      \skip_set:Nn \tex_parskip:D { .5\tex_baselineskip:D }
+      \kulemt_selectlanguage:V \l_kulemt_master_language_tl
+      \textcopyright \c_space_tl
+      \int_eval:n { \l_kulemt_opt_acyear_int + 1 }
+      \c_space_tl KU \nobreakspace Leuven
+      \kulemt_master_get_faculty_name:N \l_tmpa_tl
+      \tl_if_empty:NF \l_tmpa_tl
+        { \c_space_tl \textendash \c_space_tl \l_tmpa_tl }
+      \\
+      \kulemt_cfg_print_text_ucfirst:n {publisher.pre} \c_space_tl
+      \seq_use:Nnnn \l_kulemt_opt_author_seq
+        { ~ \kulemt_cfg_print_text:n {and} ~ }
+        { , ~ }
+        {
+          \str_if_eq:VnF \languagename {dutch} { , }
+          \c_space_tl \kulemt_cfg_print_text:n {and} ~
+        }
+      , \\
+      \kulemt_master_print_required_item:n {contact.address}
+      \par
+      \kulemt_cfg_print_text:n {copyright} \par
+      \bool_xor:nnT
+        { \str_if_eq_p:Vn \l_kulemt_master_language_tl {dutch} }
+        { \str_if_eq_p:Vn \l_kulemt_language_tl {dutch} }
+        {
+          \kulemt_selectlanguage:V \l_kulemt_language_tl
+          \kulemt_cfg_print_text:n {copyright} \par
+        }
+    \group_end:
+    \clearpage
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Printing the required pages}
+% At the beginning of the document in a thesis layout, the cover page is
+% printed if needed, which depends on |\l_kulemt_include_coverpage_bool|. If
+% this boolean is true, the title page and the copyright page are printed next.
+% If no text must be printed, the document ends here.\\
+% In an article layout, no front pages or cover page are printed and we start
+% immediately with the main matter (which is the default in \cls{memoir}).\\
+% The \pkg{hyperref} package requires a unique printed page number. Since
+% non-positive page numbers have no roman representation, the
+% |\frontmatter| is only switched on after the copyright page.\\
+% We can't use |\AtBeginDocument| here, because some packages assume that
+% no text is generated before the commands they add to that hook. An
+% example is the externalization library of the package \pkg{tikz}.
+%    \begin{macrocode}
+\kulemt_after_begin_document:n
+  {
+    \bool_if:NF \l_kulemt_opt_article_bool
+      {
+        \bool_if:NT \l_kulemt_include_coverpage_bool
+          { \@@_print_title_page: }
+        \bool_if:NT \l_kulemt_include_frontpages_bool
+          {
+            \@@_print_title_page:
+            \@@_print_copyright_page:
+          }
+        \bool_if:NF \l_kulemt_include_text_bool
+          { \end{document} }
+        \frontmatter
+        \AtEndDocument { \@@_forgot_mainmatter: }
+      }
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_forgot_mainmatter:}
+%   If text is printed, users must switch to the main matter themselves and we
+%   make sure that they don't forget it. The function
+%   \cs[no-index]{@@_forgot_mainmatter:} will be called at the end of the
+%   document. So it is undefined when |\mainmatter| is called. Since
+%   |\mainmatter| tests for a trailing star, we must prepend to it.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_forgot_mainmatter:
+  { \msg_error:nnn {kulemt} {mainmatter} }
+\msg_new:nnn {kulemt} {mainmatter}
+  { You~ forgot~ to~ use~ ' \token_to_str:N \mainmatter '. }
+\tl_put_left:Nn \mainmatter
+  { \cs_gset_eq:NN  \@@_forgot_mainmatter: \prg_do_nothing: }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

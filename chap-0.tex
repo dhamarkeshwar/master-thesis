@@ -1,0 +1,53 @@
+\chapter{Literature Review}
+\label{cha:0}
+In 1979, Shamir introduced a threshold secret sharing scheme called 
+Shamir Secret Sharing scheme \cite{10.1145/359168.359176}, which is now a well-known 
+and widely used secret sharing scheme to this day because of its numerous applications in
+cryptography. It was first of its kind to have Information Theoretic (IT) security 
+under certain assumptions against passive adversaries who can only see the secret 
+shares of the parties they have corrupted. In reality, however, the adversaries 
+are usually stronger than just being passive, moreover, they possess the power 
+to manipulate the share values of the corrupted parties itself. 
+Shamir's scheme is not tailored to defend against active adversaries as one cannot 
+verify the correctness of the shares. This led to numerous inventions of Verifiable 
+Secret Sharing (VSS) schemes, which not only does allow the parties to verify the 
+correctness of the shares shared by the dealer but also allows the parties to verify 
+the correctness of the shares when opened by the parties during the reconstruction 
+phase. Because of the feature of verifiability, VSS schemes can defend the applications 
+against active adversaries.\par
+
+There are many VSS schemes (\cite{d053b0be49644b2f932d703db8c1f8a0}, \cite{DBLP:conf/focs/Feldman87}) 
+in the literature which are based on Shamir Secret Sharing scheme. Throughout the years, many advancements 
+have been made in the field of VSS schemes, and as of writing this report the efficient VSS schemes are 
+$\Pi_F$, $\Pi_P$ and $\Pi_{LA}$ \cite{cryptoeprint:2023/1669}, each of which have distinct security features. 
+In VSS, only shareholders can actually verify the correctness of the shares. Certain applications demand 
+to have verifiability feature available to anyone, which is solved by Publicly Verifiable Secret Sharing (PVSS) 
+schemes. PVSS is an extension of VSS, where the correctness of the shares can be verified by anyone. Many 
+cool applications exist today which use PVSS schemes, such as, e-voting \cite{5581ccd9530540479539d21d1d39ae96}, 
+randomness beacons \cite{cryptoeprint:2017/216}, etc. In \cite{cryptoeprint:2025/576}, authors have noticed 
+that the Schoenmakers' PVSS scheme used for the e-voting application in \cite{5581ccd9530540479539d21d1d39ae96} 
+is actually more than a PVSS scheme, and they coined the term Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) scheme. 
+PPVSS is a special type of PVSS where the dealer additionally publishes a commitment to the secret itself. 
+The authors have also shown that any PVSS scheme can be transformed into a PPVSS scheme with minimal 
+changes, and constructed a PPVSS $\Lambda_{RO}$ from the PVSS $\Pi_S$ \cite{cryptoeprint:2023/1669} as an 
+example, where they used $\Lambda_{RO}$ to build an efficient e-voting application.\par 
+
+With PPVSS, one can build versatile applications and also can improve the efficiency of existing 
+applications. In ALBATROSS \cite{cryptoeprint:2020/644}, authors built a randomness beacon application 
+using a PVSS. We have an intuition that an efficient randomness beacon application can be built 
+using a scheme based on PPVSS on certain conditions. In this report, we will introduce Packed PPVSS (PPPVSS) 
+along with its security proofs and give an example based on $\Lambda_{RO}$, which will be used to improve 
+ALBATROSS in many cases.\par
+
+% In this chapter we sequently recall Packed Shamir secret sharing, 
+% Sigma ($\sum$) Protocols and Publicly Verifiable Secret Sharing (PVSS) followed by
+% the recent scheme introduced in \cite{cryptoeprint:2025/576}, namely, 
+% Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) which has versatile 
+% applications and also improves efficiency in existing applications.
+% The agenda of this chapter is to give enough background before describing our Packed PPVSS (PPPVSS) scheme 
+% and its corresponding security guarantees in the next chapter.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "thesis"
+%%% End: 

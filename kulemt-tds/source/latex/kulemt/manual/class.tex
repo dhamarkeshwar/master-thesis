@@ -1,0 +1,521 @@
+\ExplSyntaxOn
+\NewDocumentCommand\optionlabel{m}{
+  \hspace\labelsep
+  \let\oldmeta\meta
+  \renewcommand*\meta[1]{{\rmfamily \oldmeta{##1}}}
+  \normalfont
+  \textsc{Option \exp_args:Nx \int_compare:nNnT {\clist_count:n{#1}} > {1} {s} }
+  \c_space_tl
+  % Assuming \opt corresponds to \textsf
+  `` \group_begin: \sffamily \clist_use:nnnn {#1}
+    { \group_end: ''~or~`` \group_begin: \sffamily }
+    { \group_end: ''  ,~`` \group_begin: \sffamily }
+    { \group_end: ''~or~`` \group_begin: \sffamily }
+  \group_end: ''}
+\ExplSyntaxOff
+\newcommand*\optionlabelnote[1]{\hfill \textit{(#1)}}
+
+\chapter{The LaTeX document class \cls{kulemt}}
+\label{cha:kulemt}
+The document class \cls{kulemt} can be used to generate a master's thesis text
+that conforms to the guidelines of the KU~Leuven Faculty of Engineering
+Science.
+
+The document class \cls{kulemt} is actually an extension of the \cls{memoir}
+document class\,\cite{pkg:memoir}, which already includes the functionality of
+the most useful LaTeX packages. So, before adding or changing some
+functionality, you should check the \cls{memoir} manual\,\cite{memman} first.
+
+The default styling of the chapter and section headings is pretty plain. Of
+course you can tweak all parameters yourself, but the \cls{memoir} class
+provides consistent alternatives using the \cs{headstyles}
+command\,\cite[section 6.9]{memman}. For changing only the chapter heading
+style, the \cs{chapterstyle} command\,\cite[section 6.5]{memman} is available.
+The chapter and headings style used by this document are available in the
+\pkg{kulemtx} package, which is part of the \verb"kulemt" bundle. More examples
+of chapter styles are available from \cite{memchap}.
+
+\section{Requirements}\label{sec:requirements}
+\NewInVersion{2.0}
+A LaTeX dated 2018-04-06 with a L3 programming layer dated 2019-04-06 is a
+minimal requirement. This L3 programming layer contains important improvements,
+such as \acro{UTF-8} as the default input encoding (needed for LuaLaTeX and
+XeLaTeX) and the introduction of a rollback concept. Version~2 of the
+\cls{kulemt} class has been reimplemented completely using the new programming
+layer. In case you still need version~1, you can roll back to the version of
+2024-12-16 by starting the preamble with the following line.
+\begin{quote}
+  \verb"\documentclass["\meta{version 1 class options}\verb"]{kulemt}[=v1]"
+\end{quote}
+
+The document class \cls{kulemt} is based on the \cls{memoir} document class.
+The minimal version of \cls{memoir} is probably 3.7h (dated 2018-12-12), since
+it has been tested with this version (and some newer ones).
+
+The default LaTeX input text encoding is \acro{UTF-8}, which supports all
+characters. Furthermore Unicode engines (LuaTeX and XeTeX) only support
+\acro{UTF-8}. In case you use another encoding with pdfTeX, you have to
+include
+\begin{quote}
+  \verb"\usepackage["\meta{encoding name}\verb"]{inputenc}"
+\end{quote}
+at the beginning of the preamble.
+
+\section{The configuration file}\label{sec:ini}
+The configuration file contains all information about the masters, their
+options and layout features. By keeping this information separated from the
+document class code, it can easily be updated yearly by somebody without LaTeX
+coding experience.
+
+The syntax of the configuration file is described in \cite[Format of the
+configuration file]{pkg:kulemt-code}. As a student, you cannot change this file
+unless told so by the master's thesis coordinator of your programme or of the
+Faculty.
+
+\NewInVersion{2.0}
+The default configuration file is \file{kulemt.ini}. It is not compatible with
+the version~1 file \file{kulemt.cfg}. A master specific configuration file can
+also no longer be used.
+
+\section{Options}\label{sec:options}
+The document class can be customised by the user through options. The
+options come in two flavours. A first set of options, called
+\emph{document class options}, can only be used as options of the
+\cs{documentclass} command.
+The reason for having document class options is that an option is needed as a
+global option, which can also be used by other packages, or that an option is
+used during the initialisation of the class itself. The other options, called
+\emph{unrestricted options}, can be used everywhere in the document preamble,
+either as option of \cs{documentclass} or as an argument of a \cs{setup}
+command.
+
+Many options are specified as ``\meta{key}\texttt{=}\meta{value}''. If the
+value contains a comma or a space, it must be enclosed in braces:
+``\meta{key}\texttt{=}\marg{value}''. Due to the implementation of LaTeX,
+options of the \cs{documentclass} cannot contain commands or spaces, contrary
+to the argument of \cs{setup}\label{com:setup}. Therefore it's better to put
+all options, except the document class options, in the argument of one or more
+\cs{setup} commands. The document preamble can contain multiple
+\cs{setup}\marg{optionlist} commands. The \meta{optionlist} is a comma
+separated list of options.
+
+Options are processed in the order of appearance. This implies that if options
+are given multiple times, the last value survives. However \emph{list options}
+do not overwrite a previous value but they accumulate values of that option.
+
+Most of the options are optional, except for the \emph{required} options.
+However, when the option \opt{article} is used, all of these options are
+optional too.
+
+\subsection{Choosing the basic layout}
+The thesis layout is the standard layout and is adopted by default.
+\NewInVersion{2.0}
+The article layout is the second layout and is selected with the \opt{article}
+option. The article layout can be used to typeset additional articles which may
+be required by your master's programme.
+
+\begin{labelled}{optionlabel}
+\item[article]\optionlabelnote{document class option}\\
+  This option switches from the thesis layout to the article layout, as
+  provided by the \cls{memoir} class.
+
+  In the article layout, no cover page or front pages are generated, all other
+  options are optional and
+  \NewInVersion{2.0}
+  an additional option \opt{twocolumn} is available.
+  That additional option can only be used after the \opt{article} option.
+\end{labelled}
+
+\subsection{Selecting the master's programme}
+\begin{labelled}{optionlabel}
+\item[master=\meta{id\,}]\optionlabelnote{required document class option}\\
+  The supported master's programme \meta{id\,}s are defined in the
+  configuration file. The currently supported \meta{id\,}s for the Faculty of
+  Engineering Science are enumerated in \Sref{sec:mastercfg}.
+
+  The \opt{master} option is used to indicate the master's degree this thesis
+  is written for. Only one \opt{master} option can be given in the document,
+  which makes it impossible to generate one text for different master's
+  degrees, even if it is a common work of two or more students from different
+  master's programmes. This scenario was considered too unlikely to support,
+  also because each master's programme may have its own additional requirements
+  on content and layout.
+
+  Obsolete \meta{id\,} definitions may still be available for printing older
+  material. See \Sref{sec:obsoletemasters} for available obsolete \meta{id\,}s.
+  Note that an \meta{id\,} may change when it becomes obsolete to avoid
+  conflicts with valid \meta{id\,}s.
+
+\item[masteroption=\meta{mo}]\optionlabelnote{unrestricted list option}\\
+  This option specifies the option (\Dutch{optie}) or the major topic
+  (\Dutch{afstudeerrichting}) of the master's degree. The value \meta{mo} is
+  either an abbreviation or a text describing the master's programme option.
+  The known master's programme option abbreviations are defined in the
+  configuration file. The currently supported option abbreviations for the
+  Faculty of Engineering Science are enumerated in \Sref{sec:mastercfg}. If a
+  text is used for \meta{mo}, it must start with the appropriate word in lower
+  case: ``\texttt{option }\ldots'' (``\texttt{\foreignlanguage{dutch}{optie}
+  }\ldots'' or ``\texttt{\foreignlanguage{dutch}{afstudeerrichting} }\ldots''
+  in Dutch). Examples of full text can be found in \Sref{sec:mastercfg}. As
+  mentioned above, if \meta{mo} contains spaces, you cannot use this as a
+  document class option.
+
+  Whether or not a master's programme option must be specified depends on your
+  master's programme guidelines. Some master's programmes even do not allow you
+  to print an option on the title page. You can find all this information in
+  \Sref{sec:mastercfg}.
+
+  An error is raised if the master's programme requires you to specify an
+  option and \opt{masteroption} is not used. An error is also raised
+  if you use \opt{masteroption} and your master's programme disallows options.
+
+  If students from different master's programme options together produce a
+  single text, \opt{masteroption} can be used multiple times and the different
+  \meta{mo}s are accumulated.
+
+  Obsolete master's programme options may still be available for printing older
+  material. Available obsolete options are listed in \Sref{sec:mastercfg}. Note
+  that abbreviations may change when they become obsolete to avoid conflicts
+  with valid options.
+\end{labelled}
+
+\subsection{Declaring the language(s)}
+The commands of the \pkg{babel} package can be used to select a language.
+Currently only Dutch and English are supported as text language, but other
+languages can be used for short fragments of text.
+\NewInVersion{2.0}
+Additionally British is available, since this is the English variant
+recommended by the KU~Leuven. The master's programme language is defined by the
+master's degree itself, so it cannot be chosen.
+
+Some engines, such as pdfTeX and XeTeX, use preloaded hyphenation patterns. For
+these engines TeX will raise an error if the Dutch hyphenation patterns are not
+preloaded in your TeX installation and you use the option \opt{dutch} or the
+master's programme language is Dutch. In that case you have to update your
+installation.
+
+\begin{labelled}{optionlabel}
+\item[dutch, english, british]\optionlabelnote{document class option}\\
+  These options select the text language, either English (or its variant
+  British) or Dutch. The options are mutually exclusive: at most one of the
+  options can be used. If none of the options is used, the text language is set
+  to the master's programme language, defaulting to English if no \opt{master}
+  option is given.
+
+  Since these options are document class options, they are global LaTeX
+  options. This means that other packages which are language sensitive will
+  also use these options.
+
+\item[extralanguage=\meta{lang}]\optionlabelnote{document class list option}\\
+  To switch the language of text fragments, commands such as
+  \cs{foreignlanguage} are available from the \pkg{babel} package. In older
+  versions of \pkg{babel} (before version 3.39 dated 2020-02-03) these
+  languages must have been defined before they can be used. By default only the
+  text language and the master's programme language are defined. If other
+  languages are needed with the older versions of \pkg{babel}, they must be
+  declared with this \opt{extralanguage} option. The \meta{lang} can be any
+  language known to \pkg{babel}, but keep in mind that \pkg{babel} cannot
+  handle dialects of a previously defined language.
+
+  If multiple languages must be declared, you have to use this option
+  several times.
+
+  With recent versions of \pkg{babel} the \opt{extralanguage} option becomes
+  obsolete.
+\end{labelled}
+
+\subsection{Information for the title page}
+These options provide the necessary information for the title page. Since this
+page must be present in the thesis, most of the options are required.
+
+Due to implementation restrictions, math is not supported on the front pages
+(although it may work for some fonts). Since you cannot use math in the
+metadata you have to submit with the \PDF~file, try to avoid math in the
+next options anyway.
+
+\begin{labelled}{optionlabel}
+\item[title=\meta{title}]\optionlabelnote{required unrestricted option}\\
+  This option provides the official title \meta{title} of the thesis. It
+  must be written in the text language, which may be different from the
+  master's programme language.
+
+\item[subtitle=\meta{stitle}]\optionlabelnote{unrestricted option}\\
+  A subtitle \meta{stitle} is optional. It is only used on the cover and
+  the title page. It will not be used in any bibliographic reference.
+
+\item[author=\meta{authors}]
+  \optionlabelnote{required unrestricted option}\label{opt:author}\\
+  This option provides the name \meta{authors} of the author(s) of the
+  thesis. The name consists of a non-abbreviated first name followed by the
+  last name without a comma in between. If the thesis text has multiple
+  authors, they are all listed in \meta{authors}, separated by the command
+  \cs{and}.
+
+\item[promoter=\meta{promoters}]
+  \optionlabelnote{required unrestricted option}\\
+  This option lists the \meta{promoters} (a.k.a.\ thesis supervisors). If
+  the thesis has multiple supervisors and/or co-supervisors, they are all
+  listed in \meta{promoters}, separated by the command \cs{and}. The names of
+  the supervisors are preceded by their title unless stated otherwise in
+  the master's programme guidelines.
+
+  The \meta{promoters} value also lists the co-supervisors. Co-supervisors are
+  always given after the supervisor(s). Nothing is provided to differentiate
+  between supervisors and co-supervisors. However your master's programme may
+  have additional guidelines about this.
+
+\item[promotor=\meta{promoters}]\mbox{}\\
+  This option is an alias for the option ``\opt{promoter}''.
+
+\item[assessor=\meta{assessors}]
+  \optionlabelnote{required unrestricted option}\\
+  This option lists the \meta{assessors} of the thesis separated by the command
+  \cs{and}. The names of the assessor are preceded by their title unless
+  stated otherwise in the master's programme guidelines. For assessors from
+  other universities or companies, their affiliation can be mentioned if the
+  master's programme guidelines require it.
+
+  If you do not have any assessor, contrary to the faculty rules, you must use
+  this required option but with an empty value for \meta{assessors}, e.g., use
+  ``\verb"assessor="'' as an option.
+
+\item[assistant=\meta{assistants}]
+  \optionlabelnote{required unrestricted option}\\
+  This option lists the \meta{assistants} (a.k.a.\ assistant-supervisors) of
+  the thesis separated by the command \cs{and}. For assistants from other
+  universities or companies, their affiliation can be mentioned if the master's
+  programme guidelines require it.
+
+  If you worked without the help of an assistant, you can use this required
+  option with an empty value for \meta{assistants}, e.g., use
+  ``\verb"assistant="'' as an option.
+
+\item[acyear=\meta{acyear}]\optionlabelnote{unrestricted option}\\
+  This option sets the (starting year of the) academic year the master's degree
+  is obtained.
+  \NewInVersion{2.0}
+  Since version~2, the value \meta{acyear} is a 4-digit number.
+
+  The default is the current academic year. If run after 1~October, the current
+  year defines the start of the academic year. Otherwise it defines the end of
+  the academic year. So this option should probably only be used in case of
+  emergency because the default works quite well.
+\end{labelled}
+
+\subsection{Conditionally generating pages}
+The options in this section determine which pages are available in the
+output file.
+
+\begin{labelled}{optionlabel}
+\item[coverpageonly]\optionlabelnote{unrestricted option}\\
+  If this option is used, only the title page (which can be used as a cover
+  page) is printed. This option supersedes any other option from this section.
+
+\item[frontpagesonly]\optionlabelnote{unrestricted option}\\
+  If this option is used, only the front pages (the title page and the
+  copyright page) are printed instead of the entire document. You can use this
+  option to generate these pages when you are using other text processing
+  software to write your thesis.
+\end{labelled}
+
+\subsection{The layout of the typeblock}
+These options customise the layout of the text area on the page. Most of
+them are options available to all traditional LaTeX document classes.
+
+\begin{labelled}{optionlabel}
+\item[10pt, 11pt]\optionlabelnote{document class option}\\
+  The default font size of the main text can be set to 10\,pt or 11\,pt.
+  The options are mutually exclusive. The default size is 11\,pt.
+
+  All other fonts used in the text are scaled proportionally. Additionally
+  the line width of a 10\,pt text is decreased by 1\,cm because of
+  readability reasons.
+
+\item[oneside, twoside, twosidelrequal]%
+  \optionlabelnote{document class option}\\
+  These mutually exclusive options declare where the typeblock will be located
+  and whether the document will be printed on both sides of the paper or only
+  on one side. The default value is \opt{twosidelrequal}, so you only need it
+  to cancel a previous option \opt{oneside} or \opt{twoside}.
+
+  The \opt{twoside} option indicates that the text will be printed on both
+  sides of the paper. By default, each main chapter starts on a recto page (the
+  right-hand page of the printed book). To get a more pleasing look, the inner
+  margins (right on verso, left on recto) are smaller than the outer margins,
+  as shown on \fref{fig:spread}.
+  \begin{figure}
+    \centering
+    \setlength\unitlength{.5pt}
+    \newcommand*\typeblock[1]{%
+      \draw[thin] (#1) rectangle +(140,215);
+      \draw[thin] (#1) -- +(140,215);
+      \draw[thin] (#1) +(0,215) -- +(140,0);
+    }
+    \begin{tikzpicture}[x=\unitlength, y=\unitlength]
+      \draw[thick] (0,0) rectangle (410,297); % page spread
+      \draw[thick] (210,0) -- +(0,297); % page border
+      \typeblock{45,45}   % LH typeblock
+      \typeblock{235,45}  % RH typeblock
+    \end{tikzpicture}\medskip
+    \caption{In a spread, showing a left verso and a right recto page, the
+      combination of the two inner margins is perceived as a single margin.
+      Therefore the width of an outer margin is comparable to two times the
+      width of an inner margin.}
+    \label{fig:spread}
+  \end{figure}
+
+  The \opt{oneside} option indicates that it either will be printed on one side
+  or it will be available for on-screen viewing only. Contrary to printed
+  books, electronic versions are usually read from the screen, one page at a
+  time. In the latter case it makes more sense to have equal left and right
+  margins and to avoid empty pages between chapters. The latter can be obtained
+  by allowing chapters to begin on any page, not only on odd numbered pages.
+
+  \NewInVersion{2.0}
+  If your thesis will primarily be distributed for on-screen viewing, but it
+  should also look nice when printed, you can use the option
+  \opt{twosidelrequal}. This is equivalent to the \opt{twoside}
+  option, but with equal inner and outer margins. This way the typeblock
+  does not jump from left to right when you page on-screen through the thesis.
+
+  The \cls{kulemt} document class has been designed to guarantee that the size
+  of the typeblock does not change when you switch between the options, only
+  its horizontal position. This means that you can without problems use the
+  \opt{twoside} option to generate the high quality printed version and the
+  \opt{twosidelrequal} option for the \PDF\ version.
+
+  \NewInVersion{2.0}
+  To keep life easy, \opt{twosidelrequal} is the new default since
+  version~2. To revert to the default of version~1, you must explicitly use
+  the \opt{twoside} option.
+
+\item[openright, openleft, openany]
+  \optionlabelnote{document class option}\\
+  These options determine the page on which a new chapter in the main
+  matter starts.
+  \begin{itemize}
+  \item \opt{openright}: Each main matter chapter starts on a recto page. This
+    is customary in printing.
+  \item \opt{openleft}: Each main matter chapter starts on a verso page. Only
+    use this if your supervisor demands it.
+  \item \opt{openany}: A main matter chapter can start on any page. You can use
+    this to remove empty pages between chapters.
+  \end{itemize}
+
+  The three options are mutually exclusive. The default value is
+  \opt{openright}. For one-side printing only recto pages are used, so
+  these options are irrelevant.
+
+  The \cls{memoir} class also provides the \cs{openright}, \cs{openleft},
+  and \cs{openany} commands to change this inside the document itself.
+
+\item[bind=\meta{binding length}]\optionlabelnote{document class option}\\
+  When you open a two-side printed book, some paper of the inner margins is
+  invisible due to the binding of the book. It seems as if the inner
+  margins are smaller than specified. This option specifies the amount
+  \meta{binding length} of the invisible inner margin of a page. This amount
+  is specified as a length (e.g., \opt{3mm}) and it defaults to
+  0\,mm.
+\end{labelled}
+
+\subsection{Other options}
+\begin{labelled}{optionlabel}
+\item[cfgfile=\meta{file}]\optionlabelnote{document class option}%
+  \NewInVersion{2.0}\\
+  This option lets you use another configuration file \meta{file} instead of the
+  standard file \file{kulemt.ini}. 
+
+\item[draft]\optionlabelnote{document class option}\\
+  The \opt{draft} option is a global option which influences many packages.
+  The main effect is to mark overfull lines and to not show graphics content.
+
+\item[fleqn]\optionlabelnote{document class option}\\
+  By default displayed math equations are centred. Using this option puts all
+  displayed equations at the left margin, indented by an amount of
+  \cs{mathindent}.
+
+\item[oldfontcommands]\optionlabelnote{document class option}\\
+  The \opt{oldfontcommands} option is passed to \cls{memoir} to make the old,
+  deprecated LaTeX version 2.09 font commands available. Please use this only
+  to solve problems with old packages you are forced to use.
+\end{labelled}
+
+\subsection{Options removed in version 2}
+\NewInVersion{2.0}
+The following version~1 options are no longer available. Using them results in
+errors.
+
+\begin{itemize}
+\item The option \opt{font} has been removed. If you prefer other fonts than
+  the default ones, you have to load the appropriate packages yourself (cf.\
+  \Sref{sec:fonts}).
+\item The option \opt{inputenc} has been removed. If you insist on using an
+  encoding different from \acro{UTF-8} with pdfTeX, you have to load the
+  \pkg{inputenc} package yourself (cf.\ \Sref{sec:requirements}).
+\item Since a filing card is no longer provided, the option `\opt{filingcard}'
+  is removed as well as all options providing additional information for the
+  filing card: \opt{translatedtitle}, \opt{shortabstract}, \opt{udc},
+  \opt{keywords}, and \opt{articletitle}.
+\item The package \pkg{microtype} is no longer loaded automatically by the
+  \cls{kulemt} class, so the option \opt{nomicrotype} becomes irrelevant and is
+  removed.
+\item The option \opt{bindcover} has already been obsolete since version~1.7,
+  so it is removed.
+\end{itemize}
+
+
+\section{Additional commands and environments}
+The (extensive) basic functionality of the \cls{memoir} class, complemented
+by existing LaTeX packages, provides most of the commands to write a master's
+thesis according to the guidelines. This section describes the additional
+commands and environments defined by the \cls{kulemt} class to extend the
+user capabilities.
+
+One of the new commands is \cs{setup}\marg{optionlist}. It is used to set
+options with values which contain other commands. This command is described
+on page~\pageref{com:setup}.
+
+\subsection[\env{preface}]{The \env{preface} environment}
+The \env{preface} environment contains the preface text to be typeset on
+the preface page.
+
+The environment has one optional argument, which holds the preface author. It
+defaults to the value of the \opt{author} option (cf.\
+page~\pageref{opt:author}). This argument is typeset at the right margin in
+italics after the preface text. The argument can be used to remove the preface
+author (by providing an empty argument) or to add information such as a date to
+it. Just try out the following example right after \verb"\begin{document}":
+\begin{verbatim}
+  \begin{preface}[The Author\\ \textup{1 January 2010}]
+    The text of the preface. A few paragraphs should follow.
+  \end{preface}
+\end{verbatim}
+
+\subsection[\env{abstract*}]{The \env{abstract*} environment}
+The existing \env{abstract} environment typesets an abstract page in the
+text language. An additional \env{abstract*} environment is defined to
+typeset an additional abstract page in another language.
+%\NewInVersion{1.6}
+The language of the \env{abstract*} environment is given in the optional
+argument. It defaults to the official master's programme language. It is
+typically used to add an additional abstract page if the thesis is written in a
+language different from the master's programme language.
+
+\subsection[\cs{listoffiguresandtables}]{%
+  The \cs{listoffiguresandtables} command}
+Normally all ``List of \ldots'' overviews are printed on a separate page.
+However, for shorter texts like a master's thesis these lists may be smaller
+than half a page. Therefore an additional command
+\cs{listoffiguresandtables} is provided, which combines the list of
+figures and tables without a page break.
+
+The list of figures and tables are put in separate sections of one chapter,
+first the figures then the tables. The command
+\cs{listfiguresandtablesname} holds the title of the chapter.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "kulemt"
+%%% ispell-local-dictionary: "british"
+%%% End: 

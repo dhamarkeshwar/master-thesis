@@ -1,0 +1,235 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Loading the required class and packages}
+% \maketitle
+%
+% \DoNotIndex{\arabic, \centering, \ij, \nobreakspace}
+% \DoNotIndex{\AtBeginPackage, \LoadClass, \RequirePackage}
+% \DoNotIndex{\theHfigure, \theHtable}
+% \DoNotIndex{\box_dp:N, \box_ht:N, \box_use_drop:N, \box_wd:N,
+%   \clist_map_inline:Nn, \clist_new:N, \clist_set:Nn,
+%   \cs_generate_variant:Nn, \cs_if_exist:NTF, \cs_if_free:NT,
+%   \cs_new_protected:Nn, \dim_set:Nn, \exp_last_unbraced:Ne,
+%   \hbox_overlap_right:n, \int_use:N, \mode_leave_vertical:, \msg_fatal:nnn,
+%   \msg_fatal:nne, \msg_new:nnn, \scan_stop:, \seq_if_in:NnTF, \seq_use:Nn,
+%   \seq_put_left:Nn, \seq_put_left:Ne, \str_if_empty:nF, \str_if_eq:nnTF,
+%   \tl_if_empty:nF, \tl_put_right:Nn, \tl_set:Nn, \tl_to_str:n, \use_none:n,
+%   \vbox_set_to_ht:Nnn}
+% \DoNotIndex{\l_tmpa_box}
+% \DoNotIndex{\tex_hsize:D, \tex_vrule:D, \tex_vss:D}
+%
+% \groupIndex{babel}{\captionsbritish, \captionsenglish, \captionsdutch,
+%   \selectlanguage}
+% \groupIndex{memoirvar}{\appendixpagename, \appendixrefname, \appendixtocname,
+%   \chapterrefname, \figurerefname, \pagerefname, \partrefname, \tablerefname}
+%
+% \begin{documentation}
+% \begin{function}{\kulemt_selectlanguage:n,
+%                  \kulemt_selectlanguage:o, \kulemt_selectlanguage:V}
+%   \begin{syntax}
+%     |\kulemt_selectlanguage:n| \Arg{language}
+%   \end{syntax}
+%   Since a language and one of its dialects cannot be used at the same
+%   time as an option to \pkg{babel}, a combination of `|english|' as a master
+%   language and `|british|' as a text language is not possible. Therefore we
+%   use `|british|' to select the language instead of `|english|' when
+%   `|british|' is one of the \pkg{babel} options.
+%
+%   Furthermore, it can handle an empty \meta{language} argument. In that case
+%   no new language is selected.
+% \end{function}
+%
+% \begin{variable}{\theHsubfigure, \theHsubtable}
+%   These \pkg{hyperref} variables get a default value to avoid link label
+%   conflicts.
+% \end{variable}
+%
+% \begin{variable}{\l_kulemt_incompatible_clist}
+%   Comma list holding the incompatible packages. Using them raises an error
+%   unless it is an emulated package.
+% \end{variable}
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt_load>
+%    \end{macrocode}
+% 
+% Some x-variants are since October 2023 version no longer available. We
+% generate here the e-type variants for functions which don't exist yet and are
+% used in this file.
+%    \begin{macrocode}
+\cs_generate_variant:Nn \msg_fatal:nnn { nne }
+\cs_generate_variant:Nn \seq_put_left:Nn { Ne }
+%    \end{macrocode}
+%
+% \subsection{The \cls{memoir} class}
+% After processing the document class options, the \cls{memoir} class is
+% loaded.
+%    \begin{macrocode}
+\kulemt_process_class_options:
+\seq_put_left:Ne \l_kulemt_memoir_options_seq
+  { \int_use:N \l_kulemt_opt_ptsize_int pt }
+\exp_last_unbraced:Ne \LoadClass
+  { [ \seq_use:Nn \l_kulemt_memoir_options_seq {,} ] } {memoir} [2018/04/04]
+%    \end{macrocode}
+%
+% \subsection{The \pkg{babel} package}
+% Since the main language can be set both as a gobal and a local option, we
+% cannot use it as the last local \pkg{babel} option. So the |main| option must
+% be used here.
+%    \begin{macrocode}
+\exp_last_unbraced:Ne \RequirePackage
+  { [ \seq_use:Nn \l_kulemt_babel_seq {,} , main = \l_kulemt_language_tl ] }
+  {babel}
+%    \end{macrocode}
+%
+% \begin{macro}{\kulemt_selectlanguage:n,
+%               \kulemt_selectlanguage:o, \kulemt_selectlanguage:V}
+%   Automatically take care of language dialects (currently only British) and
+%   an empty argument.\\
+%   Note: Using |\tl_if_empty:nF| instead of |\str_if_empty:nF| because the
+%   latter is only available since 2022-04-10.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_selectlanguage:n
+  {
+    \tl_if_empty:nF {#1}
+      {
+        \str_if_eq:nnTF {#1} {english}
+          {
+            \seq_if_in:NnTF \l_kulemt_babel_seq {british}
+              { \selectlanguage {british} }
+              { \selectlanguage {#1} }
+          }
+          { \selectlanguage {#1} }
+      }
+  }
+\cs_generate_variant:Nn \kulemt_selectlanguage:n { o, V }
+%    \end{macrocode}
+% \end{macro}
+%
+% English/British and Dutch translations of additional \cls{memoir} commands
+% are also provided.
+% Later on the translations for the \dots|name| variables of the new
+% commands and environments are also added to these variables.
+%    \begin{macrocode}
+\cs_if_exist:NTF \captionsbritish
+  { \tl_put_right:Nn \captionsbritish }
+  {
+    \cs_if_exist:NTF \captionsenglish
+      { \tl_put_right:Nn \captionsenglish }
+      { \use_none:n }
+  }
+    {
+      \tl_set:Nn \appendixtocname  { Appendices }
+      \tl_set:Nn \appendixpagename { Appendices }
+      \tl_set:Nn \appendixrefname  { Appendix \nobreakspace }
+      \tl_set:Nn \chapterrefname   { Chapter \nobreakspace }
+      \tl_set:Nn \figurerefname    { Figure }
+      \tl_set:Nn \pagerefname      { page }
+      \tl_set:Nn \partrefname      { Part \nobreakspace }
+      \tl_set:Nn \tablerefname     { Table }
+    }
+\cs_if_exist:NTF \captionsdutch
+  { \tl_put_right:Nn \captionsdutch }
+  { \use_none:n }
+    {
+      \tl_set:Nn \appendixtocname  { B\ij lagen }
+      \tl_set:Nn \appendixpagename { B\ij lagen }
+      \tl_set:Nn \appendixrefname  { b\ij lage \nobreakspace }
+      \tl_set:Nn \chapterrefname   { hoofdstuk \nobreakspace }
+      \tl_set:Nn \figurerefname    { figuur }
+      \tl_set:Nn \pagerefname      { pagina }
+      \tl_set:Nn \partrefname      { Deel \nobreakspace }
+      \tl_set:Nn \tablerefname     { tabel }
+    }
+%    \end{macrocode}
+%
+% ^^A We don't redefine |\latinencoding|, it is deprecated!
+% ^^A Nobody should be using it!
+%
+% \subsection{The \pkg{graphicx} package}
+% This package is needed to include graphics, e.g., the logo on the front page.
+%    \begin{macrocode}
+\RequirePackage{graphicx}
+%    \end{macrocode}
+%
+% \subsection{The \pkg{hyperref} package}
+% The package \pkg{hyperref} is very useful for online PDF files, less for
+% printed documents. Because the package interacts with many other
+% packages, it is not loaded by default.
+%
+% If you load \pkg{hyperref}, it is best to load it as one of the last packages
+% of the preamble according to its documentation since it overwrites
+% definitions. This may change in the future.
+% 
+% \begin{macro}{\theHsubfigure, \theHsubtable}
+%   To avoid link name conflicts, subfloats should be numbered within the
+%   parent float. The defaults are provided for the most common cases of
+%   subfigures and subtables. It is no problem (according to the \pkg{hyperref}
+%   documentation) to define these, even if \pkg{hyperref} is not used.
+%    \begin{macrocode}
+\tl_set:Nn \theHsubfigure { \theHfigure . \arabic{subfigure} }
+\tl_set:Nn \theHsubtable  { \theHtable  . \arabic{subtable}  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Incompatible packages}
+% Some packages may break the assumptions of this class, e.g.\ about the
+% layout. An error will be raised if they are used.
+% \begin{variable}{\l_kulemt_incompatible_clist}
+%   The list of incompatible packages, such as \pkg{polyglossia}, which is a
+%   replacement for \pkg{babel}. The list can be extended later on inside
+%   the definition of the \cls{kulemt} class.
+%    \begin{macrocode}
+\clist_new:N  \l_kulemt_incompatible_clist
+\clist_set:Nn \l_kulemt_incompatible_clist { polyglossia }
+%    \end{macrocode}
+% \end{variable}
+% 
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% 
+% After loading the class, an error is issued if an incompatible package
+% is used. To cope with emulated packages, |\AtBeginPackage| is used
+% instead of testing at the end of the preamble.
+%    \begin{macrocode}
+%<*atend>
+\clist_map_inline:Nn \l_kulemt_incompatible_clist
+  {
+    \AtBeginPackage {#1}
+      { \msg_fatal:nne {kulemt} {load/incompatible} {#1} }
+      {}
+  }
+\msg_new:nnn {kulemt} {load/incompatible}
+  { Package~ '#1'~ is~ incompatible~ with~ kulemt. }
+%</atend>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

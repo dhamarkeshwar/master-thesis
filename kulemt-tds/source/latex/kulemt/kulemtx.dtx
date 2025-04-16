@@ -1,0 +1,887 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2010-2025 by Luc Van Eycken, KU Leuven
+% ----------------------------------------------------
+% 
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% \fi
+%
+% \iffalse
+%<style>\NeedsTeXFormat{LaTeX2e}[2018/04/01]
+%<*driver>
+\ProvidesFile{kulemtx.dtx}[%
+%</driver>
+%<style>\ProvidesExplPackage{kulemtx}{%
+%<*driver|style>
+2025-03-30%
+%</driver|style>
+%<*driver>
+\space v%
+%</driver>
+%<style>}{%
+%<*driver|style>
+1.0%
+%</driver|style>
+%<*driver>
+\space kulemtx source]
+%</driver>
+%<style>}{Additions to the kulemt document class}
+%
+%<*driver>
+\documentclass{l3doc}[2023-12-11]
+\usepackage{kulemt-code}
+\begin{document}
+  \DocInput{kulemtx.dtx}
+  \clearpage
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \GetFileInfo{kulemtx.dtx}
+%
+% \title{Extension to the \cls{kulemt} class\thanks{This document
+%     corresponds to \pkg{kulemtx}~\fileversion, dated \filedate.}}
+% \author{Luc Van Eycken}
+% \date{}
+% \maketitle
+%
+% \begin{abstract}
+%   \noindent The \cls{kulemt} class provides a general LaTeX class to typeset
+%   a KU~Leuven master's thesis. This package adds some additional features,
+%   such as extra layout settings and extra user commands. But none of these
+%   features are required by the guidelines of the Faculty of Engineering
+%   Science.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \DoNotIndex{\BooleanFalse, \IfBooleanTF, \NewDocumentCommand,
+%   \ProcessKeyOptions, \RequirePackage, \RequireAtEndPackage}
+% \DoNotIndex{\\, \,, \addvspace, \begin, \bfdefault, \columnwidth, \end,
+%   \fboxsep, \fontseries, \Huge, \huge, \item, \itshape, \Large, \large,
+%   \nobreakspace, \normalfont, \normalsize, \numberline, \raggedleft,
+%   \raggedright, \scshape, \sffamily, \textbf, \textsc, \texttt, \thechapter,
+%   \today}
+% \DoNotIndex{\cftdotfill, \cftdotsep, \cftsubsectionindent,
+%   \cftsubsectionpagefont, \chapterstyle, \headstyles}
+% \DoNotIndex{\@chapapp, \@ifclasslater, \@ifclassloaded, \@tocrmarg,
+%   \l@subsection}
+% \DoNotIndex{\bool_if:NT, \bool_if:NTF, \bool_lazy_and:nnT, \box_dp:N,
+%   \box_ht:N, \box_set_dp:Nn, \box_set_ht:Nn, \box_use_drop:N, \box_wd:N,
+%   \cs_if_exist:NTF, \cs_if_free:NT, \cs_new:Npn, \cs_new_protected:Nn,
+%   \cs_new_protected:Npn, \cs_new_protected_nopar:Nn, \cs_set:Npn,
+%   \cs_set_eq:NN, \cs_set_nopar:Npn, \cs_set_protected_nopar:Npn,
+%   \dim_gset:Nn, \dim_new:N, \dim_set:Nn, \dim_sub:Nn, \else:,
+%   \exp_args:NV, \exp_last_unbraced:NV, \fi:, \group_begin:, \group_end:,
+%   \hbox:n, \hbox_set:Nn, \hbox_to_wd:nn, \if_int_compare:w,
+%   \int_compare:nNnT, \int_eval:n, \int_set:Nn, \int_use:N,
+%   \keys_define:nn, \mode_if_horizontal:TF, \mode_leave_vertical:,
+%   \msg_critical:nnn, \msg_new:nnn, \prg_return_false:, \prg_return_true:,
+%   \prop_get:NnNTF, \quark_if_no_value:NF, \scan_stop:, \seq_clear:N,
+%   \seq_if_empty:NF, \seq_map_inline:Nn, \seq_new:N, \seq_pop_left:NN,
+%   \seq_put_right:Nn, \seq_put_right:NV, \seq_sort:Nn, \seq_use:Nn,
+%   \skip_horizontal:n, \skip_set:Nn, \skip_vertical:n, \skip_zero:N,
+%   \sort_return_same:, \sort_return_swapped:, \str_case:VnF,
+%   \str_casefold:n, \str_casefold:V, \str_clear:N, \str_compare:eNeTF,
+%   \str_fold_case:n, \str_fold_case:V, \str_foldcase:n, \str_foldcase:V,
+%   \str_if_eq:VnT, \str_if_eq_p:Vn, \tex_hrule:D, \tex_hss:D, \tex_strcmp:D,
+%   \tex_vrule:D, \tl_clear:N, \tl_if_empty:NF, \tl_if_empty:nTF,
+%   \tl_if_empty:NF, \tl_new:N, \tl_put_left:Nn, \tl_set:Nn, \tl_set_eq:NN,
+%   \use:n, \use_none:n, \vbox:n, \vbox_top:n}
+% \DoNotIndex{\c_false_bool, \c_space_tl, \c_true_bool, \c_zero_int,
+%   \l_tmpa_box, \l_tmpa_int, \l_tmpa_seq, \l_tmpa_str, \l_tmpa_tl,
+%   \l_tmpb_box, \l_tmpb_seq, \l_tmpb_str, \l_tmpb_tl,
+%   \q_no_value, \q_stop}
+% \DoNotIndex{\bigskip, \day, \enskip, \fi, \fill, \hangindent, \hfill,
+%   \hphantom, \hsize, \ifcase, \ignorespaces, \leftskip, \medskipamount,
+%   \month, \nobreak, \noindent, \number, \or, \par, \parfillskip, \parindent,
+%   \quad, \rightskip, \smallskipamount, \space, \strut, \year}
+% \DoNotIndex{\bibstring, \dateeraprintpre, \iffieldbibstring, \iffieldundef,
+%   \mkbibmonth, \stripzeros, \thefield}
+%
+% \begin{documentation}
+% \section{Options for extra layout settings}
+% The \pkg{kulemtx} package provides some options to typeset a thesis with a
+% look similar to the \cls{kulemt} manual.
+%
+% \noindent \DescribeOption{manheadstyles}
+% This package defines the chapter style \pstyle{kulemtman} and the heading
+% style \pstyle{kulemtman}, which are the styles used by the \cls{kulemt}
+% manual. The option `\opt{manheadstyles}' sets both styles.
+%
+% \noindent \DescribeOption{mantoc}
+% The option `\opt{mantoc}' changes the table of contents layout similar to
+% the one used by the \cls{kulemt} manual.
+%
+% \noindent \DescribeOption{kuldate}
+% The option `\opt{kuldate}' changes the long data formatting for the British
+% language to the conventions used by the KU~Leuven: ``8~May 2023'' instead of
+% ``8th~May 2023''.
+%
+% \begin{samepage}
+% \noindent \DescribeOption{manual}
+% The option `\opt{manual}' combines the previous options into one. The
+% document preamble of the manual contains the following snippet:
+% \begin{verbatim}
+%     \usepackage[manual]{kulemtx}
+% \end{verbatim}
+% \end{samepage}
+%
+% \section{Extra user commands}
+% User commands are provided to print configuration data nicely. These commands
+% only work if \cls{kulemt} is used as the document class. Otherwise strange
+% errors will be generated.
+%
+% \begin{variable}{\ConfigFileName}
+%   This variable holds the name of the configuration file. By default it is
+%   \file{kulemt.ini}, but it can be set to a different value by the option
+%   `\opt{cfgfile}' of the \cls{kulemt} class.
+% \end{variable}
+% 
+% \begin{function}{\ReadConfigFile}
+%   This command reads the entire configuration file again.
+% \end{function}
+% 
+% \begin{function}{\PrintConfigFileDate}
+%   This command prints the date set in the configuration file.
+% \end{function}
+%
+% \begin{function}{\PrintConfigFileAcYr}
+%   This command prints the academic year based on the date set in the
+%   configuration file.
+% \end{function}
+%
+% \begin{function}{\PrintMastersInfo}
+%   \begin{syntax}
+%     |\PrintMastersInfo| |*| \Arg{type} \Arg{language}
+%   \end{syntax}
+%   This command prints the information for a set of masters. The ordering is
+%   the same as in the configuration file. The starred version only considers
+%   obsolete masters, while the unstarred version considers only non-obsolete
+%   masters. If \meta{type} is non-empty, only masters with that \meta{type}
+%   (`|initial|' or `|advanced|') are considered. If \meta{language} is
+%   non-empty, only masters with that \meta{language} (`|dutch|' or
+%   `|english|') are considered.
+% \end{function}
+%   
+% \begin{function}{\ListMastersAndOptions}
+%   \begin{syntax}
+%     |\ListMastersAndOptions| \Arg{type} \Arg{language}
+%   \end{syntax}
+%   This command prints a sorted itemized list of non-obsolete masters with
+%   their non-obsolete options. If \meta{type} is non-empty, only masters with
+%   that \meta{type} (`|initial|' or `|advanced|') are considered. If
+%   \meta{language} is non-empty, only masters with that \meta{language}
+%   (`|dutch|' or `|english|') are considered. The ordering is the same as in
+%   the configuration file.
+% \end{function}
+%
+% \begin{function}{\ListMastersWithOptionType}
+%   \begin{syntax}
+%     |\ListMastersWithOptionType| \Arg{option type} \Arg{pre}
+%   \end{syntax}
+%   This command prints a sorted itemized list of non-obsolete masters with
+%   a given \meta{option type} (either `|required|' or `|forbidden|').
+%   The list is preceded by the text \meta{pre}. If no such masters are found,
+%   nothing is printed.
+% \end{function}
+%
+% \section{Compatibility with older versions}
+% The command \cs{kulemtmanToC} is no longer available. It is replaced by the
+% option `\opt{mantoc}'.
+% 
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+% \iffalse
+%<*style>
+% \fi
+% The namespace |kulemtx| is claimed. In case you notice that other packages
+% use this prefix too, please contact the author of this class!
+%    \begin{macrocode}
+%<@@=kulemtx>
+%    \end{macrocode}
+%
+% This package assumes that it is used together with the document class
+% \cls{kulemt} version~2 (or later). So we generate a critical error if this is
+% not the case.
+%    \begin{macrocode}
+\msg_new:nnn {kulemtx} {no_kulemt}
+  {
+    The~ package~ 'kulemtx'~ can~ only~ be~ used~ with~
+    the~ document~ class~ 'kulemt' #1.
+  }
+\@ifclassloaded {kulemt}
+  {
+    \@ifclasslater {kulemt} {2024-01-01} {}
+      { \msg_critical:nnn {kulemtx} {no_kulemt} {~ version~ 2} }
+  }
+  { \msg_critical:nnn {kulemtx} {no_kulemt} {} }
+%    \end{macrocode}
+%
+% The \cls{kulemt} class requires an l3kernel of 2019-04-06, but some functions
+% we need require a more recent version.
+%    \begin{macrocode}
+\cs_if_free:NT \str_compare:eNeTF
+  {
+    \cs_new:Npn \str_compare:eNeTF #1#2#3
+      {
+        \if_int_compare:w \tex_strcmp:D {#1} {#3} #2 \c_zero_int
+          \prg_return_true:
+        \else:
+          \prg_return_false:
+        \fi:
+      }
+  }
+%    \end{macrocode}
+%
+% Some functions have been renamed the last couple of years
+%    \begin{macrocode}
+\cs_if_free:NT \str_casefold:n
+  {
+    \cs_if_exist:NTF \str_foldcase:n
+      {
+        \cs_set_eq:NN \str_casefold:n \str_foldcase:n
+        \cs_set_eq:NN \str_casefold:V \str_foldcase:V
+      }
+      {
+        \cs_set_eq:NN \str_casefold:n \str_fold_case:n
+        \cs_set_eq:NN \str_casefold:V \str_fold_case:V
+      }
+  }
+%    \end{macrocode}
+%
+% \subsection{Headings and chapter style option}
+% \begin{optionenv}{manheadstyles}
+%   The option `\opt{manheadstyles}' sets the heading styles, including the
+%   chapter style, to the ones used by the \cls{kulemt} manual.
+%    \begin{macrocode}
+\keys_define:nn {kulemtx}
+  {
+    manheadstyles .code:n = { \headstyles {kulemtman} },
+    manheadstyles .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% \end{optionenv}
+%
+% \subsubsection{Heading style \pstyle{kulemtman}}
+% A heading style `\pstyle{kulemtman}' is defined. Not only can it be used in
+% the option `\opt{manheadstyles}' but also together with any \cls{memoir}
+% based class.
+%    \begin{macrocode}
+\makeheadstyles {kulemtman}
+  {
+%    \end{macrocode}
+% First define part title formatting.
+%    \begin{macrocode}
+    \tl_set:Nn \partnamefont  { \normalfont \huge \sffamily }
+    \tl_set:Nn \partnumfont   { \normalfont \huge \sffamily }
+    \tl_set:Nn \parttitlefont { \normalfont \Huge \sffamily }
+%    \end{macrocode}
+% Chapters are typeset using the \pkg{kulemtman} style.
+%    \begin{macrocode}
+    \chapterstyle {kulemtman}
+%    \end{macrocode}
+% Changing the styling of sections.
+%    \begin{macrocode}
+    \setsecheadstyle       { \Large \sffamily \raggedright }
+    \setsubsecheadstyle    { \large \sffamily \raggedright }
+    \setsubsubsecheadstyle { \large \sffamily \itshape \raggedright }
+%    \end{macrocode}
+% Paragraph headings use the small caps shape instead of bold with a medium
+% space before them.
+%    \begin{macrocode}
+    \setparaheadstyle  { \normalsize \scshape }
+    \setbeforeparaskip { \medskipamount }
+  }
+%    \end{macrocode}
+%
+% \subsubsection{Chapter style \pstyle{kulemtman}}
+% A chapter style `\pstyle{kulemtman}' is defined, based on the
+% \pstyle{BlueBox} chapter style. Not only can it be used in the heading style
+% `\pstyle{kulemtman}' but also together with any \cls{memoir} based class.
+%    \begin{macrocode}
+\makechapterstyle {kulemtman}
+  {
+    \tl_set:Nn \chapnamefont { \sffamily \large }
+    \tl_set:Nn \chapnumfont { \sffamily \Huge }
+    \tl_set:Nn \chaptitlefont { \sffamily \raggedright \huge }
+    \skip_zero:N \beforechapskip
+    \skip_set:Nn \afterchapskip {40pt}
+    \tl_clear:N \printchaptername
+    \tl_clear:N \chapternamenum
+    \tl_clear:N \afterchapternum
+    \tl_set:Nn \printchapternum   { \@@_printchapternum:N \c_true_bool  }
+    \tl_set:Nn \printchapternonum { \@@_printchapternum:N \c_false_bool }
+    \cs_set_eq:NN \printchaptertitle \@@_printchaptertitle:n
+  }
+%    \end{macrocode}
+% 
+% \begin{variable}{\g_@@_wd_num_dim}
+%   This global dimension variable stores the width of the last chapter number
+%   box. The width is set by \cs{@@_printchapternum:N} and can be used lateron
+%   by \cs{@@_printchaptertitle:n}.
+%    \begin{macrocode}
+\dim_new:N \g_@@_wd_num_dim
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\@@_printchapternum:N}
+%   This function prints the chapter number box for the \pstyle{kulemtman}
+%   chapter style. The argument is a boolean, specifying to print the chapter
+%   number itself or not.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_printchapternum:N
+  {
+    \hbox_set:Nn \l_tmpb_box
+      {
+        \chapnumfont
+        \skip_horizontal:n { 8pt + \fboxsep }
+        \bool_if:NTF #1 { \use:n } { \hphantom } { \thechapter }
+        \skip_horizontal:n { 8pt + \fboxsep }
+        \strut
+      }
+    \box_set_ht:Nn \l_tmpb_box { \box_ht:N \l_tmpb_box + \fboxsep }
+    \box_set_dp:Nn \l_tmpb_box { \box_dp:N \l_tmpb_box + \fboxsep + 55pt }
+    \dim_gset:Nn \g_@@_wd_num_dim { \box_wd:N \l_tmpb_box }
+    \mode_leave_vertical:
+    \vbox:n
+      {
+        \hbox_to_wd:nn { \g_@@_wd_num_dim }
+          {
+            \tex_hss:D
+            \chapnamefont
+            \bool_if:NT #1 { \@chapapp }
+            \strut
+            \tex_hss:D
+          }
+        \hbox:n
+          {
+            {
+              \color[gray]{.8}
+              \tex_vrule:D width \g_@@_wd_num_dim \scan_stop:
+            }
+            \skip_horizontal:n { -\g_@@_wd_num_dim }
+            \box_use_drop:N \l_tmpb_box
+          }
+      }
+  }
+%    \end{macrocode}
+%   Since this function depends on the \pkg{color} package for the |\color|
+%   command, we require it here.
+%    \begin{macrocode}
+\RequirePackage{color}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_printchaptertitle:n}
+%   This function prints the chapter title (given in the argument) for the
+%   \pstyle{kulemtman} chapter style.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_printchaptertitle:n
+  {
+    \hfill
+    \vbox_top:n
+      {
+        \chaptitlefont
+        \dim_sub:Nn \hsize { 12pt + \g_@@_wd_num_dim }
+        \tex_hrule:D height 1pt \scan_stop:
+        \skip_vertical:n {7pt}
+        \strut #1 \par
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \subsection{Table of contents option}
+% \begin{optionenv}{mantoc}
+%   The option `\opt{mantoc}' sets the table of contents formatting similar to
+%   the one used in the \cls{memoir} manual.
+%    \begin{macrocode}
+\keys_define:nn {kulemtx}
+  {
+    mantoc .code:n = { \@@_manual_toc: },
+    mantoc .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% 
+%   \begin{macro}{\@@_manual_toc:}
+%     This function reinitializes the necessary parameters for table of
+%     contents formatting.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_manual_toc:
+  {
+    \cs_set_eq:NN \cftchapterfont \sffamily
+    \cs_set_eq:NN \cftchapterdotsep \cftdotsep
+    \tl_set:Nn \cftchapterleader
+      { \normalfont \cftdotfill { \cftchapterdotsep} }
+    \tl_clear:N \cftchapterpagefont
+    \skip_set:Nn \cftbeforechapterskip { \medskipamount }
+    \skip_set:Nn \cftbeforesectionskip { \smallskipamount }
+    \settocdepth {subsection}
+    \tl_put_left:Nn \cftchapterbreak { \par }
+    \tl_set:Nn \cftsubsectionfont { \itshape }
+    \cs_set:Npn \l@subsection ##1 ##2
+      {
+        \skip_set:Nn \leftskip { \cftsubsectionindent }
+        \skip_set:Nn \rightskip { \@tocrmarg }
+        \skip_set:Nn \parfillskip { \fill }
+        \mode_if_horizontal:TF { , \quad } { \noindent }
+        \group_begin:
+          \cs_set_eq:NN \numberline \use_none:n
+          \cftsubsectionfont ##1
+        \group_end:
+        \nobreakspace \nobreakspace
+        \group_begin:
+          \cftsubsectionpagefont ##2
+        \group_end:
+        \ignorespaces
+      }
+  }
+%    \end{macrocode}
+%   \end{macro}
+% \end{optionenv}
+%
+% \subsection{KU~Leuven conventions option}
+% \begin{optionenv}{kuldate}
+%   The KU~Leuven has decided to go for the British English spelling system for
+%   official documents in the English language. However they deviate from it
+%   for specifying dates. The option `\opt{kuldate}' adjusts date printing
+%   commands to conform to the KU~Leuven
+%   rules\footnote{\url{https://www.kuleuven.be/english/language-guide}
+%   (requires a KU~Leuven account to access)}.
+%    \begin{macrocode}
+\keys_define:nn {kulemtx}
+  {
+    kuldate .code:n =
+      {
+%    \end{macrocode}
+%   \begin{macro}[no-user-doc]{\datebritish}
+%     (Re)define \cs{datebritish} in case the language |british| is used with
+%     \pkg{babel}. We assume the language is already loaded by the \cls{kulemt}
+%     class and not on the fly in the document.
+%    \begin{macrocode}
+        \cs_set_nopar:Npn \datebritish
+          {
+            \cs_set_nopar:Npn \today
+              {
+                \number\day \nobreakspace
+                \ifcase \month \or January \or February \or March \or April
+                  \or May \or June \or July \or August \or September
+                  \or October \or November \or December \fi
+                \space \number\year
+              }
+          }
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}[no-user-doc]{\mkbibdatelong}
+%     When \pkg{biblatex} is used, \cs{mkbibdatelong} is redefined for British.
+%    \begin{macrocode}
+        \RequireAtEndPackage {biblatex}
+          {
+            \DefineBibliographyExtras {british}
+              { \cs_set_eq:NN \mkbibdatelong \@@_mkbibdatelong:nnn }
+          }
+      },
+    kuldate .value_forbidden:n = true
+  }
+%    \end{macrocode}
+%     \begin{macro}{\@@_mkbibdatelong:nnn}
+%       A replacement for the British |\mkbibdatelong| of \pkg{biblatex} with
+%       KU~Leuven conventions.
+%    \begin{macrocode}
+\cs_new_protected_nopar:Nn \@@_mkbibdatelong:nnn
+  {
+    \iffieldundef {#3}
+      {}
+      {
+        \stripzeros { \thefield {#3} }
+        \iffieldundef {#2} {} { \nobreakspace }
+      }
+    \iffieldundef {#2}
+      {}
+      {
+        \mkbibmonth { \thefield {#2} }
+        \iffieldundef {#1} {} { \space }
+      }
+    \iffieldbibstring {#1}
+      { \bibstring { \thefield {#1} } }
+      { \dateeraprintpre {#1} \stripzeros { \thefield {#1} } }
+  }
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{optionenv}
+% 
+% \subsection{Other options}
+% \begin{optionenv}{manual}
+%   The option `\opt{manual}' sets all the options used in the \pkg{kulemt}
+%   manual.
+%    \begin{macrocode}
+\keys_define:nn {kulemtx}
+  {
+    manual .meta:n = { manheadstyles, mantoc, kuldate },
+    manual .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% \end{optionenv}
+%
+% Finally process the options.
+%    \begin{macrocode}
+\ProcessKeyOptions \scan_stop:
+%    \end{macrocode}
+%
+% \subsection{Extra user commands}
+%
+% The following commands can be used to print information of the configuration
+% file.
+%
+% \begin{variable}{\l_@@_tmpa_seq}
+%   An internal sequence variable \cs{l_@@_tmpa_seq} is made available.
+%    \begin{macrocode}
+\seq_new:N \l_@@_tmpa_seq
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\ConfigFileName}
+%   This makes the configuration file name (set by \cls{kulemt}) available to
+%   the user.
+%    \begin{macrocode}
+\tl_new:N \ConfigFileName
+\tl_set_eq:NN \ConfigFileName \l_kulemt_opt_cfgfile_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\ReadConfigFile}
+%   (Re)read the entire configuration file.
+%    \begin{macrocode}
+\NewDocumentCommand { \ReadConfigFile } {}
+  { \kulemt_read_config_file: }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\PrintConfigFileDate}
+%   This command prints the date mentioned in the configuration file in the
+%   format used by |\today|.
+%    \begin{macrocode}
+\NewDocumentCommand { \PrintConfigFileDate } {}
+  { \@@_use_configfile_date:n { \today } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_use_configfile_date:n}
+%   This function temporarily sets the |\day|, |\month| and |year| to the date
+%   mentioned in the configuration file before using with |#1|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_use_configfile_date:n
+  {
+    \prop_get:NnNTF \l_kulemt_cfg_prop {date} \l_tmpa_tl
+      {
+        \exp_last_unbraced:NV \@@_use_isodate:w \l_tmpa_tl
+          ---\q_stop {#1}
+      }
+      { ??? }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_use_isodate:w}
+%   \cs{@@_use_isodate:w} \meta{ISO data} |---| |\qstop| \Arg{use it} \\
+%   This function reads an \meta{ISO date} and lets you \meta{use it}.
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_use_isodate:w #1-#2-#3-#4 \q_stop #5
+  {
+    \group_begin:
+      \int_set:Nn \day {#3}
+      \int_set:Nn \month {#2}
+      \int_set:Nn \year {#1}
+      #5
+    \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\PrintConfigFileAcYr}
+%   This command prints the academic year based on the date mentioned in the
+%   configuration file. For a configuration date before 1 September we assume
+%   the configuration file describes data for the academic year which ends
+%   in that year otherwise data for the academic year which starts in that year.
+%    \begin{macrocode}
+\NewDocumentCommand { \PrintConfigFileAcYr } {}
+  {
+    \@@_use_configfile_date:n 
+      {
+        \int_set:Nn \l_tmpa_int
+          { \year \int_compare:nNnT { \month } < {9} { - 1 } }
+        \int_use:N \l_tmpa_int \, -- \, \int_eval:n { \l_tmpa_int + 1 }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\PrintMastersInfo}
+%   |\PrintMastersInfo| |*| \Arg{type} \Arg{language} \\
+%   Print the detailed information of non-obsolete masters, restricted to
+%   \meta{type} (if non-empty) and \meta{language} (if non-empty).
+%   The sequence is the same as in the configuration file.\\
+%   The starred version considers obsolete instead of non-obsolete masters.
+%    \begin{macrocode}
+\NewDocumentCommand { \PrintMastersInfo } { s m m }
+  {
+    \@@_handle_master:nnnn {#1} {#2} {#3}
+      { \@@_print_masterinfo: }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_handle_master:nnnn}
+%   This function iterates over a restricted set of masters and uses |#4| on
+%   each of them. The master abbreviation is available as |##1|.\\
+%   Depending on the boolean |#1| restrict the masters to obsolete (if true)
+%   or to non-obsolete (if false) ones. A non-empty |#2| restricts the masters
+%   to that type. A non-empty |#3| restricts the masters to that language.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_handle_master:nnnn
+  {
+    \seq_map_inline:Nn \l_kulemt_masters_seq
+      {
+        \IfBooleanTF {#1}
+          { \kulemt_master_obsolete_item:nT }
+          { \kulemt_master_obsolete_item:nF }
+            {##1}
+            {
+              \kulemt_set_master:n {##1}
+              \tl_if_empty:nTF {#2}
+                { \str_clear:N \l_tmpa_str }
+                { \kulemt_master_get_required_item:nN {type} \l_tmpa_str }
+              \tl_if_empty:nTF {#3}
+                { \str_clear:N \l_tmpb_str }
+                { \kulemt_master_get_required_item:nN {language} \l_tmpb_str }
+              \bool_lazy_and:nnT
+                { \str_if_eq_p:Vn \l_tmpa_str {#2} }
+                { \str_if_eq_p:Vn \l_tmpb_str {#3} }
+                { #4 }
+            }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_print_masterinfo:}
+%   Function to print the information of the current master.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_print_masterinfo:
+  {
+    \addvspace{\medskipamount}
+    \skip_zero:N \parindent
+    \sidepar
+      {
+        \raggedleft
+        \texttt { \kulemt_master_print_required_item:n {abbreviation} }
+      }
+    \textsc { \kulemt_master_print_required_item:n {name} }
+    \par \nobreak
+    \kulemt_master_get_required_item:nN {language} \l_tmpa_str
+    \kulemt_titlecase_first:V \l_tmpa_str
+    \c_space_tl master
+    \kulemt_master_get_faculty_name:N \l_tmpa_tl
+    \tl_if_empty:NF \l_tmpa_tl { ~ of~ the~ \l_tmpa_tl }
+    . \par \nobreak
+    \@@_hangfrom:nn { Contact~ info:~ }
+      { \kulemt_master_print_required_item:n {contact.address} }
+    \nobreak
+    \kulemt_master_get_item_or_fallback:nnN {option} {} \l_tmpa_tl
+    \str_case:VnF \l_tmpa_tl
+      {
+        {required}  { A~ master's~ programme~ option~ must~ be~ specified. }
+        {forbidden} { The~ master's~ programme~ doesn't~ allow~ you~ to~
+                      mention~ an~ option. }
+      }
+      { The~ master's~ programme~ doesn't~ require~ you~ to~ mention~
+        an~ option. }
+    \par
+    \kulemt_master_get_item:nN {options} \l_tmpb_seq
+    \seq_if_empty:NF \l_tmpb_seq
+      {
+        \nobreak
+        Known~ master's~ programme~ option~ abbreviations:
+        \par
+        \seq_clear:N \l_tmpa_seq
+        \seq_map_inline:Nn \l_tmpb_seq
+          {
+            \kulemt_master_obsolete_item:nTF {##1}
+              { \seq_put_right:Nn \l_tmpa_seq {##1} }
+              {
+                \nobreak \noindent \enskip
+                \@@_print_option:n {##1}
+                \par
+              }
+          }
+        \seq_if_empty:NF \l_tmpa_seq
+          {
+            \nobreak
+            \@@_hangfrom:nn { \quad obsolete: }
+              {
+                \seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+                \exp_args:NV \@@_print_option:n \l_tmpa_tl
+                \seq_map_inline:Nn \l_tmpa_seq
+                  { \\* \strut \@@_print_option:n {##1} }
+              }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_hangfrom:nn}
+%   Function to typeset |#2| hanging from |#1|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_hangfrom:nn
+  {
+    \hbox_set:Nn \l_tmpa_box {#1}
+    \dim_set:Nn \hangindent { \box_wd:N \l_tmpa_box }
+    \noindent \box_use_drop:N \l_tmpa_box
+    #2 \par
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_print_option:n}
+%   Function to typeset master option |#1| as part of a list.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_print_option:n
+  {
+    \enskip \textbf{--} \enskip \texttt{#1} \enskip
+    (`\kulemt_master_print_required_item:n { option. #1 }')
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ListMastersAndOptions}
+%   |\ListMastersAndOptions| \Arg{type} \Arg{language} \\
+%   List the non-obsolete masters with their non-obsolete options.
+%   The masters are restricted to\meta{type} (if non-empty) and
+%   \meta{language} (if non-empty).\\
+%   The masters as well as the options are sorted alphabetically.
+%    \begin{macrocode}
+\NewDocumentCommand { \ListMastersAndOptions } { m m }
+  {
+    \seq_clear:N \l_tmpa_seq
+    \@@_handle_master:nnnn { \BooleanFalse } {#1} {#2}
+      { \seq_put_right:Nn \l_tmpa_seq {##1} }
+    \seq_if_empty:NF \l_tmpa_seq
+      {
+        \seq_sort:Nn \l_tmpa_seq
+          {
+            \kulemt_set_master:n {##1}
+            \kulemt_master_get_item:nN {name} \l_tmpa_tl
+            \kulemt_set_master:n {##2}
+            \kulemt_master_get_item:nN {name} \l_tmpb_tl
+            \str_compare:eNeTF
+              { \str_casefold:V \l_tmpa_tl } > { \str_casefold:V \l_tmpb_tl }
+              { \sort_return_swapped: }
+              { \sort_return_same: }
+          }
+        \begin{itemize}
+          \seq_map_inline:Nn \l_tmpa_seq
+            {
+              \kulemt_set_master:n {##1}
+              \item \kulemt_master_print_required_item:n {name} \par
+                \@@_print_option_names:
+            }
+        \end{itemize}
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_print_option_names:}
+%   Function to typeset a sorted list of non-obsolete options of the current
+%   master.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_print_option_names:
+  {
+    \kulemt_master_get_item:nN {options} \l_tmpb_seq
+    \seq_if_empty:NF \l_tmpb_seq
+      {
+        \seq_clear:N \l_@@_tmpa_seq
+        \seq_map_inline:Nn \l_tmpb_seq
+          {
+            \kulemt_master_obsolete_item:nF {##1}
+              {
+                \kulemt_master_get_item:nN { option.##1 } \l_tmpa_tl
+                \seq_put_right:NV \l_@@_tmpa_seq \l_tmpa_tl }
+          }
+        \seq_if_empty:NF \l_@@_tmpa_seq
+          {
+            \seq_sort:Nn \l_@@_tmpa_seq
+              {
+                \str_compare:eNeTF
+                  { \str_casefold:n {##1} } > { \str_casefold:n {##2} }
+                  { \sort_return_swapped: }
+                  { \sort_return_same: }
+              }
+            \begin{itemize}
+            \item \seq_use:Nn \l_@@_tmpa_seq { \item }
+            \end{itemize}
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ListMastersWithOptionType}
+%   |\ListMastersWithOptionType| \Arg{option type} \Arg{pre}\\
+%   Command to print \meta{pre} followed by a sortedlist of masters with
+%   a given \meta{option type}. Nothing is printed if no masters are found.
+%    \begin{macrocode}
+\NewDocumentCommand {\ListMastersWithOptionType} { m m }
+  {
+    \seq_clear:N \l_@@_tmpa_seq
+    \seq_map_inline:Nn \l_kulemt_masters_seq
+      {
+        \kulemt_set_master:n {##1}
+        \kulemt_master_get_item_or_fallback:nnN {option} {?} \l_tmpa_tl
+        \str_if_eq:VnT \l_tmpa_tl {#1}
+          {
+            \kulemt_master_get_required_item:nN {name} \l_tmpa_tl
+            \seq_put_right:NV \l_@@_tmpa_seq \l_tmpa_tl
+          }
+      }
+    \seq_if_empty:NF \l_@@_tmpa_seq
+      {
+        \seq_sort:Nn \l_@@_tmpa_seq
+          {
+            \str_compare:eNeTF
+              { \str_casefold:n {##1} } > { \str_casefold:n {##2} }
+              { \sort_return_swapped: }
+              { \sort_return_same: }
+          }
+        #2
+        \begin{itemize}
+        \item \seq_use:Nn \l_@@_tmpa_seq { \item }
+        \end{itemize}
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \iffalse
+%</style>
+% \fi
+%
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

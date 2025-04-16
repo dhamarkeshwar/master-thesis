@@ -1,0 +1,1126 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Option processing}
+% \maketitle \label{file:opt}
+%
+% \DoNotIndex{\\, \and}
+% \DoNotIndex{\NewDocumentCommand}
+% \DoNotIndex{\A, \d, \bool_const:Nn, \bool_if:NF, \bool_if:NT, \bool_if:NTF,
+%   \bool_lazy_and:nnF, \bool_new:N, \bool_set_false:N, \bool_set_true:N,
+%   \cs_generate_variant:Nn, \cs_new_protected:Nn, \cs_set:Npn, \dim_new:N,
+%   \dim_set:Nn, \exp_args:Ne, \exp_not:N, \exp_not:c, \int_compare:nNnT,
+%   \int_new:N, \int_set:Nn, \keys_define:nn, \keys_set:nn, \msg_error:nnn,
+%   \msg_error:nne, \msg_fatal:nn, \msg_fatal:nnn, \msg_fatal:nne,
+%   \msg_fatal:nnnn, \msg_fatal:nnee, \msg_info:nnn, \msg_warning:nn,
+%   \msg_new:nnn, \msg_new:nnnn, \quark_if_no_value:NT,
+%   \regex_extract_once:nnN, \scan_stop:, \seq_clear:N,
+%   \seq_concat:NNN, \seq_get:NN, \seq_if_empty:NF, \seq_if_empty:NT,
+%   \seq_if_empty:NTF, \seq_if_in:NnF, \seq_item:Nn, \seq_map_inline:Nn,
+%   \seq_new:N, \seq_put_right:Nn, \seq_put_right:NV, \seq_remove_all:Nn,
+%   \seq_set_eq:NN, \seq_set_split:Nnn, \seq_use:Nn, \str_if_eq:VnTF,
+%   \str_if_eq:VnT, \str_if_eq:VVF, \str_if_eq_p:Vn, \tl_if_empty:NT,
+%   \tl_if_empty:NTF, \tl_if_empty:nF, \tl_new:N, \tl_set:Nn, \tl_set_eq:NN,
+%   \tl_set_rescan:NnV , \tl_to_str:n}
+% \DoNotIndex{\c_false_bool, \c_sys_month_int, \c_sys_year_int, \c_true_bool,
+%   \l_tmpa_seq, \l_tmpa_str, \l_tmpa_tl}
+%
+% \groupIndex{latexcmd}{\@onlypreamble, \ProcessKeyOptions, \author,
+%   \fontencoding, \fontfamily, \selectfont, \title}
+% \groupIndex{latexvar}{\encodingdefault, \rmdefault, \sfdefault, \ttdefault} 
+%
+% \begin{documentation}
+% \section{Setting options}
+% Options can be set as document class options or with the preamble command
+% |\setup|. Some options can only be used as document class options because
+% they are used directly in the \cls{kulemt} class file. On the other hand,
+% some key-value pairs cannot be used as class options because their value
+% contains commands, braces, brackets, commas or spaces. In practice these are
+% the options which provide information for the title page (`\opt{assessor}',
+% `\opt{assistant}', `\opt{author}', `\opt{promoter}', `\opt{subtitle}', and
+% `\opt{title}').
+%
+% Most of the options are optional, except for `\opt{master}' (which determines
+% the master) and most of the information for the title page (`\opt{assessor}',
+% `\opt{assistant}', `\opt{author}', `\opt{promoter}', and `\opt{title}').
+% However, when the option `\opt{article}' is used, all of these options are
+% optional too.
+%
+% \medskip
+% \noindent \DescribeClassCmd{\setup} \marg{key-value list} \\
+% Contrary to document class options, the values in |\setup| have no
+% restrictions if they are grouped (i.e., enclosed in braces).
+% The |\setup| command can be used multiple times but only in the document
+% preamble.
+%
+% Since no language settings are active in the preamble, language specific
+% active characters (e.g. `|"|' as defined by \pkg{babel} for Dutch) cannot
+% be used.
+%
+% \begin{function}{\kulemt_process_class_options:}
+%   The function |\kulemt_process_class_options:| can be used to process the
+%   document class options.
+% \end{function}
+%
+% \subsection{Using the option information}
+% \DescribeClassOption[noprint]{article}
+% \DescribeClassOption[noprint]{twocolumn}
+% \begin{variable}{\l_kulemt_opt_article_bool}
+%   The document class option `\opt{article}' switches from the thesis layout
+%   to an article layout, as provided by the \cls{memoir} class. The variable
+%   |\l_kulemt_opt_article_bool| remembers the switch.\\
+%   In this layout, no front  pages are generated, all other options are
+%   optional and an additional option `\opt{twocolumn}' is available. The
+%   additional option can only be used after the `\opt{article}' option.
+% \end{variable}
+%
+% \DescribeClassOption[noprint]{10pt}
+% \DescribeClassOption[noprint]{11pt}
+% \DescribeClassOption[noprint]{draft}
+% \DescribeClassOption[noprint]{fleqn}
+% \DescribeClassOption[noprint]{oldfontcommands}
+% \DescribeClassOption[noprint]{openany}
+% \DescribeClassOption[noprint]{openleft}
+% \DescribeClassOption[noprint]{openright}
+% \begin{variable}{\l_kulemt_memoir_options_seq}
+%   Many document class options are actually \cls{memoir} options. They are
+%   remembered in the sequence |\l_kulemt_memoir_options_seq|. These are all
+%   options without values: `\opt{10pt}', `\opt{11pt}', `\opt{draft}',
+%   `\opt{fleqn}', `\opt{oldfontcommands}', `\opt{openany}', `\opt{openleft}',
+%   and `\opt{openright}'.
+% \end{variable}
+%
+% \DescribeClassOption[noprint]{oneside}
+% \DescribeClassOption[noprint]{twoside}
+% \DescribeClassOption[noprint]{twosidelrequal}
+% \begin{variable}{\l_kulemt_opt_lrequal_bool}
+%   The options `\opt{oneside}' and `\opt{twoside}' are also \cls{memoir}
+%   options. The new option `\opt{twosidelrequal}' corresponds to the
+%   \opt{twoside} option but with equal inner and outer margins.
+%   They all set the variable |\l_kulemt_opt_lrequal_bool|.
+% \end{variable}
+%
+% \begin{variable}{\l_kulemt_opt_ptsize_int}
+%   The type size is not only passed to \cls{memoir}, but the number is also
+%   stored in the integer |\l_kulemt_opt_ptsize_int|.
+% \end{variable}
+%
+% \DescribeClassOption[noprint]{dutch}
+% \DescribeClassOption[noprint]{english}
+% \DescribeClassOption[noprint]{british}
+% \DescribeClassOption[noprint]{extralanguage}
+% \begin{variable}{\l_kulemt_language_tl, \l_kulemt_master_language_tl,
+%                  \l_kulemt_babel_seq}
+%   Three document class options are available to set the language options. The
+%   main text language is stored in |\l_kulemt_language_tl| and set either
+%   by the option `\opt{dutch}' or `\opt{english}'. Additionally the language
+%   `\opt{british}' is available, since this is the English variant recommended
+%   by the KU~Leuven. Initially |\l_kulemt_language_tl| is set to the language
+%   of the master program, which is stored in |\l_kulemt_master_language_tl|.
+%   If no `\opt{master}' option is given, |\l_kulemt_language_tl| is
+%   initialized to |english|, which is the default \pkg{babel} language.
+%   
+%   Extra \pkg{babel} languages can be added with option `\opt{extralanguage}'
+%   but no dialects of `|english|' (namely `|american|', `|australian|',
+%   `|canadian|', `|newzealand|') or `|dutch|' (namely `|afrikaans|') are
+%   allowed.
+%   This option can be used multiple times.
+%   
+%   All \pkg{babel} options are stored in the sequence |\l_kulemt_babel_seq|.
+% \end{variable}
+%
+% \DescribeClassOption[noprint]{bind}
+% \DescribeClassOption[noprint]{cfgfile}
+% \DescribeClassOption[noprint]{master}
+% \begin{variable}{\l_kulemt_opt_bind_dim, \l_kulemt_opt_cfgfile_tl,
+%                  \l_kulemt_opt_master_tl}
+%   The remaining document class options store their information in an
+%   appropriate variable. The dimension |\l_kulemt_opt_bind_dim| holds the
+%   binding loss length (option `\opt{bind}'). The variable
+%   |\l_kulemt_opt_cfgfile_tl| holds the name of the configuration file
+%   (option `\opt{cfgfile}') and |\l_kulemt_opt_master_tl| holds the master
+%   option abbreviation (option `\opt{master}').
+% \end{variable}
+%
+% \DescribeClassSetupOption[noprint]{masteroption}
+% \begin{variable}{\l_kulemt_opt_masteroption_seq}
+%   The option `\opt{masteroption}' selects the master option. If students of
+%   different options work on one thesis, the option can be used multiple
+%   times. The value of an option can either be an abbreviation or a full
+%   option name. Only if it is an abbreviation, this option can be used as a
+%   document class option. The sequence |\l_kulemt_opt_masteroption_seq|
+%   holds the master options with all abbreviations replaced by their full
+%   name.
+% \end{variable}
+%
+% \begin{variable}{\l_kulemt_include_coverpage_bool,
+%                  \l_kulemt_include_frontpages_bool,
+%                  \l_kulemt_include_text_bool}
+%   These boolean variables determine which pages are generated: the cover
+%   page, the front pages and the text. By default, the cover page is not
+%   generated, which is compatible with version~1\@. In the article layout,
+%   the front pages and the cover page are not generated.
+%
+%   \DescribeClassSetupOption[noprint]{coverpageonly}
+%   \DescribeClassSetupOption[noprint]{frontpagesonly}
+%   The options (without values) `\opt{coverpageonly}' and
+%   `\opt{frontpagesonly}' can be used to generate only the cover page or only
+%   the front pages (the title page and the copyright page). They set the
+%   boolean variables mentioned above. These options can be used as document
+%   class options as well as within the |\setup| argument.\\
+%   In the article layout these options have no effect.
+% \end{variable}
+%
+% \DescribeClassSetupOption[noprint]{acyear}
+% \DescribeSetupOption[noprint]{subtitle}
+% \DescribeSetupOption[noprint]{title}
+% \begin{variable}{\l_kulemt_opt_acyear_int, \l_kulemt_opt_subtitle_tl,
+%                  \l_kulemt_opt_title_tl}
+%   The options `\opt{acyear}', `\opt{subtitle}', and `\opt{title}' store their
+%   value in the corresponding variables.
+% \end{variable}
+% \noindent \DescribeLaTeXCmd{\title}
+% For compatibility with other LaTeX packages, the title is also stored with
+% the standard LaTeX command |\title|.
+%
+% \DescribeSetupOption[noprint]{assessor}
+% \DescribeSetupOption[noprint]{assistant}
+% \DescribeSetupOption[noprint]{author}
+% \DescribeSetupOption[noprint]{promoter}
+% \begin{variable}{\l_kulemt_opt_assessor_seq, \l_kulemt_opt_assistant_seq,
+%                  \l_kulemt_opt_author_seq, \l_kulemt_opt_promoter_seq}
+%   The options `\opt{assessor}', `\opt{assistant}', `\opt{author}', and
+%   `\opt{promoter}' store their value in a sequence. These options can be used
+%   multiple times or values can be combined separated with `|\and|'.
+%   The options `\opt{assessor}' and `\opt{assistant}' also allow an empty
+%   value to suppress the printing of their information.
+% \end{variable}
+% \noindent \DescribeLaTeXCmd{\author}
+% For compatibility with other LaTeX packages, the authors are also stored
+% with the standard LaTeX command |\author|.
+%
+% \subsection{Removed version 1 options}
+% \subsubsection{Filing card options}
+% Since a filing card is no longer provided, all options providing additional
+% information for the filing card are removed: `\opt{translatedtitle}',
+% `\opt{shortabstract}', `\opt{udc}', `\opt{keywords}', and
+% `\opt{articletitle}'. Additionally the option `\opt{filingcard}' is removed.
+% 
+% \subsubsection{Typeblock layout options}
+% The obsolete option `\opt{bindcover}' has been removed.
+%
+% \subsubsection{Text encoding option}
+% Since 2018 the default LaTeX text encoding is \textsc{utf-8}, which supports
+% all characters. Furthermore Unicode engines only support \textsc{utf-8}. So,
+% the option `\opt{inputenc}' becomes much less relevant. If people need it,
+% they can use
+% \begin{quote}
+%   |\usepackage[|\meta{encoding name}|]{inputenc}|
+% \end{quote}
+% at the beginning of the preamble.
+%
+% \subsubsection{Font selection}
+% Depending on the use of traditional fonts or OpenType fonts and depending on
+% the engine, font selection varies a lot. So, it doesn't seem to be a good
+% idea to make too much assumptions. It seems better to let users put their own
+% font packages in the preamble.
+%
+% Latin Modern is used as default font family since this is a pretty complete
+% family which works well with most popular font encodings. The default font
+% encoding is either |TU| for LuaTeX and XeTeX, |T1| (instead of |OT1|)
+% otherwise.
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt_opt>
+%    \end{macrocode}
+%
+% Some x-variants are since October 2023 version no longer available. We
+% generate here the e-type variants for functions which don't exist yet and
+% are used in this file.
+%    \begin{macrocode}
+\cs_generate_variant:Nn \msg_error:nnn { nne }
+\cs_generate_variant:Nn \msg_fatal:nnn { nne }
+\cs_generate_variant:Nn \msg_fatal:nnnn { nnee }
+%    \end{macrocode}
+%
+% \subsection{Setting the font defaults}
+% By default, LaTeX sets the font encoding to |TU| for Unicode engines and to
+% |OT1| otherwise. In the latter case we change it to |T1|. The LaTeX core uses
+% |\renewcommand|, so we use |\cs_set:Npn| instead of |\tl_set:Nn| to have the
+% same effect.
+%    \begin{macrocode}
+\str_if_eq:VnT \encodingdefault {OT1}
+  {
+    \cs_set:Npn \encodingdefault {T1}
+    \fontencoding { \encodingdefault }
+  }
+%    \end{macrocode}
+%
+% The Latin Modern family is the default font family for the |TU| font
+% encoding, so we prefer it also for other encodings over the default font
+% family Computer Modern.
+%    \begin{macrocode}
+\str_if_eq:VnT \rmdefault {cmr}
+  {
+    \cs_set:Npn \rmdefault {lmr}
+    \cs_set:Npn \sfdefault {lmss}
+    \cs_set:Npn \ttdefault {lmtt}
+    \fontfamily { \rmdefault }
+  }
+%    \end{macrocode}
+%
+% \subsection{Keys which can only be used as class options}
+% The following keys can only be used as class options because they are either
+% used directly in the \cls{kulemt} class file or they must be passed as class
+% options to \cls{memoir}.
+% 
+% \begin{variable}{\l_@@_allow_class_option_bool}
+%   This boolean is set true when we are processing document class options.
+%   We also set it true while loading this class to make initialization work.
+%    \begin{macrocode}
+\bool_new:N \l_@@_allow_class_option_bool
+\bool_set_true:N \l_@@_allow_class_option_bool
+%    \end{macrocode}
+% \end{variable}
+% 
+% \begin{macro}{\@@_class_option:n}
+%   Execute |#1| only when processing a document class option. Otherwise raise
+%   an error.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_class_option:n
+  {
+    \bool_if:NTF \l_@@_allow_class_option_bool
+      { #1 }
+      { \msg_error:nne {kulemt} {opt/not-class} { \kulemt_keys_key: } }
+  }
+\msg_new:nnnn {kulemt} {opt/not-class}
+  { Option~ '#1'~ can~ only~ be~ used~ as~ a~ class~ option. }
+  { This~ setup~ option~ will~ be~ ignored. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{variable}{\l_kulemt_memoir_options_seq}
+%   This variable stores the list of options to pass to the \cls{memoir} class.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_memoir_options_seq
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\@@_memoir_option:n, \@@_memoir_option:}
+%   The function \cs[no-index]{@@_memoir_option:n} stores |#1| as a
+%   \cls{memoir} option. For the more common case of storing the current
+%   option key (not the value), \cs[no-index]{@@_memoir_option:} can be used.\\
+%   Since the \cls{memoir} options are used in the \cls{kulemt} class, these
+%   functions can only be used in the definition of document class options or
+%   before loading the \cls{memoir} class.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_memoir_option:n
+  {
+    \@@_class_option:n
+      { \seq_put_right:Nn \l_kulemt_memoir_options_seq {#1} }
+  }
+\cs_new_protected:Nn \@@_memoir_option:
+  { \exp_args:Ne \@@_memoir_option:n { \kulemt_keys_key: } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Selecting an article layout}
+% \begin{copt}{article}
+%   The option `\opt{article}' select an article layout instead of the thesis
+%   layout.
+%   \begin{variable}{\l_kulemt_opt_article_bool}
+%     The variable |\l_kulemt_article_bool| remembers the request for an
+%     article layout.
+%    \begin{macrocode}
+\bool_new:N \l_kulemt_opt_article_bool
+\keys_define:nn {kulemt}
+  {
+    article .code:n =
+      {
+        \@@_class_option:n
+          {
+            \bool_set_true:N \l_kulemt_opt_article_bool
+            \@@_memoir_option:
+          }
+      } ,
+    article .value_forbidden:n = true
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{copt}
+%
+% \begin{copt}{twocolumn}
+%   The option `\opt{twocolumn}' is only available in the article layout.
+%   Furthermore it can only be used after the `\opt{article}' option. Otherwise
+%   it generates an error.
+%    \begin{macrocode}
+\keys_define:nn {kulemt}
+  {
+    twocolumn .code:n =
+      {
+        \@@_class_option:n
+          {
+            \bool_if:NTF \l_kulemt_opt_article_bool
+              { \@@_memoir_option: }
+              { \msg_error:nne {kulemt} {opt/not-art} { \kulemt_keys_key: } }
+          }
+      } ,
+    twocolumn .value_forbidden:n = true
+  }
+\msg_new:nnnn {kulemt} {opt/not-art}
+  { Option~ '#1'~ can~ only~ be~ used~ after~ the~ class~ option~ 'article'. }
+  { This~ setup~ option~ will~ be~ ignored. }
+%    \end{macrocode}
+% \end{copt}
+%
+% \subsubsection{Selecting the master's program}
+% \begin{copt}{cfgfile}
+%   The option `\opt{cfgfile}' defines the name of the configuration file. By
+%   default it is set to ``\file{kulemt.ini}''.
+%   \begin{variable}{\l_kulemt_opt_cfgfile_tl}
+%     This variable holds the name of the configuration file.
+%    \begin{macrocode}
+\tl_new:N \l_kulemt_opt_cfgfile_tl
+\keys_define:nn {kulemt}
+  {
+    cfgfile .code:n =
+      {
+        \@@_class_option:n
+          { \tl_set:Nn \l_kulemt_opt_cfgfile_tl {#1} }
+
+      } ,
+    cfgfile .value_required:n = true,
+    cfgfile .initial:n = { kulemt.ini }
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{copt}
+%
+% \begin{copt}{master}
+%   The value of the option `\opt{master}' is the abbreviation of the master.
+%   \begin{variable}{\l_kulemt_opt_master_tl}
+%     It is stored in the variable |\l_kulemt_opt_master_tl|.
+%    \begin{macrocode}
+\tl_new:N \l_kulemt_opt_master_tl
+\keys_define:nn {kulemt}
+  {
+    master .code:n =
+      {
+        \@@_class_option:n
+          { \tl_set:Nn \l_kulemt_opt_master_tl {#1} }
+      } ,
+    master .value_required:n = true
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{copt}
+% 
+% \subsubsection{Type size}
+% \begin{copt}{10pt, 11pt}
+%   The type size option is either `\opt{10pt}' or `\opt{11pt}' (the default
+%   value). It will be passed to \cls{memoir} but it will also be used to
+%   determine the page layout. These options are mutually exclusive.
+%   \begin{variable}{\l_kulemt_opt_ptsize_int}
+%     This variable stores the number of the type size.
+%    \begin{macrocode}
+\int_new:N \l_kulemt_opt_ptsize_int
+\int_set:Nn \l_kulemt_opt_ptsize_int {11}
+\keys_define:nn {kulemt}
+  {
+    10pt .code:n =
+      {
+        \@@_class_option:n
+          { \int_set:Nn \l_kulemt_opt_ptsize_int {10} }
+      } ,
+    10pt .value_forbidden:n = true,
+    11pt .code:n =
+      {
+        \@@_class_option:n
+          { \int_set:Nn \l_kulemt_opt_ptsize_int {11} }
+      } ,
+    11pt .value_forbidden:n = true
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{copt}
+% 
+% \subsubsection{Printing options}
+% A4 paper is used. No other options to change the paper size are available.
+%    \begin{macrocode}
+\@@_memoir_option:n { a4paper }
+%    \end{macrocode}
+%
+% \begin{copt}{draft, openany, openleft, openright}
+%   The following options are passed directly to \cls{memoir}.
+%    \begin{macrocode}
+\keys_define:nn {kulemt} {
+    draft .code:n = { \@@_memoir_option: } ,
+    draft .value_forbidden:n = true ,
+    openany .code:n = { \@@_memoir_option: } ,
+    openany .value_forbidden:n = true,
+    openleft .code:n = { \@@_memoir_option: } ,
+    openleft .value_forbidden:n = true,
+    openright .code:n = { \@@_memoir_option:n {open} } ,
+    openright .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% \end{copt}
+%
+% \begin{variable}{\l_kulemt_opt_lrequal_bool}
+%   When this boolean is set true, the inner and outer
+%   margins must be made equal. By default it is true since version~2.
+%    \begin{macrocode}
+\bool_new:N \l_kulemt_opt_lrequal_bool
+\bool_set_true:N \l_kulemt_opt_lrequal_bool
+%    \end{macrocode}
+% \end{variable}
+% 
+% \begin{copt}{oneside, twoside, twosidelrequal}
+%   These options set the \cls{memoir} options \opt{oneside} or \opt{twoside}.
+%   They also set the variable |\l_kulemt_opt_lrequal_bool|, false for
+%   \opt{twoside}, true otherwise.
+%    \begin{macrocode}
+\keys_define:nn {kulemt} {
+    oneside .code:n =
+      {
+        \@@_class_option:n
+          {
+            \seq_put_right:Nn \l_kulemt_memoir_options_seq {oneside}
+            \bool_set_true:N \l_kulemt_opt_lrequal_bool
+          }
+      } ,
+    oneside .value_forbidden:n = true,
+    twoside .code:n =
+      {
+        \@@_class_option:n
+          {
+            \seq_put_right:Nn \l_kulemt_memoir_options_seq {twoside}
+            \bool_set_false:N \l_kulemt_opt_lrequal_bool
+          }
+      } ,
+    twoside .value_forbidden:n = true,
+    twosidelrequal .code:n =
+      {
+        \@@_class_option:n
+          {
+            \seq_put_right:Nn \l_kulemt_memoir_options_seq {twoside}
+            \bool_set_true:N \l_kulemt_opt_lrequal_bool
+          }
+      } ,
+    twosidelrequal .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% \end{copt}
+%
+% \begin{copt}{bind}
+%   The option `\opt{bind}' specifies the loss of visible paper due to binding
+%   the book.
+%   \begin{variable}{\l_kulemt_opt_bind_dim}
+%     This dimension is stored in the variable |\l_kulemt_opt_bind_dim|.
+%    \begin{macrocode}
+\dim_new:N \l_kulemt_opt_bind_dim
+\keys_define:nn {kulemt}
+  {
+    bind .code:n =
+      {
+        \@@_class_option:n
+          { \dim_set:Nn \l_kulemt_opt_bind_dim {#1} }
+      } ,
+    bind .value_required:n = true
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{copt}
+%
+% \subsubsection{Language options}
+% \begin{variable}{\l_kulemt_babel_seq}
+%   The options of the \pkg{babel} package are collected in the variable
+%   |\l_kulemt_babel_seq|.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_babel_seq
+%    \end{macrocode}
+% \end{variable}
+% 
+% \begin{copt}{dutch, english, british}
+%   The options `\opt{dutch}', `\opt{english}', or `\opt{british}' allow you to
+%   select the main text language. Since you can have only one main text
+%   language, these three options are mutually exclusive.
+%
+%   \begin{variable}{\l_kulemt_language_tl}
+%     The main text language is stored in the variable |\l_kulemt_language_tl|.
+%     We use a token list instead of a string because \pkg{babel} assumes
+%     document category codes when comparing language names: it uses |\ifx| for
+%     the comparison.
+%    \begin{macrocode}
+\tl_new:N \l_kulemt_language_tl
+%    \end{macrocode}
+%   \end{variable}
+%
+%   \begin{macro}{\@@_store_language:n}
+%     Store the main text language |#1| in |\l_kulemt_language_tl|.
+%     Since you can have only one main text language, an error is issued if you
+%     try to do this more than once.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_store_language:n
+  {
+    \@@_class_option:n
+      {
+        \tl_if_empty:NTF \l_kulemt_language_tl
+          { \tl_set:Nn \l_kulemt_language_tl {#1} }
+          {
+            \msg_fatal:nnee {kulemt} {opt/multiple-languages}
+              { \l_kulemt_language_tl } {#1}
+          }
+      }
+  }
+\msg_new:nnnn {kulemt} {opt/multiple-languages}
+  { You~ can~ set~ the~ main~ text~ language~ only~ once.\\
+    You~ used~ the~ language~ options~ '#1'~ and~ '#2'. }
+  { Remove~ one~ of~ the~ language~ options. }
+%    \end{macrocode}
+%   \end{macro}
+%
+%    \begin{macrocode}
+\keys_define:nn {kulemt}
+  {
+    dutch .code:n =   { \@@_store_language:n {dutch} } ,
+    dutch .value_forbidden:n = true,
+    english .code:n = { \@@_store_language:n {english} } ,
+    english .value_forbidden:n = true,
+    british .code:n = { \@@_store_language:n {british} } ,
+    british .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% \end{copt}
+%
+% \begin{copt}{extralanguage}
+%   The option `\opt{extralanguage}' adds a language to \pkg{babel}. Its value
+%   is added to the list |\l_kulemt_babel_seq|. We assume that the extra
+%   language is not one of the languages in |\l_kulemt_babel_seq| or a dialect
+%   of one of them, since \pkg{babel} cannot handle this.
+%    \begin{macrocode}
+\keys_define:nn {kulemt}
+  {
+    extralanguage .code:n =
+      {
+        \@@_class_option:n
+          {
+            \tl_if_empty:nF {#1}
+              { \seq_put_right:Nn \l_kulemt_babel_seq {#1} }
+          }
+      } ,
+    extralanguage .value_required:n = true
+  }
+%    \end{macrocode}
+% \end{copt}
+%
+% \subsubsection{Other options}
+% \begin{copt}{fleqn, oldfontcommands}
+%   The following options are also passed directly to the \cls{memoir} class.
+%    \begin{macrocode}
+\keys_define:nn {kulemt}
+  {
+    fleqn .code:n = { \@@_memoir_option: } ,
+    fleqn .value_forbidden:n = true,
+    oldfontcommands .code:n = { \@@_memoir_option: } ,
+    oldfontcommands .value_forbidden:n = true
+  }
+%    \end{macrocode}
+% \end{copt}
+%
+% \subsection{Keys which can also be used in \cs[no-index]{setup}}
+% The following keys can be used multiple times in the preamble, as a
+% document option and in every |\setup|.
+%
+% \begin{macro}{\@@_check_required:nn}
+%   If the required option |#2| of type |#1| (e.g. |tl|) was not used, i.e. its
+%   variable is empty, raise a fatal error at the end of the document preamble,
+%   but only in the thesis layout.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_check_required:nn
+  {
+    \exp_args:Ne \kulemt_at_end_preamble:n
+      {
+        \exp_not:N \bool_if:NF \exp_not:N \l_kulemt_opt_article_bool
+          {
+            \exp_not:c { #1 _if_empty:NT } \exp_not:c { l_kulemt_opt_ #2 _ #1 }
+              { \exp_not:N \msg_fatal:nnn {kulemt} {opt/missing} {#2} }
+          }
+      }
+  }
+\msg_new:nnn {kulemt} {opt/missing} { A~ required~ option~ '#1'~ is~ missing. }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \subsubsection{Setting the master's program option}
+% \begin{csopt}{masteroption}
+%   The value of the option `\opt{masteroption}' defines the master's program
+%   option or specialization (aka ``optie'' or ``afstudeerrichting'').
+%   The value is a text starting with ``|option |\ldots'' (or its Dutch
+%   counterpart) or something similar. If the master's program defines options,
+%   you can use the option abbreviation as a \opt{masteroption} value. In that
+%   case, `\opt{masteroption}' can also be used as a document class option. \par
+%   If students of different master's program options work on one common
+%   master's thesis, the option `\opt{masteroption}' can be used multiple
+%   times. 
+%   \begin{variable}{\l_@@_masteroption_seq}
+%     A list of all \opt{masteroption} values is stored in
+%     \cs[no-index]{l_@@_masteroption_seq}. It contains no duplicates.
+%    \begin{macrocode}
+\seq_new:N \l_@@_masteroption_seq
+\keys_define:nn {kulemt}
+  {
+    masteroption .code:n =
+      {
+        \tl_if_empty:nF {#1}
+          {
+            \seq_if_in:NnF \l_@@_masteroption_seq {#1}
+              { \seq_put_right:Nn \l_@@_masteroption_seq {#1} }
+          }
+      } ,
+    masteroption .value_required:n = true
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{csopt}
+%
+% \begin{variable}{\l_kulemt_opt_masteroption_seq}
+%   This variable holds the list of master options with the abbreviations
+%   expanded to their full text.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_opt_masteroption_seq
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\@@_check_masteroption:}
+%   Once we know the master's program, we can check the master option(s) and
+%   eventually expand the abbreviations. If no master's program is known, we
+%   simply keep the values from `\opt{masteroption}'. Since a master option can
+%   be set with |\setup|, we have to check this at the end of the document
+%   preamble.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_check_masteroption:
+  {
+    \tl_if_empty:NTF \l_kulemt_opt_master_tl
+      {
+        \seq_set_eq:NN \l_kulemt_opt_masteroption_seq
+          \l_@@_masteroption_seq
+      }
+      {
+        \seq_clear:N \l_kulemt_opt_masteroption_seq
+        \kulemt_master_get_item_or_fallback:nnN {option} {} \l_tmpa_tl
+        \str_if_eq:VnTF \l_tmpa_tl {forbidden}
+          {
+            \seq_if_empty:NF \l_@@_masteroption_seq
+              {
+                \msg_warning:nn {kulemt} {opt/masteroption-forbidden}
+                \seq_clear:N \l_@@_masteroption_seq
+              }
+          }
+          {
+            \str_if_eq:VnT \l_tmpa_tl {required}
+              {
+                \seq_if_empty:NT \l_@@_masteroption_seq
+                  {
+                    \msg_fatal:nne {kulemt} {opt/masteroption-missing}
+                      { \l_kulemt_opt_master_tl }
+                  }
+              }
+            \seq_map_inline:Nn \l_@@_masteroption_seq
+              {
+                \kulemt_master_get_item:nN { option. ##1  } \l_tmpa_tl
+                \quark_if_no_value:NT \l_tmpa_tl
+                  {
+                    \msg_info:nnn {kulemt} {opt/masteroption-no-abbrev} {##1}
+                    \tl_set:Nn \l_tmpa_tl {##1}
+                  }
+                \seq_put_right:NV \l_kulemt_opt_masteroption_seq \l_tmpa_tl
+              }
+          }
+      }
+  }
+\kulemt_at_end_preamble:n { \@@_check_masteroption: }
+\msg_new:nnn {kulemt} {opt/masteroption-forbidden}
+  {
+    The~ option~ 'masteroption'~ is~ ignored~ because~ your~ program~
+    disallows~ a~ master's~ program~ option~ on~ front~ pages.
+  }
+\msg_new:nnn {kulemt} {opt/masteroption-missing}
+  {
+    For~ master~ '#1'~ you~ must~ specify~ at~ least~ one~
+    master's~ program~ option.
+  }
+\msg_new:nnn {kulemt} {opt/masteroption-no-abbrev}
+  {
+    The~ master~ option~ '#1'~ is~ not~ a~ known~ abbreviation.\\
+    It~ is~ used~ directly~ as~ the~ master~ option~ text.
+   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Information for the title page}
+% \begin{macro}{\@@_seq_add_split:NnnN}
+%   Some of the options can store multiple values, separated by |#3|. This
+%   function converts its argument |#2| to a sequence and adds it to the
+%   sequence |#1|, ignoring the empty first element of it. If |#4| is
+%   \meta{true}, an empty option value is allowed otherwise not. So if |#4| is
+%   \meta{true} and |#2| is empty after removing any |#3|, the sequence |#1| is
+%   set to a sequence with one empty item. (This is the only way to get an
+%   empty item in the sequence.)
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_seq_add_split:NnnN
+  {
+    \seq_set_split:Nnn \l_tmpa_seq {#3} {#2}
+    \seq_remove_all:Nn \l_tmpa_seq {}
+    \seq_if_empty:NTF \l_tmpa_seq
+      {
+        \bool_if:NT #4
+          {
+            \seq_clear:N #1
+            \seq_put_right:Nn #1 {}
+          }
+      }
+      {
+        \seq_if_empty:NTF #1
+          { \seq_set_eq:NN #1 \l_tmpa_seq }
+          {
+            \seq_get:NN #1 \l_tmpa_tl
+            \tl_if_empty:NTF \l_tmpa_tl
+              { \seq_set_eq:NN #1 \l_tmpa_seq }
+              { \seq_concat:NNN #1 #1 \l_tmpa_seq }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{variable}{\c_@@_disallow_empty_bool, \c_@@_allow_empty_bool}
+%   To make the code more readable, these constant booleans are defined to be
+%   used as |#4| of \cs{@@_seq_add_split:NnnN}.
+%    \begin{macrocode}
+\bool_const:Nn \c_@@_disallow_empty_bool { \c_false_bool }
+\bool_const:Nn \c_@@_allow_empty_bool    { \c_true_bool  }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{sopt}{title}
+%   The option `\opt{title}' defines the title of the thesis.\par
+%   Since `\opt{title}' is a required option in the thesis layout, a fatal
+%   error is issued if the option is missing at the beginning of the document.
+%   \begin{variable}{\l_kulemt_opt_title_tl}
+%     This variable holds the title. For compatibility with other LaTeX
+%     packages, e.g.\ \pkg{hyperref}, the title is also stored with the
+%     standard LaTeX command |\title|. Since packages may redefine this
+%     command, its use is postponed until the end of the preamble.
+%    \begin{macrocode}
+\tl_new:N \l_kulemt_opt_title_tl
+\keys_define:nn {kulemt}
+  {
+    title .code:n =
+      {
+        \tl_set:Nn \l_kulemt_opt_title_tl {#1}
+        \kulemt_at_end_preamble:n { \title{#1} }
+      } ,
+    title .value_required:n = true
+  }
+\@@_check_required:nn {tl} {title}
+%    \end{macrocode}
+%   \end{variable}
+% \end{sopt}
+%
+% \begin{sopt}{subtitle}
+%   The option `\opt{subtitle}' defines the subtitle.
+%   \begin{variable}{\l_kulemt_opt_subtitle_tl}
+%     The subtitle is stored in the variable |\l_kulemt_opt_subtitle_tl|.
+%    \begin{macrocode}
+\tl_new:N \l_kulemt_opt_subtitle_tl
+\keys_define:nn {kulemt}
+  {
+    subtitle .tl_set:N = \l_kulemt_opt_subtitle_tl ,
+    subtitle .value_required:n = true
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{sopt}
+%
+% \begin{sopt}{author}
+%   The option `\opt{author}' defines one author or multiple authors separated
+%   by `|\and|'. This option can also be used multiple times.
+%   \begin{variable}{\l_kulemt_opt_author_seq}
+%     The variable |\l_kulemt_opt_author_seq| holds the list of authors.\par
+%     Since `\opt{author}' is a required option, a fatal error is issued if the
+%     option is missing at the beginning of the document. The
+%     \cs[no-index]{@@_check_required:nn} also guarantees that an empty
+%     |\l_kulemt_opt_author_seq| is not possible in the thesis layout.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_opt_author_seq
+\keys_define:nn {kulemt}
+  {
+    author .code:n =
+      {
+        \@@_seq_add_split:NnnN \l_kulemt_opt_author_seq
+          {#1} { \and } \c_@@_disallow_empty_bool
+      } ,
+    author .value_required:n = true
+  }
+\@@_check_required:nn {seq} {author}
+%    \end{macrocode}
+%     For compatibility with other LaTeX packages, the authors are also stored
+%     with the standard LaTeX command |\author| using `|\and|' to separate
+%     the authors. Since packages may redefine the command, its use is
+%     postponed until the end of the preamble.
+%    \begin{macrocode}
+\kulemt_at_end_preamble:n
+  {
+    \seq_if_empty:NF \l_kulemt_opt_author_seq
+      {
+        \exp_args:Ne \author
+          { \seq_use:Nn \l_kulemt_opt_author_seq { \and } }
+      }
+  }
+%    \end{macrocode}
+%   \end{variable}
+% \end{sopt}
+%
+% \begin{sopt}{promoter, promotor}
+%   The option `\opt{promoter}' or its alias `\opt{promotor}'
+%   \DescribeSetupOption[noprint]{promotor}
+%   defines one promoter or multiple promoters separated by `|\and|'. This
+%   option can also be used multiple times. Since this is a required option, a
+%   fatal error is issued if the option is missing.
+%   \begin{variable}{\l_kulemt_opt_promoter_seq}
+%     The variable |\l_kulemt_opt_promoter_seq| holds the list of promoters.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_opt_promoter_seq
+\keys_define:nn {kulemt}
+  {
+    promoter .code:n =
+      {
+        \@@_seq_add_split:NnnN \l_kulemt_opt_promoter_seq
+          {#1} { \and } \c_@@_disallow_empty_bool
+      } ,
+    promoter .value_required:n = true ,
+    promotor .meta:n = { promoter = {#1} } ,
+    promotor .value_required:n = true
+  }
+\@@_check_required:nn {seq} {promoter}
+%    \end{macrocode}
+%   \end{variable}
+% \end{sopt}
+%
+% \begin{sopt}{assessor}
+%   The option `\opt{assessor}' defines one assessor or multiple assessors
+%   separated by `|\and|'. This option can also be used multiple times. Since
+%   this is a required option, a fatal error is issued if the option is
+%   missing. However, an empty value is allowed and suppresses its printing.
+%   \begin{variable}{\l_kulemt_opt_assessor_seq}
+%     The variable |\l_kulemt_opt_assessor_seq| holds the list of assessors.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_opt_assessor_seq
+\keys_define:nn {kulemt}
+  {
+    assessor .code:n =
+      {
+        \@@_seq_add_split:NnnN \l_kulemt_opt_assessor_seq
+          {#1} { \and } \c_@@_allow_empty_bool
+      } ,
+      assessor .value_required:n = true
+  }
+\@@_check_required:nn {seq} {assessor}
+%    \end{macrocode}
+%   \end{variable}
+% \end{sopt}
+%
+% \begin{sopt}{assistant}
+%   The option `\opt{assistant}' defines one assessor or multiple assessors
+%   separated by `|\and|'. This option can also be used multiple times. Since
+%   this is a required option, a fatal error is issued if the option is
+%   missing. However, an empty value is allowed and suppresses its printing.
+%   \begin{variable}{\l_kulemt_opt_assistant_seq}
+%     The variable |\l_kulemt_opt_assistant_seq| holds the list of assistants.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_opt_assistant_seq
+\keys_define:nn {kulemt}
+  {
+    assistant .code:n =
+      {
+        \@@_seq_add_split:NnnN \l_kulemt_opt_assistant_seq
+          {#1} { \and } \c_@@_allow_empty_bool
+      } ,
+    assistant .value_required:n = true
+  }
+\@@_check_required:nn {seq} {assistant}
+%    \end{macrocode}
+%   \end{variable}
+% \end{sopt}
+%
+% \begin{csopt}{acyear}
+%   The option `\opt{acyear}' sets the starting year of the academic year of
+%   the thesis. The value starts with a 4-digit number.
+%   For compatibility with a previous version, the other tokens are ignored.
+%   This option should probably not be used because the default works quite
+%   well. To allow for the thesis to be printed in September, we start the
+%   default academic year on October~1.
+%   \begin{variable}{\l_kulemt_opt_acyear_int}
+%     This variable holds the starting year.
+%    \begin{macrocode}
+\int_new:N \l_kulemt_opt_acyear_int
+\int_set:Nn \l_kulemt_opt_acyear_int
+  { \c_sys_year_int \int_compare:nNnT { \c_sys_month_int } < {10} { - 1 } }
+\keys_define:nn {kulemt}
+  {
+    acyear .code:n =
+      {
+        \tl_if_empty:nF {#1}
+          {
+            \regex_extract_once:nnN {\A\d{4}} {#1} \l_tmpa_seq
+            \seq_if_empty:NTF \l_tmpa_seq
+              { \msg_error:nnn {kulemt} {opt/invalid-year} {#1} }
+              {
+                \int_set:Nn \l_kulemt_opt_acyear_int
+                  { \seq_item:Nn \l_tmpa_seq {1} }
+              }
+          }
+      } ,
+    acyear .value_required:n = true
+  }
+\msg_new:nnn {kulemt} {opt/invalid-year}
+  { Value~ `\tl_to_str:n{#1}'~ of~ option~ 'acyear'~ does~ not~ start~ with~
+    a~ 4-digit~ number. } 
+%    \end{macrocode}
+%   \end{variable}
+% \end{csopt}
+%
+% \subsubsection{Conditionally generating pages}
+% \begin{variable}{\l_kulemt_include_coverpage_bool,
+%                  \l_kulemt_include_frontpages_bool,
+%                  \l_kulemt_include_text_bool } 
+%   These variables determine which pages are generated. By default, the cover
+%   page is not generated.
+%    \begin{macrocode}
+\bool_new:N \l_kulemt_include_coverpage_bool
+\bool_new:N \l_kulemt_include_frontpages_bool
+\bool_new:N \l_kulemt_include_text_bool
+\bool_set_true:N \l_kulemt_include_frontpages_bool
+\bool_set_true:N \l_kulemt_include_text_bool
+%    \end{macrocode}
+%   \begin{csopt}{coverpageonly, frontpagesonly}
+%     The options `\opt{coverpageonly}' and `\opt{frontpagesonly}' set these
+%     variables.
+%    \begin{macrocode}
+\keys_define:nn {kulemt}
+  {
+    coverpageonly .code:n =
+      {
+        \bool_set_true:N  \l_kulemt_include_coverpage_bool
+        \bool_set_false:N \l_kulemt_include_frontpages_bool
+        \bool_set_false:N \l_kulemt_include_text_bool
+      } ,
+    coverpageonly .value_forbidden:n = true ,
+    frontpagesonly .code:n =
+      {
+        \bool_set_false:N \l_kulemt_include_coverpage_bool
+        \bool_set_true:N  \l_kulemt_include_frontpages_bool
+        \bool_set_false:N \l_kulemt_include_text_bool
+      } ,
+    frontpagesonly .value_forbidden:n = true
+  }
+%    \end{macrocode}
+%   \end{csopt}
+% \end{variable}
+% 
+% \subsection{Option handling commands}
+% \subsubsection{The \texttt{setup} command}
+% \begin{classcmd}{\setup}
+%   This command lets you set additional options. Currently we assume their is
+%   no need for category code changes.
+%    \begin{macrocode}
+\NewDocumentCommand \setup { m }
+  {
+    \bool_set_false:N \l_@@_allow_class_option_bool
+    \keys_set:nn {kulemt} {#1}
+  }
+\@onlypreamble \setup
+%    \end{macrocode}
+% \end{classcmd}
+% 
+% \subsubsection{Handling class options}
+% \begin{variable}{\l_kulemt_master_language_tl}
+%   This variable stores the master language. It is set from the configuration
+%   key \key{language} when setting the master, but with document category codes.
+%   Otherwise \pkg{babel} gets confused.
+%   \DescribeConfKey[noprint]{language}
+%    \begin{macrocode}
+\tl_new:N \l_kulemt_master_language_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\kulemt_process_class_options:}
+%   Only one document class option is required: `\opt{master}'. So, after
+%   handling the options, we set the property list of the master and the master
+%   language. If the option is missing a fatal error is raised.\\
+%   If the variable |\l_kulemt_language_tl| is still empty at the end of
+%   option processing, it is set to the master language.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_process_class_options:
+  {
+    \bool_set_true:N \l_@@_allow_class_option_bool
+    \ProcessKeyOptions \scan_stop:
+    \tl_if_empty:NTF \l_kulemt_opt_master_tl
+      {
+        \bool_if:NF \l_kulemt_opt_article_bool
+          { \msg_fatal:nn {kulemt} {opt/master-missing} }
+        \tl_if_empty:NT \l_kulemt_language_tl
+          { \tl_set:Nn \l_kulemt_language_tl {english} }
+        \seq_put_right:NV \l_kulemt_babel_seq \l_kulemt_language_tl
+      }
+      {
+        \kulemt_set_master:V \l_kulemt_opt_master_tl
+        \kulemt_master_get_required_item:nN {language} \l_tmpa_str
+        \tl_set_rescan:NnV \l_kulemt_master_language_tl {} \l_tmpa_str
+        \tl_if_empty:NT \l_kulemt_language_tl
+          { \tl_set_eq:NN \l_kulemt_language_tl \l_kulemt_master_language_tl }
+        \bool_lazy_and:nnF
+          { \str_if_eq_p:Vn \l_kulemt_language_tl {british} }
+          { \str_if_eq_p:Vn \l_kulemt_master_language_tl {english} }
+          { \seq_put_right:NV \l_kulemt_babel_seq \l_kulemt_master_language_tl }
+        \str_if_eq:VVF \l_kulemt_language_tl \l_kulemt_master_language_tl
+          { \seq_put_right:NV \l_kulemt_babel_seq \l_kulemt_language_tl }
+      }
+  }
+\msg_new:nnn {kulemt} {opt/master-missing}
+  { The~ required~ document~ class~ option~ 'master'~ is~ missing. }
+%    \end{macrocode}
+% \end{macro}
+% 
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

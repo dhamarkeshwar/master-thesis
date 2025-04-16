@@ -1,0 +1,80 @@
+%% Common settings for the code documentation
+%% It assumes l3doc is used as document class.
+%% Inspired by fontspec-doc-style.sty
+\ProvidesPackage{kulemt-code}
+
+% We need doc v3
+\RequirePackage{doc}[2022-06-01]
+\NewDocElement[macrolike = false, toplevel = false, idxtype = env.,
+               idxgroup = Class environments, printtype = \textit{env.}]%
+              {ClassEnv}{classenv}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = Class commands]%
+              {ClassCmd}{classcmd}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = Class variables]%
+              {ClassVar}{classvar}
+\NewDocElement[macrolike = false,  toplevel = false,
+               idxgroup  = Options (class),
+               printtype = \textit{option}]%
+              {ClassOption}{copt}
+\NewDocElement[macrolike = false,  toplevel = false,
+               idxgroup  = Options (setup),
+               printtype = \textit{option}]%
+              {SetupOption}{sopt}
+\NewDocElement[macrolike = false,  toplevel = false,
+               idxgroup  = Options (class or setup),
+               printtype = \textit{option}]%
+              {ClassSetupOption}{csopt}
+\NewDocElement[macrolike = false,  toplevel = false,
+               idxgroup  = Configuration keys,
+               printtype = \textit{conf.\ key}]%
+              {ConfKey}{ckey}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = Babel commands and variables]%
+              {Babel}{babel}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = LaTeX commands]%
+              {LaTeXCmd}{latexcmd}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = LaTeX variables]%
+              {LaTeXVar}{latexvar}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = Memoir commands]%
+              {MemoirCmd}{memoircmd}
+\NewDocElement[macrolike = true,  toplevel = false,
+               idxgroup  = Memoir variables]%
+              {MemoirVar}{memoirvar}
+
+\NewDocumentCommand{\groupIndex}{mm}{%
+  \begin{#1}[noindex, noprint]{#2}\end{#1}%
+}
+
+% Versie 3.0 suggested for luatex
+%\IfFileExists{microtype.sty}{\RequirePackage{microtype}[2021/10/31]}{}
+
+%% Steal \autoindex  and use it as \index, so hypdoc can redefine it
+% \newcommand*\autoindex{\index}
+% \newcommand*\UsageIndex[1]{\autoindex{#1\encapchar usage}}
+\AddToHook{package/hyperref/after}{%
+  \hypersetup{linkcolor=[rgb]{0,0,1}}%
+  \pdfstringdefDisableCommands{\let\file\texttt \let\pstyle\textsf}%
+}
+
+\let\key\texttt
+\let\opt\texttt
+\let\pstyle\textsf
+
+%\ExplSyntaxOn
+%\msg_redirect_name:nnn {hooks} {generic-deprecated} {info}
+%\ExplSyntaxOff
+
+\setlength{\belowcaptionskip}{8pt}
+
+% The standard metadata, except for the title (which is different for each file)
+\input{kulemt-version.dtx}
+\author{Luc Van Eycken}
+\date{Release v\fileversion\ (\filedate)}
+
+
+\endinput

@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{h2g2}
 D.~Adams.
@@ -21,10 +21,31 @@ G.~R. Blakley and C.~Meadows.
 \newblock Security of ramp schemes.
 \newblock In {\em Advances in Cryptology, Proceedings of CRYPTO '84, Santa Barbara, California, USA, August 19-22, 1984, Proceedings}, volume 196 of {\em Lecture Notes in Computer Science}, pages 242--268. Springer, 1984.
 
+\bibitem{cryptoeprint:2017/216}
+I.~Cascudo and B.~David.
+\newblock {SCRAPE}: Scalable randomness attested by public entities.
+\newblock Cryptology {ePrint} Archive, Paper 2017/216, 2017.
+
+\bibitem{cryptoeprint:2020/644}
+I.~Cascudo and B.~David.
+\newblock {ALBATROSS}: publicly {AttestabLe} {BATched} randomness based on secret sharing.
+\newblock Cryptology {ePrint} Archive, Paper 2020/644, 2020.
+
 \bibitem{10.1007/3-540-48071-4_7}
 D.~Chaum and T.~P. Pedersen.
 \newblock Wallet databases with observers.
 \newblock In E.~F. Brickell, editor, {\em Advances in Cryptology --- CRYPTO' 92}, pages 89--105, Berlin, Heidelberg, 1993. Springer Berlin Heidelberg.
+
+\bibitem{d053b0be49644b2f932d703db8c1f8a0}
+B.~Chor, S.~Goldwasser, S.~Micali, and B.~Awerbuch.
+\newblock Verifiable secret sharing and achieving simultaneity in the presence of faults (extended abstract).
+\newblock In {\em SFCS '85}, pages 383--395. IEEE, 1985.
+\newblock DBLP's bibliographic metadata records provided through http://dblp.org/search/publ/api are distributed under a Creative Commons CC0 1.0 Universal Public Domain Dedication. Although the bibliographic metadata records are provided consistent with CC0 1.0 Dedication, the content described by the metadata records is not. Content may be subject to copyright, rights of privacy, rights of publicity and other restrictions.; 26th Annual Symposium on Foundations of Computer Science ; Conference date: 21-10-1985 Through 23-10-1985.
+
+\bibitem{DBLP:conf/focs/Feldman87}
+P.~Feldman.
+\newblock A practical scheme for non-interactive verifiable secret sharing.
+\newblock In {\em 28th Annual Symposium on Foundations of Computer Science, Los Angeles, California, USA, 27-29 October 1987}, pages 427--437. {IEEE} Computer Society, 1987.
 
 \bibitem{10.1007/3-540-47721-7_12}
 A.~Fiat and A.~Shamir.
@@ -35,6 +56,16 @@ A.~Fiat and A.~Shamir.
 M.~Franklin and M.~Yung.
 \newblock Communication complexity of secure computation (extended abstract).
 \newblock In {\em Proceedings of the Twenty-Fourth Annual ACM Symposium on Theory of Computing}, STOC '92, page 699–710, New York, NY, USA, 1992. Association for Computing Machinery.
+
+\bibitem{crypto-1989-1727}
+C.-P. Schnorr.
+\newblock Efficient identification and signatures for smart cards.
+\newblock In {\em Advances in Cryptology - CRYPTO '89, 9th Annual International Cryptology Conference, Santa Barbara, California, USA, August 20-24, 1989, Proceedings}, volume 435 of {\em Lecture Notes in Computer Science}, pages 239--252. Springer, 1989.
+
+\bibitem{5581ccd9530540479539d21d1d39ae96}
+L.~Schoenmakers.
+\newblock A simple publicly verifiable secret sharing scheme and its application to electronic voting.
+\newblock In M.~Wiener, editor, {\em Advances in Cryptology - CRYPTO'99 (Proceedings 19th Annual International Cryptology Conference, Santa Barbara CA, USA, August 15-19, 1999)}, Lecture Notes in Computer Science, pages 148--164, Germany, 1999. Springer.
 
 \bibitem{10.1145/359168.359176}
 A.~Shamir.

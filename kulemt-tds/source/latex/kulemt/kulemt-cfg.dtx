@@ -1,0 +1,1251 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Reading the configuration file}
+% \maketitle
+%
+% \DoNotIndex{\kulemt_master_obsolete_item:n}
+% \DoNotIndex{\\, \ExplSyntaxOff, \MakeUppercase}
+% \DoNotIndex{\bool_if:NTF, \bool_lazy_any:nT, \bool_lazy_any:nTF,
+%   \bool_lazy_or:nnT, \bool_set_false:N, \bool_set_true:N,
+%   \cs_generate_variant:Nn, \char_set_catcode_other:N,
+%   \char_set_catcode_space:n,
+%   \cs_if_exist:NTF, \cs_new:Npn, \cs_new_protected:Nn, \cs_new_protected:Npn,
+%   \cs_set_eq:NN, \exp_args:NNe, \exp_args:NV, \exp_args:Ne,
+%   \exp_last_unbraced:Nf, \exp_last_unbraced:Nn, \exp_last_unbraced:No,
+%   \exp_last_unbraced:NV, \exp_last_unbraced:Ne, \file_if_exist:nF,
+%   \int_compare:nNnF, \ior_close:N, \ior_map_break:, \ior_open:Nn,
+%   \ior_str_map_inline:Nn, \msg_error:nnn, \msg_error:nnnn, \msg_error:nnnnn,
+%   \msg_error:nne, \msg_error:nnee, \msg_error:nneee, \msg_fatal:nnn,
+%   \msg_fatal:nne, \msg_new:nnn, \msg_new:nnnn, \msg_warning:nnn,
+%   \msg_warning:nnee, \msg_warning:nnnn, \prg_new_protected_conditional:Nnn,
+%   \prg_generate_conditional_variant:Nnn, \prg_return_false:,
+%   \prg_return_true:, \prop_clear:N, \prop_clear:c, \prop_get:NnN,
+%   \prop_get:cnN, \prop_get:NnNF, \prop_get:NnNTF, \prop_get:NVNF,
+%   \prop_if_empty:NT, \prop_if_empty_p:N, \prop_map_inline:Nn,
+%   \prop_map_tokens:Nn, \prop_map_tokens:cn, \prop_new:N, \prop_put:Nnn,
+%   \prop_put:Nne, \prop_put:Nen, \prop_put:NnV, \prop_put:NVV,
+%   \prop_set_eq:NN, \prop_set_eq:Nc, \prop_set_eq:cN,
+%   \prop_set_from_keyval:Nn, \quark_if_no_value:NF, \quark_if_no_value:NT,
+%   \quark_if_no_value:NTF, \quark_if_no_value_p:N, \q_stop, \seq_clear:N,
+%   \seq_const_from_clist:Nn, \seq_count:c, \seq_if_empty:NT, \seq_if_exist:NT,
+%   \seq_if_exist:NTF, \seq_if_in:Nn, \seq_if_in:NnF, \seq_if_in:NeF,
+%   \seq_if_in:NeTF, \seq_if_in:NVF, \seq_if_in:NVT, \seq_if_in:NVTF,
+%   \seq_item:Nn, \seq_map_inline:Nn, \seq_new:N, \seq_pop_left:NN,
+%   \seq_put_right:NV, \seq_set_eq:Nc, \seq_set_split:Nnn, \seq_set_split:NnV,
+%   \seq_set_split:Nee, \seq_use:Nn, \seq_use:Nnnn, \str_case:nnF,
+%   \str_case:VnF, \str_case_e:nnF, \str_clear:N, \str_head_ignore_spaces:n,
+%   \str_if_empty:NF, \str_if_empty:NTF, \str_if_eq:VnT, \str_if_eq:VnTF,
+%   \str_if_eq_p:nn, \str_if_eq_p:Vn, \str_new:N, \str_put_right:Ne,
+%   \str_put_right:Nn, \str_set:Nn, \str_set:Ne, \str_tail_ignore_spaces:n,
+%   \sys_if_engine_luatex_p:, \sys_if_engine_xetex_p:,
+%   \text_titlecase_first:nn, \tl_clear:N, \tl_if_empty:NF, \tl_if_empty:NTF,
+%   \tl_if_empty:nF, \tl_if_empty:nT, \tl_if_empty:nTF, \tl_if_eq_p:Nc,
+%   \tl_if_in:nnTF, \tl_new:N, \tl_set:Nn, \tl_set:Ne, \tl_set_rescan:Nno,
+%   \tl_to_str:n, \tl_trim_spaces:n, \tl_trim_spaces:o, \use:n, \use_i:nn,
+%   \use_ii:nn, \use_none:n, \use_none:nn}
+% \DoNotIndex{\c_space_tl, \l_char_special_seq, \l_tmpa_bool, \l_tmpa_prop,
+%   \l_tmpb_prop, \l_tmpa_seq, \l_tmpa_str, \l_tmpb_str, \l_tmpa_tl,
+%   \l_tmpb_tl, \g_tmpa_ior, \q_no_value}
+%
+% \groupIndex{babel}{\languagename}
+% 
+% \begin{documentation}
+% This module contains the user commands to get data from the configuration
+% file or to print it.
+%
+% \section{Format of the configuration file}
+% The configuration file is an
+% INI~file.\footnote{\href{https://en.wikipedia.org/wiki/INI_file}^^A
+%                         {https://en.wikipedia.org/wiki/INI\string_file}}
+% The file contains lines with key-value pairs separated by an equal sign `|=|'
+% and grouped in sections. Each section name is on a line itself and surrounded
+% by brackets `|[|\ldots|]|'. The section name will be used as
+% \meta{master abbreviation}. Section names, keys and values are case
+% sensitive. LaTeX constructs are not allowed in the configuration file, but
+% \textsc{utf-8} characters are. So, if you want to keep words together on a
+% typeset line, you can use a ``\textsc{no-break~space}'' (aka ``Nonbreaking
+% space'' in MS~Word) and not a '|~|'.
+%
+% Initial spaces on a line are ignored as well as empty lines and comment lines
+% (the lines starting with a semicolon `|;|'). Leading and trailing spaces on
+% keys and values are also ignored. If a line does not contain a `|=|', it is
+% assumed to be a continuation line of the previous value. This implies that
+% you cannot use a continuation line containing a `|=|'.
+%
+% The section |[defaults]| contains the default values for the keys. This
+% implies that `|defaults|' cannot be used as a \meta{master abbreviation}.
+%
+% Keys consist of an alphanumeric word or words separated by a dot `|.|',
+% without any intervening spaces. The word before the first dot is called the
+% main key, the other ones are called subkeys. The following keys are currently
+% recognized. Required keys are required for each master definition or they
+% should be defined in the section |[defaults]|.
+% \begin{itemize}
+% \item \key{name}, \DescribeConfKey{name}
+%   with value \meta{full official master name}.\\
+%   The \meta{full official master name} must be identical to the master's name
+%   in the program guide. This is a required key.
+% \item \key{type}, \DescribeConfKey{type}
+%   with value `|initial|' or `|advanced|'.\\
+%   The type declares it to be either an initial master or an advanced master.
+%   This is a required key.
+% \item \key{language}, \DescribeConfKey{language}
+%   with value \meta{master language}.\\
+%   The \meta{master language} is the official language of the master. It is
+%   defined by the program guide. Currently the languages `|dutch|' and
+%   `|english|' are supported. This is a required key.
+% \item \key{option} \DescribeConfKey{option}
+%   \DescribeConfKey{option.\meta{abbrev}} \\
+%   The subkeys of the \key{option} main key enumerate the abbreviations of the
+%   different options. The value gives the full official option name in the
+%   \meta{master language}.\\
+%   Whether the option is mentioned on the title page or not, depends on the
+%   requirements of the master program. A program can require it, allow it
+%   (in which case the student decides) or forbid it. This requirement can be
+%   set by using the key |option| (without subkeys) with a value `|required|',
+%   `|allowed|' (the default) or `|forbidden|'.
+% \item \key{faculty}, \DescribeConfKey{faculty}
+%   with value \meta{full faculty name}.\\
+%   Apart from the \meta{full faculty name}, the value can also be `|multi|'
+%   which indicates that the thesis is a combined work of multiple faculties.\\
+%   \DescribeConfKey{faculty.logo}
+%   The subkey \key{.logo} can be used to refer to an image file of the faculty
+%   logo. At least a \file{.pdf} version should be available. If students also
+%   use |dvips|, a \file{.eps} should also be available. The logo will be used
+%   at its natural size, so the KU~Leuven part of the logo must be 2\,cm high.
+% \item \key{contact}, \DescribeConfKey{contact.address}
+%   \DescribeConfKey{contact.email} \DescribeConfKey{contact.phone}
+%   always in combination with a subkey:
+%   \begin{itemize}
+%   \item \key{contact.address}, with the full international address as a value;
+%   \item \key{contact.email}, with a contact email address as value;
+%   \item \key{contact.phone}, with an international contact phone number as
+%     value.
+%   \end{itemize}
+%   The email address and the phone number are not used in the current template.
+% \end{itemize}
+% \DescribeConfKey{\meta{key}.from}
+% Additionally the subkey \key{from} (as the only subkey) can be used to get
+% information from another master definition, which appears earlier in the
+% configuration file. The value is the \meta{master abbreviation} we get the
+% data from. This subkey is typically used for the key \key{contact}.\\
+% \DescribeConfKey{\meta{key}.\meta{lang}}
+% An additional final subkey can be used to select different values for each
+% \meta{document language}. E.g., \key{contact.address.dutch} defines the
+% \key{contact.address} to be used when typeset in a Dutch context. Currently
+% only `|dutch|' and `|english|' can be used as \meta{document language}. This
+% \meta{document language} is typically used for the keys \key{contact.address}
+% and \key{faculty}.
+%
+% Since masters and/or options can become obsolete after some time, please
+% stick to the following rules about them.
+% \begin{itemize}
+% \item Masters or options which are removed from the KU~Leuven program guide
+%   are also removed from the configuration file, or at least commented out.
+% \item When a master is changed considerably or the set of options is changed,
+%   a new program is set up and the old one is phased out. Students who
+%   started in the old program can still continue in it. So the old
+%   program, which we call the obsolete program, is still valid as
+%   program for the master's thesis.
+%   \DescribeConfKey{\meta{key}.\meta{year}}
+%   We differentiate between the new and the obsolete program by adding a dot
+%   `|.|' followed by a year to the master or option abbreviation. By
+%   convention the year is the starting year of the last academic year the
+%   master or option was not obsolete.
+% \item To speed up checking, a master or an option is considered obsolete as
+%   soon as it has a dot `|.|' in its name abbreviation.
+% \end{itemize}
+%
+% \DescribeConfKey{date}
+% \DescribeConfKey{text.\meta{\textellipsis}}
+% The key-value pairs before the first section change the configuration data.
+% Typically it contains the key \key{date}, which holds the date of the
+% configuration file in ISO-format. Currently the only other keys are \key{text}
+% keys, which hold the language specific predefined texts. The values for
+% English and Dutch are already known, so you should only need them for other
+% languages or when the predefined texts must be changed later on. The currently
+% used configuration data is enumerated in table~\ref{tab:cfg-items}.
+%
+% For an example of a configuration file, see the file \file{kulemt.ini}.
+%
+% \section{Using the configuration file}
+% \subsection{Public variables and constants}
+% \begin{variable}{\l_kulemt_cfg_prop}
+%   The variable |\l_kulemt_cfg_prop| holds a property list with all
+%   key-value pairs of general configuration data, which are independent of the
+%   master selected. This data is either predefined or set at the start of the
+%   configuration file before the first section. The currently supported
+%   key-value pairs are enumerated in table~\ref{tab:cfg-items}. The variable
+%   |\l_kulemt_cfg_prop| is only valid after reading the configuration file.
+% \end{variable}
+% \begin{table}
+%   \centering
+%   \def\mlanguage{.\textrm{\meta{language}}}
+%   \def\plural{\textrm{[}.plural\textrm{]}}
+%   \caption{Configuration data. All values are strings.}
+%   \label{tab:cfg-items}
+%   \begin{tabular}{@{}>{\ttfamily}ll@{}} \toprule
+%     \multicolumn{1}{@{}c}{key}
+%                    & \multicolumn{1}{c@{}}{value} \\ \midrule
+%     date           & date of the configuration file in ISO-format \\
+%     text.and\mlanguage
+%                    & translation of ``and'' \\
+%     text.assessor\plural\mlanguage
+%                    & designation for the assessor(s) \\
+%     text.assistant\plural\mlanguage
+%                    & designation for the assistant(s) \\
+%     text.author\plural\mlanguage
+%                    & designation for the author(s) \\
+%     text.copyright\mlanguage
+%                    & copyright text \\
+%     text.acyear.pre\mlanguage
+%                    & text before the academic year on the title page \\
+%     text.title.pre\mlanguage
+%                    & text before the master name on the title page \\
+%     text.promoter\plural\mlanguage
+%                    & designation for the promoter(s) \\
+%     text.publisher.pre\mlanguage
+%                    & text before the list of publishers \\ \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% \begin{variable}{\l_kulemt_master_prop}
+%   The variable |\l_kulemt_master_prop| holds a property list with all
+%   key-value pairs of the configuration file, which describe the current
+%   master. The supported key-value pairs are enumerated in
+%   table~\ref{tab:master-items}.
+%   The variable |\l_kulemt_master_prop| is only valid after calling the
+%   function |\kulemt_set_master:n|.
+% \end{variable}
+% \begin{table}
+%   \centering
+%   \caption{Possible master items. All items are strings except
+%     \texttt{options}, which is a sequence of strings.}
+%   \label{tab:master-items}
+%   \begin{tabular}{@{}>{\ttfamily}ll@{}} \toprule
+%     \multicolumn{1}{@{}c}{key}
+%                        & \multicolumn{1}{c@{}}{value} \\ \midrule
+%     abbreviation       & master abbreviation \\
+%     contact.address\textrm{[}.\textrm{\meta{language}]}
+%                        & full international address,
+%                          possibly \meta{language} specific \\
+%     contact.email      & contact email address \\
+%     contact.phone      & international contact phone number \\
+%     faculty\textrm{[}.\textrm{\meta{language}]}
+%                        & full faculty name or `|multi|',
+%                          possibly \meta{language} specific \\
+%     faculty.logo\textrm{[}.\textrm{\meta{language}]}
+%                        & faculty logo \\
+%     language           & master language \\
+%     name               & full official master name \\
+%     option             & `|required|', `|allowed|' or `|forbidden|' \\
+%     option.\textrm{\meta{name}}
+%                        & full official name of master option \meta{name} \\
+%     options            & list of option \meta{name}s \\
+%     type               & `|initial|' or `|advanced|' \\ \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% \begin{variable}{\l_kulemt_masters_seq}
+%   The variable |\l_kulemt_masters_seq| contains a list of master
+%   abbreviations, which are known until now. It only contains the complete
+%   list of master abbreviations after calling the function
+%   |\kulemt_read_config_file:| to read the entire configuration file.
+% \end{variable}
+%
+% \subsection{Getting data from the configuration file}
+% The option variable \cs{l_kulemt_opt_cfgfile_tl} holds the name of the
+% configuration file (see file \hyperref[file:opt]{\file{kulemt-opt.dtx}}).
+%
+% \begin{function}{\kulemt_read_config_file:}
+%   The function |\kulemt_read_config_file:| reads the entire configuration
+%   file. It deletes any previously read defaults and master information.
+% \end{function}
+%
+% \begin{function}{\kulemt_read_config_file:n}
+%   \begin{syntax}
+%     |\kulemt_read_config_file:n| \Arg{master abbreviation}
+%   \end{syntax}
+%   The function |\kulemt_read_config_file:n| reads from the configuration
+%   file only the configuration data, the defaults and the information for the
+%   master \meta{master abbreviation}. A fatal error is raised if the section
+%   |[|\meta{master abbreviation}|]| is not found in the configuration file. The
+%   function has no effect if the information for the
+%   \meta{master abbreviation} already exists.
+% \end{function}
+%
+% \begin{function}{\kulemt_set_master:n}
+%   \begin{syntax}
+%     |\kulemt_set_master:n| \Arg{master abbreviation}
+%   \end{syntax}
+%   This function initializes the property list |\l_kulemt_master_prop| for
+%   the master \meta{master abbreviation}. The initialization is a prerequisite
+%   for any function getting or using master information. If needed, it calls
+%   the function |\kulemt_read_config_file:n|.
+% \end{function}
+%
+% \begin{function}{\kulemt_master_get_item:nN}
+%   \begin{syntax}
+%     |\kulemt_master_get_item:nN| \Arg{key} \meta{var} \\
+%   \end{syntax}
+%   This function returns the value of the \meta{key} for the current master in
+%   the variable \meta{var}. First the current language is added as a final
+%   subkey to \meta{key}. If this doesn't exist, the key without that final
+%   language subkey is tried. The \meta{var} is set to |\q_no_value| if no
+%   such item is found for the current master. The type of \meta{var}
+%   depends on the \meta{key} (see table~\ref{tab:master-items}).
+% \end{function}
+%
+% \begin{function}{\kulemt_master_get_item_or_fallback:nnN}
+%   \begin{syntax}
+%     |\kulemt_master_get_item_or_fallback:nnN|
+%       \Arg{key} \Arg{fallback} \meta{tl var}
+%   \end{syntax}
+%   This function returns in the variable \meta{tl var} the value of the
+%   \meta{key} for the current master. If the item is not found for the current
+%   master, a \meta{fallback} value is returned. If \meta{fallback} is empty,
+%   an educated guess for the fallback is returned.
+% \end{function}
+%
+% \begin{function}{\kulemt_master_get_required_item:nN}
+%   \begin{syntax}
+%     |\kulemt_master_get_required_item:nN| \Arg{key} \meta{tl var}
+%   \end{syntax}
+%   This function returns the value of the \meta{key} for the current
+%   master in the variable \meta{tl var}. Since the item is required, an error
+%   is issued if the item is not found for the current master.
+% \end{function}
+%
+% \begin{function}{\kulemt_master_get_faculty_name:N}
+%   \begin{syntax}
+%     |\kulemt_master_get_faculty_name:N| \meta{tl var}
+%   \end{syntax}
+%   This function returns the faculty name for the current master in the
+%   variable \meta{tl~var}. In case no faculty name is provided or it is
+%   `|multi|', \meta{tl~var} is made empty.
+% \end{function}
+%
+% \begin{function}[TF]{\kulemt_master_obsolete_item:n}
+%   \begin{syntax}
+%     |\kulemt_master_obsolete_item:nTF| \Arg{item}
+%       \Arg{true code} \Arg{false code}
+%   \end{syntax}
+%   Determines if the \meta{item} is obsolete (i.e., contains a dot). This item
+%   can be a master abbreviation or an option subkey.
+% \end{function}
+%
+% \subsection{Typesetting data from the configuration file}
+% \begin{function}{\kulemt_titlecase_first:n}
+%   \begin{syntax}
+%     |\kulemt_titlecase_first:n| \Arg{text}
+%   \end{syntax}
+%   |\kulemt_titlecase_first:n| prints the \meta{text} with the first character
+%   converted to uppercase. It takes into account special forms in the current
+%   language, such as |ij| in Dutch which is converted to |IJ|. However the
+%   latter only works with a recent (2020) kernel.
+% \end{function}
+%
+% \begin{function}{\kulemt_cfg_print_text:n, \kulemt_cfg_print_text_ucfirst:n}
+%   \begin{syntax}
+%     |\kulemt_cfg_print_text:n| \Arg{subkey}
+%     |\kulemt_cfg_print_text_ucfirst:n| \Arg{subkey}
+%   \end{syntax}
+%   |\kulemt_cfg_print_text:n| prints the configuration text based on the
+%   configuration key `\key{text.\meta{subkey}.\meta{current language}}'.
+%   If the configuration key is not found, an error is raised.
+%   |\kulemt_cfg_print_text_ucfirst:n| does the same but also makes the first
+%   character uppercase.
+% \end{function}
+%
+% \begin{function}{\kulemt_cfg_print_text_from_opt:n,
+%                  \kulemt_cfg_print_text_from_opt_ucfirst:n}
+%   \begin{syntax}
+%     |\kulemt_cfg_print_text_from_opt:n| \Arg{subkey}
+%     |\kulemt_cfg_print_text_from_opt_ucfirst:n| \Arg{subkey}
+%   \end{syntax}
+%   |\kulemt_cfg_print_text_from_opt:n| calls |\kulemt_cfg_print_text:n|
+%   with \meta{subkey} if the option \meta{subkey} variable holds exactly one
+%   item and with `\key{\meta{subkey}.plural}' otherwise.
+%   |\kulemt_cfg_print_text_from_opt_ucfirst:n| does the same but also makes
+%   the first character uppercase.
+% \end{function}
+%
+% \begin{function}{\kulemt_master_print_required_item:n}
+%   \begin{syntax}
+%     |\kulemt_master_print_required_item:n| \Arg{key}
+%   \end{syntax}
+%   This function prints the value of the \meta{key} for the current master.
+%   Since the item is required, an error is issued if the item is not found for
+%   the current master.
+% \end{function}
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt_cfg>
+%    \end{macrocode}
+% 
+% Some x-variants are since October 2023 version no longer available. We
+% generate here the e-type variants for functions which don't exist yet and are
+% used in this file.
+%    \begin{macrocode}
+\cs_generate_variant:Nn \exp_last_unbraced:Nn { Ne }
+\cs_generate_variant:Nn \msg_error:nnn { nne }
+\cs_generate_variant:Nn \msg_error:nnnn { nnee }
+\cs_generate_variant:Nn \msg_error:nnnnn { nneee }
+\cs_generate_variant:Nn \msg_fatal:nnn { nne }
+\cs_generate_variant:Nn \msg_warning:nnnn { nnee }
+\cs_generate_variant:Nn \prop_put:Nnn { Nne }
+\cs_generate_variant:Nn \str_put_right:Nn { Ne }
+\cs_generate_variant:Nn \str_set:Nn { Ne }
+\cs_generate_variant:Nn \tl_set:Nn { Ne }
+%    \end{macrocode}
+%
+% \subsection{Public variables and constants}
+% \begin{variable}{\l_kulemt_masters_seq}
+%   This variable holds a list of the master abbreviations known until now. It
+%   contains the list of all master abbreviations after reading the entire
+%   configuration file with |\kulemt_read_config_file:|.
+%    \begin{macrocode}
+\seq_new:N \l_kulemt_masters_seq
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_kulemt_master_prop}
+%   This variable holds the property list describing the current master. It is
+%   set by the function |\kulemt_set_master:n| to
+%   \cs[no-index]{l_@@_master_\meta{abbrev}_prop}, which stores the key-value
+%   pairs for the master with abbreviation \meta{abbrev}.\\
+%   The keys are the full keys from the configuration file section
+%   |[|\meta{abbrev}|]| with defaults from the configuration file section
+%   |[defaults]|. Apart from the full keys allowed by
+%   \cs[no-index]{c_@@_allowed_key_seq}, the key \key{abbreviation} is added.
+%    \begin{macrocode}
+\prop_new:N \l_kulemt_master_prop
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_kulemt_cfg_prop}
+%   This variable holds the property list describing the general configuration
+%   data. See table~\ref{tab:cfg-items} on page~\pageref{tab:cfg-items} for a
+%   list of supported keys. It is initialized with the default data as strings.
+%   The initialization is needed before the configuration file is read!
+%    \begin{macrocode}
+\prop_new:N \l_kulemt_cfg_prop
+\prop_set_from_keyval:Nn \l_kulemt_cfg_prop
+  {
+    date = ,
+    text.and.dutch   = en ,
+    text.and.english = and ,
+    text.assessor.dutch   = evaluator ,
+    text.assessor.english = assessor ,
+    text.assessor.plural.dutch   = evaluatoren ,
+    text.assessor.plural.english = assessors ,
+    text.assistant.dutch   = begeleider ,
+    text.assistant.english = assistant-supervisor ,
+    text.assistant.plural.dutch   = begeleiders ,
+    text.assistant.plural.english = assistant-supervisors ,
+    text.author.dutch   = auteur ,
+    text.author.english = author ,
+    text.author.plural.dutch   = auteurs ,
+    text.author.plural.english = authors ,
+    text.copyright.dutch   = { Alle~ rechten~ voorbehouden.~ Niets~ uit~ deze~
+      uitgave~ mag~ worden~ vermenigvuldigd~ en/of~ openbaar~ gemaakt~ worden~
+      door~ middel~ van~ druk,~ fotokopie,~ microfilm,~ elektronisch~ of~ op~
+      welke~ andere~ wijze~ ook~ zonder~ voorafgaande~ schriftelijke~
+      toestemming~ van~ de~ uitgever.} ,
+    text.copyright.english = { All~ rights~ reserved.~ No~ part~ of~ the~
+      publication~ may~ be~ reproduced~ in~ any~ form~ by~ print,~ photoprint,~
+      microfilm,~ electronic~ or~ any~ other~ means~ without~ written~
+      permission~ from~ the~ publisher.} ,
+    text.acyear.pre.dutch   = academiejaar ,
+    text.acyear.pre.english = academic~ year ,
+    text.title.pre.dutch   = thesis~ voorgedragen~ tot~ het~ behalen~
+                             van~ de~ graad~ van ,
+    text.title.pre.english = thesis~ submitted~ for~ the~ degree~ of ,
+    text.promoter.dutch   = promotor ,
+    text.promoter.english = supervisor ,
+    text.promoter.plural.dutch   = promotoren ,
+    text.promoter.plural.english = supervisors ,
+    text.publisher.pre.dutch   = uitgegeven~ in~ eigen~ beheer~ door ,
+    text.publisher.pre.english = published~ by 
+  }
+\prop_map_inline:Nn \l_kulemt_cfg_prop
+  { \prop_put:Nne \l_kulemt_cfg_prop {#1} { \tl_to_str:n {#2} } }
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsection{Helper functions}
+% We provide some variants of \LaTeX3 functions.
+%    \begin{macrocode}
+\cs_generate_variant:Nn \prop_put:Nnn { Ne }
+\cs_generate_variant:Nn \seq_set_split:Nnn { Nee }
+\prg_generate_conditional_variant:Nnn \seq_if_in:Nn { Ne } { T, F, TF }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_str_seq_const_from_clist:Nn}
+%   The configuration file lines are read as strings. However,
+%   |\seq_if_in:|\ldots\ compares tokens not strings. Therefore we need to
+%   store the values also as strings in the constants with values.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_str_seq_const_from_clist:Nn
+  { \exp_args:NNe \seq_const_from_clist:Nn #1 { \tl_to_str:n {#2} } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \medskip
+% Strings in the configuration file are assumed to be \textsc{utf-8}. But
+% |pdflatex| reads the \textsc{utf-8} sequences as bytes and converts each byte
+% separately to a string character: `\texttt{â}' becomes `\texttt{Ãć}' in T1
+% font encoding. For LuaTeX or XeTeX this is not a problem.
+%
+% \begin{macro}{\@@_str_with_utf:N}
+%   To solve this problem, a helper function is provide to replace the
+%   \textsc{utf-8} string bytes in |#1| back to normal characters.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_str_with_utf:N
+  {
+    \tl_set_rescan:Nno #1
+      {
+        \ExplSyntaxOff
+        \seq_map_inline:Nn \l_char_special_seq
+          { \char_set_catcode_other:N ##1 }
+        \char_set_catcode_space:n {9}
+        \char_set_catcode_space:n {32}
+      }
+      { #1 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_str_with_utf:nN}
+%   Of course we only want to do this for string values. This helper function
+%   first checks whether the key |#1| stores a string value before trying to
+%   replace characters in |#2|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_str_with_utf:nN
+  {
+    \seq_if_in:NnF \l_@@_non_str_items_seq {#1}
+      { \@@_str_with_utf:N #2 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{variable}{\l_@@_non_str_items_seq}
+%   This variable holds a list of keys whose values does not contain a simple
+%   string.
+%    \begin{macrocode}
+\seq_const_from_clist:Nn \l_@@_non_str_items_seq { options }
+%    \end{macrocode}
+% \end{variable}
+%
+% But all this is not needed for LuaTeX or XeTeX.
+%    \begin{macrocode}
+\bool_lazy_any:nT { \sys_if_engine_luatex_p: \sys_if_engine_xetex_p: }
+  {
+    \cs_set_eq:NN \@@_str_with_utf:N \use_none:n
+    \cs_set_eq:NN \@@_str_with_utf:nN \use_none:nn
+  }
+%    \end{macrocode}
+%
+% 
+% \subsection{Parsing the configuration file}
+% \subsubsection{Private variables and constants}
+% \begin{variable}{\l_@@_current_section_name_str, \l_@@_current_key_str,
+%                  \l_@@_current_value_str, \l_@@_current_section_prop}
+%   The variable \cs[no-index]{l_@@_current_section_name_str} holds the name of
+%   the current section, the variable \cs[no-index]{l_@@_current_key_str} the
+%   name of the current key being parsed, and the variable
+%   \cs[no-index]{l_@@_current_value_str} the value of the current key so far.
+%   The property list \cs[no-index]{l_@@_current_section_prop} holds the
+%   key-value pairs of the current section, parsed so far. These variables have
+%   only meaningful content during the parsing of a section of the
+%   configuration file.
+%    \begin{macrocode}
+\str_new:N  \l_@@_current_section_name_str
+\str_new:N  \l_@@_current_key_str
+\str_new:N  \l_@@_current_value_str
+\prop_new:N \l_@@_current_section_prop
+%    \end{macrocode}
+% \end{variable}
+% 
+% \begin{variable}{\l_@@_current_options_seq}
+%   A list of the \key{option} subkeys of the current section so far.
+%    \begin{macrocode}
+\seq_new:N \l_@@_current_options_seq
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_@@_section_defaults_prop}
+%   The property list \cs[no-index]{l_@@_section_\meta{name}_prop} stores the
+%   key-value pairs for the section |[|\meta{name}|]|, which is either a
+%   |[|\meta{master abbreviation}|]| or |[defaults]|. Each key is a main key of
+%   the section and its value is again a property list with as key the
+%   concatenated subkeys and as value the value of the section key. The reason
+%   for having this complex organization, is that we want to easily replace
+%   entire main key contents. E.g., we want to avoid combining a specific
+%   contact address with a default contact phone number. (If you want to do
+%   this anyway, use ``|contact.from=defaults|'' first.)
+%    \begin{macrocode}
+\prop_new:N \l_@@_section_defaults_prop
+%    \end{macrocode}
+% \end{variable}
+% 
+% \begin{variable}{\c_@@_allowed_key_seq} 
+%   This constant holds the valid keys, including subkeys. Additionally the key
+%   |option| can have subkeys, namely the abbreviation of an option name and
+%   the last year before coming obsolete. The subkey |from| as a single subkey
+%   is also allowed for all keys.\\
+%   The list must be converted to strings because |\seq_if_in:|\ldots\ compares
+%   token lists.
+%    \begin{macrocode}
+\@@_str_seq_const_from_clist:Nn \c_@@_allowed_key_seq
+  { name, type, language, option,
+    faculty, faculty.dutch, faculty.english,
+    faculty.logo, faculty.logo.dutch, faculty.logo.english,
+    contact.address, contact.address.english, contact.address.dutch,
+    contact.email, contact.phone }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_language_values_seq, \c_@@_type_values_seq,
+%                  \c_@@_option_values_seq}
+%   The following constants hold the allowed values for the keys \key{language},
+%   \key{type} and \key{option} without a subkey. It is assumed that for each
+%   of the languages hyphenation patterns are available, either loaded on demand
+%   (LuaTeX) or preloaded (the other formats).\\
+%   The first list item is used instead of an incorrect value or when a value
+%   is missing for a required item.
+%    \begin{macrocode}
+\@@_str_seq_const_from_clist:Nn \c_@@_language_values_seq
+  { english, dutch }
+\@@_str_seq_const_from_clist:Nn \c_@@_option_values_seq
+  { allowed, forbidden, required }
+\@@_str_seq_const_from_clist:Nn \c_@@_type_values_seq
+  { initial, advanced }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_@@_tmp_tl}
+%   Temporary internal variable, used when printing an item.
+%    \begin{macrocode}
+\tl_new:N \l_@@_tmp_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsubsection{Reading the configuration file}
+%
+% \begin{macro}{\kulemt_read_config_file:}
+%   Public function to read the entire configuration file. It removes any
+%   previously read configuration information.\\
+%   The name of the configuration file is taken from
+%   |\l_kulemt_opt_cfgfile_tl|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_read_config_file:
+  {
+    \prop_clear:N \l_@@_section_defaults_prop
+    \seq_clear:N \l_kulemt_masters_seq
+    \exp_args:NV \@@_read_file:nn \l_kulemt_opt_cfgfile_tl {}
+    \seq_if_empty:NT \l_kulemt_masters_seq
+      { \msg_fatal:nne {kulemt} {cfg/no-masters} { \l_kulemt_opt_cfgfile_tl } }
+  }
+\msg_new:nnnn {kulemt} {cfg/no-masters}
+  { No~ master~ definitions~ are~ found~ in~ the~ configuration~ file~ '#1'. }
+  { Please~ correct~ the~ configuration~ file~ or~ select~ another~ one. }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{\kulemt_read_config_file:n}
+%   Public function to read from the configuration file the necessary
+%   information about one master as fast as possible. It adds this to the
+%   existing configuration information. If the section |[|\meta{master
+%   abbreviation}|]| is not found in the configuration file, a fatal error is
+%   raised.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_read_config_file:n
+  {
+    \seq_if_in:NeF \l_kulemt_masters_seq { \tl_to_str:n {#1} }
+      {
+        \exp_args:NV \@@_read_file:nn \l_kulemt_opt_cfgfile_tl {#1}
+        \seq_if_in:NeF \l_kulemt_masters_seq { \tl_to_str:n {#1} }
+          { \msg_fatal:nnn {kulemt} {cfg/missing-master} {#1} }
+      }
+  }
+\msg_new:nnnn {kulemt} {cfg/missing-master}
+  { The~ master~ abbreviation~ '#1'~ is~ not~ defined~
+    in~ the~ configuration~ file~ '\l_kulemt_opt_cfgfile_tl'. }
+  { Perhaps~ you~ mistyped~ the~ abbrevation~ or~
+    the~ configuration~ file~ needs~ updating. }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{\@@_read_file:nn}
+%   This function reads the information for a specific \meta{master
+%   abbreviation} (|#2|) from the configuration file \meta{file name} (|#1|).
+%   If |#2| is empty, the entire configuration file is read.\\
+%   Empty lines and comment lines (starting with a `|;|') in the configuration
+%   file are ignored. A section starts with a line containing a
+%   |[|\meta{section name}|]|. Other lines define a new key or continue an
+%   existing key.\\
+%   Due to the possibility of a subkey \key{from}, no sections can be skipped
+%   until the section |[|\meta{master abbreviation}|]|. After that section,
+%   reading stops. We assume no relevant |[defaults]| sections can be found
+%   further down the line.\\
+%   Note: \cs[no-index]{l_@@_current_section_name_str} holds the name of the
+%   previous section when a `|[|' is encountered.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_read_file:nn
+  {
+    \file_if_exist:nF {#1}
+      { \msg_fatal:nnn {kulemt} {cfg/file-not-found} {#1} }
+    \str_clear:N \l_@@_current_section_name_str
+    \ior_open:Nn \g_tmpa_ior {#1}
+    \ior_str_map_inline:Nn \g_tmpa_ior
+      {
+        \str_set:Ne \l_tmpa_str { \str_head_ignore_spaces:n {##1} }
+        \str_case:VnF \l_tmpa_str
+          {
+            {}  {}
+            {;} {}
+            {[} {
+                  \@@_finish_read_section:
+                  \tl_if_empty:nTF {#2}
+                    { \@@_start_read_section:nn {##1} {#2} }
+                    {
+                      \str_if_eq:VnTF
+                        \l_@@_current_section_name_str {#2}
+                        { \ior_map_break: }
+                        { \@@_start_read_section:nn {##1} {#2} }
+                    }
+                }
+          }
+          { \@@_read_key:w ##1 == \q_stop }
+      }
+    \@@_finish_read_section:
+    \ior_close:N \g_tmpa_ior
+  }
+\msg_new:nnn {kulemt} {cfg/file-not-found}
+  { The~ configuration~ file~ '#1'~ is~ missing.}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Reading a section}
+%
+% \begin{macro}{\@@_start_read_section:nn, \@@_start_read_section_aux:w}
+%   Start reading a section from \meta{line} (|#1|) for \meta{master
+%   abbreviation} (|#2|). To allow reading the configuration file multiple
+%   times for different masters, a redefinition of a section does only results
+%   in an error if the entire configuration file is read (|#2| is empty).
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_start_read_section:nn
+  {
+    \exp_last_unbraced:Nf \@@_start_read_section_aux:w
+      { \str_tail_ignore_spaces:n {#1} } ] \q_stop
+    \tl_if_empty:nT {#2}
+      {
+        \seq_if_in:NVT \l_kulemt_masters_seq
+          \l_@@_current_section_name_str
+          {
+            \msg_error:nne {kulemt} {cfg/section-redefined}
+              { \l_@@_current_section_name_str }
+          }
+      }
+    \prop_clear:N \l_@@_current_section_prop
+    \str_clear:N \l_@@_current_key_str
+    \str_clear:N \l_@@_current_value_str
+    \seq_clear:N \l_@@_current_options_seq
+  }
+\cs_new_protected:Npn \@@_start_read_section_aux:w #1] #2 \q_stop
+  {
+    \tl_if_empty:nT {#2}
+      { \msg_warning:nnn {kulemt} {cfg/section-name-error} {#1} }
+    \str_set:Nn \l_@@_current_section_name_str {#1}
+  }
+\msg_new:nnnn {kulemt} {cfg/section-redefined}
+  { Section~ '#1'~ defined~ more~ than~ once~ in~ the~ configuration~ file.}
+  { The~ previous~ definition~ will~ be~ ignored. }
+\msg_new:nnnn {kulemt} {cfg/section-name-error}
+  { '[#1'~ misses~ a~ trailing~ ']'~ in~ the~ configuration~ file.}
+  { An~ extra~ ']'~ is~ assumed. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_finish_read_section:}
+%   Finish up reading a section. A |[defaults]| section is merged with existing
+%   ones. Any other section describes a master and it replaces an existing
+%   section with the same name.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_finish_read_section:
+  {
+    \@@_finish_read_key:
+    \str_if_eq:VnTF \l_@@_current_section_name_str {defaults}
+      {
+        \prop_map_tokens:Nn \l_@@_current_section_prop
+          { \prop_put:Nnn \l_@@_section_defaults_prop }
+      }
+      {
+        \prop_clear:N \l_tmpa_prop
+        \prop_put:NnV \l_tmpa_prop {} \l_@@_current_options_seq
+        \prop_put:NnV \l_@@_current_section_prop {options} \l_tmpa_prop
+        \str_if_empty:NF \l_@@_current_section_name_str
+          { \seq_put_right:NV \l_kulemt_masters_seq
+              \l_@@_current_section_name_str }
+        \prop_set_eq:cN
+          { l_@@_section_ \l_@@_current_section_name_str _prop }
+          \l_@@_current_section_prop
+        \prop_clear:c
+          { l_@@_master_ \l_@@_current_section_name_str _prop }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Reading a key-value pair}
+% \begin{macro}{\@@_read_key:w, \@@_read_key_aux:w}
+%   Usage: \cs[no-index]{@@_read_key:w} \meta{line} |==\q_stop|\\
+%   The function \cs[no-index]{@@_read_key:w} splits a \meta{line} in a key and
+%   a value, based on the first `|=|' in the \meta{line}. The value may contain
+%   `|=|' characters. In that case, |#3| contains more than a `|=|'. If no
+%   `|=|' is present in the \meta{line }(when |#3| is empty), the \meta{line}
+%   is added to the previous value.
+%   The auxiliary function \cs[no-index]{@@_read_key_aux:w} is used to remove
+%   the |==| before the |\q_stop|.
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_read_key:w #1 = #2 = #3 \q_stop
+  {
+    \str_case:nnF {#3}
+      {
+        {}  {
+              \str_put_right:Ne \l_@@_current_value_str
+                { \c_space_tl \tl_trim_spaces:n {#1} }
+            }
+        {=} {
+              \@@_finish_read_key:
+              \str_set:Ne \l_@@_current_key_str
+                { \tl_trim_spaces:n {#1} }
+              \str_set:Ne \l_@@_current_value_str
+                { \tl_trim_spaces:n {#2} }
+            }
+      }
+      {
+        \@@_finish_read_key:
+        \str_set:Ne \l_@@_current_key_str { \tl_trim_spaces:n {#1} }
+        \str_set:Ne \l_@@_current_value_str
+          { \tl_trim_spaces:o { \@@_read_key_aux:w #2=#3\q_stop } }
+      }
+  }
+\cs_new:Npn \@@_read_key_aux:w #1 ==\q_stop { #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_finish_read_key:}
+%   After checking for invalid keys, add the key-value pair to the current
+%   section property list. Before the first section, any key is allowed and is
+%   stored in the configuration property list. In any other section keys
+%   enumerated in \cs[no-index]{c_@@_allowed_key_seq} are allowed as well as
+%   \key{option.\meta{option abbrev}}.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_finish_read_key:
+  {
+    \str_if_empty:NF \l_@@_current_key_str
+      {
+        \str_if_empty:NTF \l_@@_current_section_name_str
+          {
+            \prop_put:NVV \l_kulemt_cfg_prop \l_@@_current_key_str
+              \l_@@_current_value_str
+          }
+          {
+            \seq_set_split:NnV \l_tmpa_seq {.} \l_@@_current_key_str
+            \seq_pop_left:NN \l_tmpa_seq \l_tmpa_str
+            \str_set:Ne \l_tmpb_str { \seq_use:Nn \l_tmpa_seq {.} }
+            \str_if_eq:VnTF \l_tmpb_str {from}
+              {
+                \@@_get_section_item_from:VVN
+                  \l_@@_current_value_str \l_tmpa_str \l_tmpa_prop
+              }
+              {
+                \seq_if_in:NVTF \c_@@_allowed_key_seq
+                  \l_@@_current_key_str
+                  {
+                    \seq_set_eq:Nc \l_tmpa_seq
+                      {c_@@_ \l_tmpa_str _values_seq}
+                    \seq_if_exist:NT \l_tmpa_seq
+                      {
+                        \seq_if_in:NVF \l_tmpa_seq
+                          \l_@@_current_value_str
+                          {
+                            \msg_error:nneee {kulemt} {cfg/unknown-value}
+                              { \l_@@_current_value_str }
+                              { \l_@@_current_key_str }
+                              { ' \seq_use:Nnnn \l_tmpa_seq
+                                { '~ and~ ' } { ',~ ' } { ',~ and~ ' } ' }
+                            \tl_set:Ne \l_@@_current_value_str
+                              { \seq_item:Nn \l_tmpa_seq {1} }
+                          }
+                      }
+                    \bool_set_true:N \l_tmpa_bool
+                  }
+                  {
+                    \str_if_eq:VnTF \l_tmpa_str {option}
+                      {
+                        \tl_if_empty:NF \l_tmpb_str
+                          {
+                            \seq_put_right:NV
+                              \l_@@_current_options_seq \l_tmpb_str
+                          }
+                        \bool_set_true:N \l_tmpa_bool
+                      }
+                      { \bool_set_false:N \l_tmpa_bool }
+                  }
+                \bool_if:NTF \l_tmpa_bool
+                  {
+                    \prop_get:NVNF
+                      \l_@@_current_section_prop
+                      \l_tmpa_str
+                      \l_tmpa_prop
+                      { \prop_clear:N \l_tmpa_prop }
+                    \prop_put:NVV \l_tmpa_prop \l_tmpb_str
+                      \l_@@_current_value_str
+                  }
+                  {
+                    \msg_warning:nnee {kulemt} {cfg/invalid-key}
+                      { \l_@@_current_key_str }
+                      { \l_@@_current_section_name_str }
+                    \prop_set_eq:NN \l_tmpa_prop \q_no_value
+                  }
+              }
+            \quark_if_no_value:NF \l_tmpa_prop
+              {
+                \prop_put:NVV \l_@@_current_section_prop \l_tmpa_str
+                  \l_tmpa_prop
+              }
+          }
+      }
+  }
+\msg_new:nnnn {kulemt} {cfg/invalid-key}
+  { Invalid~ key~ '#1'~ in~ section~ '#2'. }
+  { The~ invalid~ key~ is~ ignored. }
+\msg_new:nnnn {kulemt} {cfg/unknown-value}
+  { '#1'~ is~ not~ a~ valid~ value~ for~ key~ '#2'.}
+  { Valid~ choices~ for~ '#2'~ are:~ #3. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_get_section_item_from:nnN, \@@_get_section_item_from:VVN}
+%   Return the value of \meta{key} (|#2|) from the section named \meta{section}
+%   (|#1|) in the \meta{variable} (|#3|), normally a property list variable.
+%   Return |\q_no_value| if the \meta{key} is not present in
+%   \meta{section}.\\
+%   Note: the \meta{section} must be located before the current section in the
+%   configuration file.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_get_section_item_from:nnN
+  {
+    \seq_if_in:NeTF \l_kulemt_masters_seq { \tl_to_str:n {#1} }
+      { \prop_get:cnN { l_@@_section_ #1 _prop } {#2} #3 }
+      {
+        \msg_error:nneee {kulemt} {cfg/unknown-from}
+          { \l_@@_current_key_str }
+          { \l_@@_current_section_name_str } { #1 }
+        \prop_set_eq:NN #3 \q_no_value
+      }
+  }
+\cs_generate_variant:Nn \@@_get_section_item_from:nnN { VV }
+\msg_new:nnn {kulemt} {cfg/unknown-from}
+  { The~ configuration~ key~ '#1'~ in~ section~ '#2'~ refers~ to~ '#3'.~
+    But~ this~ section~ has~ not~ been~ defined~ before. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Getting information of a master}
+% \begin{macro}{\kulemt_set_master:n, \kulemt_set_master:V}
+%   Combine the default settings (from section |[defaults]|) and the settings
+%   for a master \meta{master abbreviation} and return the result in
+%   |\l_kulemt_master_prop|. If needed the configure file is read. If this
+%   file does not contain a section named \meta{master abbreviation}, a fatal
+%   error is issued by |\kulemt_read_config_file:n|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_set_master:n
+  {
+    \seq_if_in:NeF \l_kulemt_masters_seq { \tl_to_str:n {#1} }
+      { \kulemt_read_config_file:n {#1} }
+    \bool_lazy_or:nnT
+      {
+        ! \tl_if_eq_p:Nc \l_kulemt_master_prop
+          { l_@@_master_ #1 _prop }
+        }
+      { \prop_if_empty_p:N \l_kulemt_master_prop }
+      {
+        \prop_set_eq:Nc \l_kulemt_master_prop { l_@@_master_ #1 _prop }
+        \prop_if_empty:NT \l_kulemt_master_prop
+          {
+            \prop_set_eq:NN \l_tmpa_prop \l_@@_section_defaults_prop
+            \prop_map_tokens:cn { l_@@_section_ #1 _prop }
+              { \prop_put:Nnn \l_tmpa_prop }
+            \prop_map_inline:Nn \l_tmpa_prop
+              {
+                \tl_set:Nn \l_tmpb_prop {##2}
+                \prop_map_inline:Nn \l_tmpb_prop
+                  {
+                    \prop_put:Nen \l_kulemt_master_prop
+                      { ##1 \tl_if_empty:nF {####1} { . ####1  } } { ####2 }
+                  }
+              }
+            \prop_put:Nnn \l_kulemt_master_prop {abbreviation} {#1}
+            \prop_set_eq:cN { l_@@_master_ #1 _prop }
+              \l_kulemt_master_prop
+          }
+      }
+  }
+\cs_generate_variant:Nn \kulemt_set_master:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_master_get_item:nN} 
+%   Return the value of \meta{key} (`|#1.|\meta{current language}' or `|#1|')
+%   of the current master into the \meta{var} (|#2|). If \meta{current
+%   language} is |british|, |english| is also tried. The \meta{var} is set
+%   to |\q_no_value| if the item is not found for the current master.\\
+%   The property list |\l_kulemt_master_prop| holds the information of the
+%   current master.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_master_get_item:nN
+  {
+    \prop_if_empty:NT \l_kulemt_master_prop
+      { \msg_fatal:nnn {kulemt} {cfg/master-not-set} {#1} }
+    \exp_args:NNe \prop_get:NnNF \l_kulemt_master_prop {#1 . \languagename} #2
+      {
+        \str_if_eq:VnTF \languagename {british}
+          { \prop_get:NnNF \l_kulemt_master_prop {#1 .english} #2 }
+          { \use:n }
+            { \prop_get:NnN \l_kulemt_master_prop {#1} #2 }
+      }
+    \quark_if_no_value:NF #2 { \__kulemt_cfg_str_with_utf:nN {#1} #2 }
+  }
+\msg_new:nnn {kulemt} {cfg/master-not-set}
+  { A~ master~ must~ be~ selected~ before~ getting~ information~ about~ '#1'.}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_master_get_item_or_fallback:nnN}
+%   If the item |#1| is not found for the current master, |#2| is used as
+%   fallback. If |#2| is empty, the function
+%   \cs[no-index]{@@_master_get_item_fallback:nN} provides a fallback value.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_master_get_item_or_fallback:nnN
+  {
+    \kulemt_master_get_item:nN {#1} #3
+    \quark_if_no_value:NT #3
+      {
+        \tl_if_empty:nTF {#2}
+          { \@@_master_get_item_fallback:nN {#1} #3 }
+          { \tl_set:Nn #3 {#2} }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_master_get_required_item:nN}
+%   If the item is not found for the current master, an error is issued. If you
+%   continue after the error, the function
+%   \cs[no-index]{@@_master_get_item_fallback:nN} provides a fallback value.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_master_get_required_item:nN
+  {
+    \kulemt_master_get_item:nN {#1} #2
+    \quark_if_no_value:NT #2
+      {
+        \@@_master_get_item_fallback:nN {#1} \l_tmpa_tl
+        \prop_get:NnN \l_kulemt_master_prop {abbreviation} \l_tmpb_tl
+        \msg_error:nneee {kulemt} {cfg/missing-key}
+          { \l_tmpb_tl } {#1} { \l_tmpa_tl }
+        \prop_put:NnV \l_kulemt_master_prop {#1} \l_tmpa_tl
+        \prop_set_eq:cN { l_@@_master_ \l_tmpb_tl _prop }
+          \l_kulemt_master_prop
+      }
+  }
+\msg_new:nnnn {kulemt} {cfg/missing-key}
+  { The~ required~ key~ '#2'~ is~ missing~ for~ master~ '#1'.}
+  { If~ you~ continue,~ the~ value~ '#3'~ will~ be~ used. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_master_get_item_fallback:nN}
+%   This function returns the fallback value for \meta{key} (|#1|) in \meta{tl
+%   var} |#2|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_master_get_item_fallback:nN
+  {
+    \seq_set_eq:Nc \l_tmpa_seq {c_@@_ #1 _values_seq}
+    \tl_set:Ne #2 { \seq_if_exist:NTF \l_tmpa_seq
+                      { \seq_item:Nn \l_tmpa_seq {1} }
+                      { ???? } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_master_get_faculty_name:N}
+%   Returns the faculty name in |#1| or clear it.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_master_get_faculty_name:N
+  {
+    \kulemt_master_get_item:nN {faculty} #1
+    \bool_lazy_or:nnT
+      { \quark_if_no_value_p:N #1 }
+      { \str_if_eq_p:Vn #1 {multi} }
+      { \tl_clear:N #1 }
+    }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[TF]{\kulemt_master_obsolete_item:n}
+%   An item is considered obsolete if it contains a dot.
+%    \begin{macrocode}
+\prg_new_protected_conditional:Nnn \kulemt_master_obsolete_item:n { T, F, TF }
+  { \tl_if_in:nnTF {#1} {.} { \prg_return_true: } { \prg_return_false: } }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \subsection{Typesetting configuration data}
+% \begin{macro}{\kulemt_titlecase_first:n, \kulemt_titlecase_first:V}
+%   This helper function converts the first character of |#1| to uppercase,
+%   taking into account the current language, as stored in |\languagename|.\\
+%   Unfortunately |\text_titlecase_first:nn| exists only since 2020. So, for
+%   older kernels we approximate it with |\MakeUppercase|, but this is unaware
+%   of the current language.
+%    \begin{macrocode}
+\cs_if_exist:NTF \text_titlecase_first:nn
+  {
+    \cs_new_protected:Nn \kulemt_titlecase_first:n
+      { \exp_args:NV \text_titlecase_first:nn \languagename {#1} }
+  } 
+  {
+    \cs_new_protected:Nn \kulemt_titlecase_first:n
+      { \MakeUppercase #1 }
+  }
+\cs_generate_variant:Nn \kulemt_titlecase_first:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_cfg_print_text:n, \kulemt_cfg_print_text_ucfirst:n,
+%               \@@_get_text:n}
+%   The function |\kulemt_cfg_print_text:n| prints the configuration data
+%   `|text.#1|' for the current language, which is stored in |\languagename| by
+%   \pkg{babel}. If it is not defined the language \texttt{english}
+%   is tried after issuing an error.\\
+%   The function |\kulemt_cfg_print_text_ucfirst:n| also makes the first
+%   character uppercase.\\
+%   Both functions use the function \cs[no-index]{@@_get_text:n} to get the
+%   configuration data.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_cfg_print_text:n
+  {
+    \@@_get_text:n {#1}
+    \l_@@_tmp_tl
+  }
+\cs_new_protected:Nn \kulemt_cfg_print_text_ucfirst:n
+  {
+    \@@_get_text:n {#1}
+    \kulemt_titlecase_first:V \l_@@_tmp_tl
+  }
+\cs_new_protected:Nn \@@_get_text:n
+  {
+     \exp_args:NNe
+      \prop_get:NnNF \l_kulemt_cfg_prop { text. #1 .\languagename}
+        \l_@@_tmp_tl
+        {
+          \str_if_eq:VnT \languagename {british}
+            {
+              \prop_get:NnN \l_kulemt_cfg_prop {text.#1.english}
+                \l_@@_tmp_tl
+            }
+        }
+    \quark_if_no_value:NT \l_@@_tmp_tl
+      {
+        \msg_error:nnee {kulemt} {cfg/text-not-set} {#1} { \languagename }
+        \prop_get:NnN \l_kulemt_cfg_prop { text.#1.english}
+          \l_@@_tmp_tl
+      }
+    \quark_if_no_value:NTF \l_@@_tmp_tl
+      { \tl_set:Ne \l_@@_tmp_tl {???} }
+      { \__kulemt_cfg_str_with_utf:N \l_@@_tmp_tl }
+  }
+\msg_new:nnnn {kulemt} {cfg/text-not-set}
+  { Configuration~ data~ 'text.#1'~ is~ undefined~ for~ language~ '#2'. }
+  { Correct~ the~ configuration~ file.\\
+    I~ shall~ use~ the~ English~ text~ for~ now~ if~ available. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kulemt_cfg_print_text_from_opt:n,
+%               \kulemt_cfg_print_text_from_opt_ucfirst:n,
+%               \@@_get_text_from_opt:n}
+%   These functions add |.plural| to the argument |#1| if the option holds
+%   multiple items. Then they call the corresponding function without
+%   |_from_opt| in its name.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_cfg_print_text_from_opt:n
+  {
+    \@@_get_text_from_opt:n {#1}
+    \l_@@_tmp_tl
+  }
+\cs_new_protected:Nn \kulemt_cfg_print_text_from_opt_ucfirst:n
+  {
+    \@@_get_text_from_opt:n {#1}
+    \kulemt_titlecase_first:V \l_@@_tmp_tl
+  }
+\cs_new_protected:Nn \@@_get_text_from_opt:n
+  {
+    \exp_args:Ne \@@_get_text:n
+      {
+        #1
+        \int_compare:nNnF { \seq_count:c { l_kulemt_opt_ #1 _seq } } = {1}
+          { .plural }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{\kulemt_master_print_required_item:n}
+%   Works like |\kulemt_master_get_required_item:nN| but prints the value
+%   instead of storing it in a variable.
+%    \begin{macrocode}
+\cs_new_protected:Nn \kulemt_master_print_required_item:n
+  {
+    \kulemt_master_get_required_item:nN {#1} \l_@@_tmp_tl
+    \l_@@_tmp_tl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

@@ -1,0 +1,41 @@
+\chapter{Information about the master's programmes}
+
+\ReadConfigFile
+
+This \ifanappendix appendix \else chapter \fi gives an overview of the master's
+programmes of the Faculty of Engineering Science. These master's programmes are
+supported by default by the LaTeX document class \cls{kulemt}. But all of this
+information is also valid for non-LaTeX documents.
+
+\section{Information from \file{\ConfigFileName}}
+\label{sec:mastercfg}
+The master's programme specific information is stored in the
+\file{\ConfigFileName} file. It contains information about the master's
+programme language, the programme's faculty, known master's programme options,
+and copyright contact information.
+
+\ifdefined\microtypesetup \microtypesetup{protrusion=false}\fi
+
+This section describes the \file{\ConfigFileName} file dated
+\PrintConfigFileDate. For the latest information, consult
+\file{\ConfigFileName} directly.
+If no faculty name is shown, it is an inter-faculty programme.
+
+\subsection{Dutch initial master’s programmes}
+\PrintMastersInfo{initial}{dutch}
+
+\subsection{English initial master’s programmes}
+\PrintMastersInfo{initial}{english}
+
+\subsection{Advanced master’s programmes}
+\PrintMastersInfo{advanced}{}
+
+\subsection{Obsolete master’s programmes}
+\label{sec:obsoletemasters}
+\PrintMastersInfo*{}{}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "kulemt"
+%%% ispell-local-dictionary: "british"
+%%% End: 

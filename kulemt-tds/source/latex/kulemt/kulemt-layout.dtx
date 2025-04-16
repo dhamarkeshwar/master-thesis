@@ -1,0 +1,231 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Document layout}
+% \maketitle
+%
+% \DoNotIndex{\centering, \clearpage, \leftmark, \rightmark, \scshape,
+%   \thepage, \upshape}
+% \DoNotIndex{\RenewDocumentCommand}
+% \DoNotIndex{\bool_if:NF, \bool_if:NTF, \clist_put_right:Nn, \cs_gset_eq:NN,
+%   \dim_set:Nn, \dim_set_eq:NN, \int_compare:nNnTF, \scan_stop:, \skip_set:Nn,
+%   \tl_set:Nn}
+%
+% \groupIndex{latexvar}{\headsep, \marginparpush, \marginparsep,
+%   \marginparwidth, \paperwidth, \textheight, \textwidth}
+% \groupIndex{memoircmd}{\aliaspagestyle, \captionnamefont, \captiontitlefont,
+%   \captionstyle, \centerlastline, \chapterheadstart, \checkandfixthelayout,
+%   \checkthelayout, \cleartorecto, \cleartoverso, \fixthelayout,
+%   \makeevenfoot, \makeoddfoot, \makeoddhead, \makepagestyle, \maxsecnumdepth,
+%   \maxtocdepth, \pagestyle, \setheaderspaces, \setrmarg, \setulmargins,
+%   \tocheadstart}
+% \groupIndex{memoirvar}{\cftbeforechapterskip, \foremargin, \onelineskip,
+%   \spinemargin}
+% 
+% \begin{documentation}
+% \DescribeLaTeXCmd{\maketitle}
+% The LaTeX command |\maketitle| is made a no-op in the thesis layout because
+% it otherwise conflicts with our layout.
+%
+% \medskip
+% \noindent \DescribeMemoirCmd{\clearforchapter}
+% The \cls{memoir} command |\clearforchapter| is redefined to avoid empty pages
+% in the front and back matter. These parts of the text are always
+% \opt{openany}. If you don't like this, you can use the |\openleft| or
+% |\openright| command in the document.
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt_layout>
+%    \end{macrocode}
+% First the popular packages incompatible with this layout are enumerated.
+%    \begin{macrocode}
+\clist_put_right:Nn \l_kulemt_incompatible_clist
+  { a4, a4wide, anysize, fullpage, geometry, typearea }
+%    \end{macrocode}
+%
+% \begin{latexcmd}{\maketitle}
+%   Since we have our own functions to typeset the title and authors, the user
+%   command |\maketitle| should do nothing in the thesis layout except stop the
+%   scanning.
+%    \begin{macrocode}
+\bool_if:NF \l_kulemt_opt_article_bool
+  { \cs_gset_eq:NN \maketitle \scan_stop: }
+%    \end{macrocode}
+% \end{latexcmd}
+%
+% \subsection{Page layout}
+% The default |\headheight| and |\headsep| from \cls{memoir} are left
+% as is, but the text body dimensions are redefined depending on the text
+% point size (10pt and 11pt respectively).
+%    \begin{macrocode}
+\int_compare:nNnTF { \l_kulemt_opt_ptsize_int } = {10}
+  {
+    \dim_set:Nn \textwidth  { 13cm }
+    \dim_set:Nn \textheight { 20cm }
+  }
+  {
+    \dim_set:Nn \textwidth  { 14cm }
+    \dim_set:Nn \textheight { 215mm }
+  }
+%    \end{macrocode}
+% The inner (|\spinemargin|) and outer (|\foremargin|) margins are computed as
+% follows:\\
+% \hspace*{2em}$\begin{array}[t]{@{}l@{{}={}}l@{}}
+%   |\foremargin|  & 0.6\,(|\paperwidth| - |\textwidth| -
+%                          \mathrm{binding}) \\
+%   |\spinemargin| & 0.4\,(|\paperwidth| - |\textwidth| -
+%                          \mathrm{binding}) + \mathrm{binding} \\
+% \end{array}$ \\
+% When equal margins are requested, the visible parts of both margins are made
+% equal (use a factor 0.5 instead of 0.4 and 0.6).
+%    \begin{macrocode}
+\dim_set:Nn \foremargin
+  {
+    ( \paperwidth - \textwidth - \l_kulemt_opt_bind_dim )
+    * \bool_if:NTF \l_kulemt_opt_lrequal_bool {5} {6} /10
+  }
+\dim_set:Nn \spinemargin
+  {
+    ( \paperwidth - \textwidth - \l_kulemt_opt_bind_dim )
+    * \bool_if:NTF \l_kulemt_opt_lrequal_bool {5} {4} /10
+    + \l_kulemt_opt_bind_dim
+  }
+%    \end{macrocode}
+% Margin notes get a fixed width independent of one side or two side printing.
+% This makes sure that generating a PDF version (one side) or a printed version
+% (two side) have the same text on each page. The separation between notes is
+% kept as small as possible, as well as the distance from the text block.
+%    \begin{macrocode}
+\dim_set:Nn \marginparwidth { 56pt }
+\dim_set:Nn \marginparsep   { 1.2\onelineskip }
+\dim_set_eq:NN \marginparpush \onelineskip
+%    \end{macrocode}
+% The lower margin is 1.2 times the upper margin. The header parameters
+% are set to the default values.
+%    \begin{macrocode}
+\setulmargins{*}{*}{1.2}
+\setheaderspaces{*}{\headsep}{*}
+%    \end{macrocode}
+% Finish up the layout definitions. Redo this at the end of the document
+% preamble in case users redefine some parameters (which they shouldn't
+% of course).
+%    \begin{macrocode}
+\checkthelayout
+\fixthelayout
+\kulemt_at_end_preamble:n { \checkandfixthelayout }
+%    \end{macrocode}
+%
+% \begin{memoircmd}{\clearforchapter}
+% The \opt{open\textrm{\textellipsis}} options only control the main matter
+% chapters. Chapters in the front and back matter are always \opt{openany}.
+%    \begin{macrocode}
+\RenewDocumentCommand \clearforchapter {}
+  {
+    \legacy_if:nTF {@mainmatter}
+      {
+        \legacy_if:nTF {@openleft}
+          { \cleartoverso }
+          {
+            \legacy_if:nTF {@openright}
+              { \cleartorecto }
+              { \clearpage    }
+          }
+      }
+      { \clearpage }
+  }
+%    \end{macrocode}
+% \end{memoircmd}
+%
+% \subsection{Page styles}
+% By default the pagestyle \pstyle{ruled} is used. However for front matter
+% (actually for non-main matter) the header on odd pages is the same as on
+% even pages, because typically front matter chapters have no sections.
+%    \begin{macrocode}
+\makeoddhead {ruled} {} {}
+  { \legacy_if:nTF {@mainmatter} { \rightmark } { \scshape \leftmark } }
+\pagestyle {ruled}
+%    \end{macrocode}
+%
+% The \pstyle{nohead} pagestyle puts the page number in the footer at the
+% outer margin.
+%    \begin{macrocode}
+\makepagestyle {nohead}
+\makeevenfoot {nohead} { \thepage } {} {}
+\makeoddfoot  {nohead} {} {} { \thepage }
+%    \end{macrocode}
+% The \pstyle{chapter} pagestyle is aliased to this new pagestyle.
+%    \begin{macrocode}
+\aliaspagestyle {chapter} {nohead}
+%    \end{macrocode}
+%
+% \subsection{Section numbering}
+% Sections are numbered up to the subsection level.
+%    \begin{macrocode}
+\maxsecnumdepth {subsection}
+%    \end{macrocode}
+% But numbering in the table of contents ends at the section level.
+%    \begin{macrocode}
+\maxtocdepth {section}
+%    \end{macrocode}
+%
+% \subsection{Content lists}
+% The content lists are typeset ragged right without hyphenation.
+%    \begin{macrocode}
+\setrmarg { 2.55em plus 1fil }
+%    \end{macrocode}
+% 
+% In \cls{memoir}, content lists don't start a new page. By default it is
+% done here for the table of contents. It is no longer done for the list of
+% figures or the list of tables, as was the default in version~1.
+%    \begin{macrocode}
+\tl_set:Nn \tocheadstart { \clearforchapter \chapterheadstart }
+%    \end{macrocode}
+%
+% For these lists the space before chapter items is halved. This is only
+% important when the lists don't start a new page.
+%    \begin{macrocode}
+\skip_set:Nn \cftbeforechapterskip { 1ex plus 1pt }
+%    \end{macrocode}
+%
+% \subsection{Tables and figures}
+% The captions of tables and figures have the last line centered. The caption
+% name is printed in small caps. Because of bugs in some versions of
+% \cls{memoir} the font settings for the caption name must be undone for the
+% caption title.
+%    \begin{macrocode}
+\captionnamefont { \scshape }
+\captiontitlefont { \upshape }
+\captionstyle [ \centering ] { \centerlastline }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:

@@ -1,0 +1,12 @@
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3cm}|p{4cm}|p{3.5cm}|p{4cm}|p{1cm}|}
+\hline
+\textbf{Protocol}     & \textbf{Commit} \textit{(by Dealer)} & \textbf{Reveal} \textit{(by Dealer)} & \textbf{Recovery}  \textit{(by shareholder)}                                                      \\ \hline
+\textbf{ALBATROSS}   & $nG+(t+l)\mathbb{Z}_q$ & $(t+l)\mathbb{Z}_q$ & $1G+1\mathbb{Z}_q+1R_o$ \\ \hline
+\textbf{with PPPVSS}    & $(n+1)G+(t+l)\mathbb{Z}_q$ & $l\mathbb{Z}_q$ & $1G+1\mathbb{Z}_q+1R_o$ \\ \hline
+
+\end{tabular}
+\caption{Communication cost of dealer and (each) shareholder, $R_o$ being the random oracle, $G = $group of order $q$ and $\mathbb{Z}_q =$ modular group of order $q$, where $q$ is a large prime}
+\label{tab:dealer_comm}
+\end{table}

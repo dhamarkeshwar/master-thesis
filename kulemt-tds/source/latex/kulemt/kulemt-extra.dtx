@@ -1,0 +1,211 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2024 by Luc Van Eycken
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+%<*driver>
+\documentclass{l3doc}
+\usepackage{kulemt-code}
+\begin{document}
+\DocInput{\jobname.dtx}
+\PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Extra commands and environments}
+% \maketitle
+%
+% \DoNotIndex{\\, \abstract, \bigskip, \chapter, \clearpage, \endabstract,
+%   \ij, \itshape, \listoffigures, \listoftables, \par, \raggedleft, \section}
+% \DoNotIndex{\IfNoValueTF, \NewDocumentCommand, \NewDocumentEnvironment,
+%   \RenewDocumentEnvironment}
+% \DoNotIndex{\bool_if:NF, \cs_generate_variant:Nn, \cs_if_exist:NT,
+%   \cs_if_exist:NTF, \exp_not:n, \seq_if_empty:NTF, \seq_use:Nn,
+%   \tl_clear:N, \tl_if_blank:VF, \tl_new:N, \tl_put_right:Ne,
+%   \tl_put_right:Nn, \tl_set:Nn, \use_none:n}
+% \DoNotIndex{\tex_vfill:D}
+%
+% \groupIndex{babel}{\abstractname, \captionsbritish, \captionsdutch,
+%   \captionsenglish, \listfigurename, \listtablename, \prefacename}
+% \groupIndex{memoircmd}{\@lofmaketitle, \@lotmaketitle, \AtEndOfClass}
+%
+% \begin{documentation}
+% \noindent \DescribeClassEnv{abstract}
+% The \env{abstract} environment is typeset like a chapter, but only in the
+% thesis layout.
+%
+% \noindent \DescribeClassEnv{abstract*}
+% The \env{abstract*} environment works like the \env{abstract} environment,
+% but it uses the language from its optional argument. By default this is the
+% master's program language.
+%
+% \noindent \DescribeClassEnv{preface}
+% The \env{preface} environment holds the preface text. It has one optional
+% argument, which holds the preface author. The default preface author is the
+% value of the |author| option.
+%
+% \noindent \DescribeClassCmd{\listoffiguresandtables} \oarg{title} \\
+% This command lists figures and tables on one page. The chapter title is
+% \meta{title}.\\
+% This command is deprecated but kept at this moment for compatibility reasons.
+% It may disappear in a future version.
+% 
+% \noindent \DescribeClassVar{\listfiguresandtablesname}
+% This variable holds the default \meta{title} of the combined list of
+% figures and tables.
+% \end{documentation}
+%
+% \begin{implementation}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%<@@=kulemt_extra>
+%    \end{macrocode}
+% 
+% Some x-variants are since October 2023 version no longer available. We
+% generate here the e-type variants for functions which don't exist yet and are
+% used in this file.
+%    \begin{macrocode}
+\cs_generate_variant:Nn \tl_put_right:Nn { Ne }
+%    \end{macrocode}
+%
+% \subsection{Front matter}
+% \subsubsection{Environment \env{preface}}
+% \begin{classenv}{preface}
+%   The \env{preface} environment has one optional argument, namely the preface
+%   author. The default preface author is the value of the |author| option, one
+%   author per line. The preface is printed as a single page chapter. The
+%   variable |\prefacename| is defined by \pkg{babel}.
+%    \begin{macrocode}
+\NewDocumentEnvironment {preface} { o }
+  {
+    \chapter { \prefacename }
+    \IfNoValueTF {#1}
+      {
+        \seq_if_empty:NTF \l_kulemt_opt_author_seq
+          { \tl_clear:N \l_@@_preface_author_tl }
+          {
+            \tl_set:Nn \l_@@_preface_author_tl
+              { \seq_use:Nn \l_kulemt_opt_author_seq { \\ } }
+          }
+      }
+      { \tl_set:Nn \l_@@_preface_author_tl {#1} }
+  }
+  {
+    \par
+    \tl_if_blank:VF \l_@@_preface_author_tl
+      {
+        \bigskip
+        \raggedleft
+        \itshape
+        \l_@@_preface_author_tl
+      }
+    \tex_vfill:D
+    \clearpage
+  }
+%    \end{macrocode}
+% \end{classenv}
+%
+% \begin{variable}{\l_@@_preface_author_tl}
+%   This variable remembers the optional argument of the environment
+%   \env{preface} until the end of the environment.
+%    \begin{macrocode}
+\tl_new:N \l_@@_preface_author_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsubsection{Environment \env{abstract} and \env{abstract*}}
+% \begin{classenv}{abstract}
+%   In the thesis layout the \env{abstract} environment is redefined as an
+%   ordinary chapter. To know the layout we have to wait until the class is
+%   loaded.\\
+%   The variable |\abstractname| is defined by \pkg{babel}.
+%    \begin{macrocode}
+\AtEndOfClass
+  {
+    \bool_if:NF \l_kulemt_opt_article_bool
+      {
+        \RenewDocumentEnvironment {abstract} {}
+          { \chapter { \abstractname } }
+          { \clearpage }
+      }
+  }
+%    \end{macrocode}
+% \end{classenv}
+%
+% \begin{classenv}{abstract*}
+%   The \env{abstract*} environment sets the language from the optional
+%   argument before starting an \env{abstract}. The optional argument defaults
+%   to the master's program language.
+%    \begin{macrocode}
+\NewDocumentEnvironment {abstract*} { O { \l_kulemt_master_language_tl } }
+  {
+    \kulemt_selectlanguage:o {#1}
+    \abstract
+  }
+  { \endabstract }
+%    \end{macrocode}
+% \end{classenv}
+% 
+% \subsubsection{Content lists}
+% \begin{classcmd}{\listoffiguresandtables}
+%   The command |\listoffiguresandtables| lists first the figures and then
+%   the tables on the same page. The optional argument sets the chapter title,
+%   which is |\listfiguresandtablesname| by default.
+%    \begin{macrocode}
+\NewDocumentCommand \listoffiguresandtables { O{\listfiguresandtablesname} }
+  {
+    \chapter {#1}
+    \tl_set:Nn \@lofmaketitle { \section* { \listfigurename } }
+    \listoffigures*
+    \tl_set:Nn \@lotmaketitle { \section* { \listtablename } }
+    \listoftables*
+  }
+%    \end{macrocode}
+% \end{classcmd}
+% 
+% \begin{classvar}{\listfiguresandtablesname}
+%   The variable |\listfiguresandtablesname| holds the default title for a
+%   page combining the list of figures and of tables. An English (or British)
+%   as well as a Dutch translation is provided.
+%    \begin{macrocode}
+\tl_new:N \listfiguresandtablesname
+\tl_set:Nn \listfiguresandtablesname { List~ of~ Figures~ and~ Tables }
+\cs_if_exist:NTF \captionsbritish
+  { \tl_put_right:Ne \captionsbritish }
+  {
+    \cs_if_exist:NTF \captionsenglish
+      { \tl_put_right:Ne \captionsenglish }
+      { \use_none:n }
+  }
+    {
+      \exp_not:n { \tl_set:Nn \listfiguresandtablesname }
+        { \listfiguresandtablesname }
+    }
+\cs_if_exist:NT \captionsdutch
+  {
+    \tl_put_right:Nn \captionsdutch
+      {
+        \tl_set:Nn \listfiguresandtablesname
+          { L\ij st~ van~ figuren~ en~ tabellen }
+      }
+  }
+%    \end{macrocode}
+% \end{classvar}
+% 
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+\endinput
+
+%% Local Variables:
+%% ispell-check-comments: exclusive
+%% End:
