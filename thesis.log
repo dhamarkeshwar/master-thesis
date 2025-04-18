@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  19 APR 2025 01:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  19 APR 2025 01:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1048,24 +1048,19 @@ LaTeX Warning: Float too large for page by 68.98949pt on input line 72.
 [12]
 \openout2 = `chap-2.aux'.
 
- (./chap-2.tex)
+ (./chap-2.tex
 
 [13
 
 
 
 
-]
+])
+
+[14]
 \openout2 = `chap-n.aux'.
 
- (./chap-n.tex
-
-[14
-
-
-
-
-] (./figures/commit_reveal.tex
+ (./chap-n.tex (./figures/commit_reveal.tex
 
 LaTeX Warning: Reference `fig:9' on page 15 undefined on input line 38.
 
@@ -1097,24 +1092,24 @@ Overfull \hbox (82.65535pt too wide) in paragraph at lines 3--38
  [][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[15]
-Overfull \vbox (547.64516pt too high) has occurred while \output is active []
-
-
-
-[16])
+)
 Overfull \hbox (8.18344pt too wide) in paragraph at lines 16--27
 \T1/lmr/m/n/10.95 share-holder who has not opened the se-cret poly-no-mial, each shareholder/re-
  []
 
 
 
-[17] (./tables/communication.tex
+[15
+
+
+
+
+]
+Underfull \vbox (badness 6380) has occurred while \output is active []
+
+
+
+[16] (./tables/communication.tex
 Underfull \hbox (badness 4072) in paragraph at lines 5--5
 []|\T1/lmr/bx/n/10.95 Recovery \T1/lmr/m/it/10.95 (by share-
  []
@@ -1124,7 +1119,9 @@ Overfull \hbox (64.56491pt too wide) in paragraph at lines 3--10
  [][] 
  []
 
-))
+)
+
+[17])
 
 [18]
 
@@ -1208,13 +1205,13 @@ Package rerunfilecheck Info: File `thesis.out' has not changed.
 Here is how much of TeX's memory you used:
  29979 strings out of 473190
  567664 string characters out of 5715800
- 1103194 words of memory out of 5000000
+ 1100194 words of memory out of 5000000
  52570 multiletter control sequences out of 15000+600000
  642644 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,15n,107p,678b,707s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
-Output written on thesis.pdf (38 pages, 469081 bytes).
+Output written on thesis.pdf (38 pages, 471529 bytes).
 PDF statistics:
  629 PDF objects out of 1000 (max. 8388607)
  535 compressed objects within 6 object streams

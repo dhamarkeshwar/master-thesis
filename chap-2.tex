@@ -24,7 +24,12 @@ The following definition directly follows the definition of PPVSS in \cite{crypt
     A Packed PPVSS scheme should have four algorithms, namely, Initial, Share, Verify and Reconstruction whose 
     descriptions are as follows:
     \begin{itemize}
-        \item \textbf{Initial}$(1^\lambda)\rightarrow$:
+        \item \textbf{Initial} $(1^\lambda)\rightarrow\{PK_i\}_{i=1}^n\sqcup\{PK_j\}_{j=-(\ell-1)}^0$: 
+          When given $1^\lambda$, each party $P_i$ for $1\leq i\leq n$ registers their public key $PK_i$ in a 
+          public ledger and withholds the corresponding secret key $sk_i$. Also, all parties and the dealer $D$ 
+          agree on $\ell$ commitment keys or public keys whose secret keys are known to some target people.
+        \item \textbf{Share} $(n,t,f_0,\{PK_i\}_{i=1}^n\sqcup\{PK_j\}_{j=-(l-1)}^0)\rightarrow(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$: 
+          It secret shares 
     \end{itemize}
 \end{definition}
 
