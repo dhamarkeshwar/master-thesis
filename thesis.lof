@@ -11,13 +11,14 @@
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Packed Shamir Secret Sharing}}{5}{figure.caption.12}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Chaum-Pedersen NIZK PoK for DLEQ}}{6}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces A NIZK PoK for Polynomial DL based on Schoenmakers' PVSS}}{7}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Packed Shamir Secret Sharing}}{7}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Chaum-Pedersen NIZK PoK for DLEQ}}{9}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces A NIZK PoK for Polynomial DL based on Schoenmakers' PVSS}}{10}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces PPVSS Scheme}}{12}{figure.caption.15}%
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{12}{figure.caption.15}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{15}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{16}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{19}{figure.caption.17}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

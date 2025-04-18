@@ -6,6 +6,11 @@ D.~Adams.
 \newblock Del Rey (reprint), 1995.
 \newblock ISBN-13: 978-0345391803.
 
+\bibitem{cryptoeprint:2023/992}
+S.~Atapoor, K.~Baghery, D.~Cozzo, and R.~Pedersen.
+\newblock {VSS} from distributed {ZK} proofs and applications.
+\newblock Cryptology {ePrint} Archive, Paper 2023/992, 2023.
+
 \bibitem{cryptoeprint:2023/1669}
 K.~Baghery.
 \newblock $\pi$: A unified framework for computational verifiable secret sharing.
@@ -57,6 +62,21 @@ M.~Franklin and M.~Yung.
 \newblock Communication complexity of secure computation (extended abstract).
 \newblock In {\em Proceedings of the Twenty-Fourth Annual ACM Symposium on Theory of Computing}, STOC '92, page 699–710, New York, NY, USA, 1992. Association for Computing Machinery.
 
+\bibitem{gallian2024contemporary}
+J.~Gallian.
+\newblock {\em Contemporary Abstract Algebra}.
+\newblock CRC Press, 2024.
+
+\bibitem{crypto-1991-1671}
+T.~P. Pedersen.
+\newblock Non-interactive and information-theoretic secure verifiable secret sharing.
+\newblock In {\em Advances in Cryptology - CRYPTO '91, 11th Annual International Cryptology Conference, Santa Barbara, California, USA, August 11-15, 1991, Proceedings}, volume 576 of {\em Lecture Notes in Computer Science}, pages 129--140. Springer, 1991.
+
+\bibitem{doi:10.1137/0108018}
+I.~S. Reed and G.~Solomon.
+\newblock Polynomial codes over certain finite fields.
+\newblock {\em Journal of the Society for Industrial and Applied Mathematics}, 8(2):300--304, 1960.
+
 \bibitem{crypto-1989-1727}
 C.-P. Schnorr.
 \newblock Efficient identification and signatures for smart cards.
@@ -71,5 +91,10 @@ L.~Schoenmakers.
 A.~Shamir.
 \newblock How to share a secret.
 \newblock {\em Commun. ACM}, 22(11):612–613, Nov. 1979.
+
+\bibitem{welch1986error}
+L.~R. Welch and E.~Berlekamp.
+\newblock Error correction for algebraic block codes, December 1986.
+\newblock U.S. Patent 4,633,470.
 
 \end{thebibliography}

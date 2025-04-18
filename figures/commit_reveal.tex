@@ -14,15 +14,29 @@
     \begin{enumerate}
         \item [1.]\textbf{Commit:} For $1 \leq j \leq n$:
         \begin{itemize}
-            \item Shareholder $P_j$ executes the Distribution phase of the PPPVSS as Dealer for $\ell = n - 2t$ secrets, publishing commitments (/encryptions) of secrets, $y_{-(l-1)}^j, \dots, y_{-1}^j, y_0^j$, and encryptions of shares $\{y_i^j\}_{i=1}^n$ along with $\pi_{proof}^{j}$, which is a NIZK PoK for proving the correctness of committed(/encrypted) secrets and encrypted secret shares on the public ledger, also learning the secrets $h^{s_0^j},...,h^{s_{-(l-1)}^j}$ and their corresponding exponents\\ $s_0^j, \dots, s_{-(l-1)}^j$.
+            \item Shareholder $P_j$ executes the Distribution phase of the 
+            PPPVSS as Dealer for $\ell = n - 2t$ secrets, publishing commitments 
+            (/encryptions) of secrets, $y_{-(l-1)}^j, \dots, y_{-1}^j, y_0^j$, 
+            and encryptions of shares $\{y_i^j\}_{i=1}^n$ along with 
+            $\pi_{proof}^{j}$, which is a NIZK PoK for proving the correctness of 
+            committed(/encrypted) secrets and encrypted secret shares on the 
+            public ledger, also learning the secrets $h^{s_0^j},...,h^{s_{-(l-1)}^j}$ 
+            and their corresponding exponents\\ $s_0^j, \dots, s_{-(l-1)}^j$.
         \end{itemize}
         
         \item [2.]\textbf{Reveal:}
         \begin{itemize}
-            \item Each shareholder checks the validity of the proof $\pi_{proof}^j$, i.e., the \textbf{verification phase of PPPVSS protocol}.
-            \item After a set $\mathcal{C}$ containing at least $n-t$ shareholders publish their shares in the public ledger, $P_j\in\mathcal{C}$ reveals $l$ secrets.
-            \item Every shareholder verifies the validity of secrets by reproducing the commitments using the commitment keys (/public keys of target people).
-            \item At this point, if every party in $\mathcal{C}$ has opened their secrets correctly, go to step 4' in Figure \ref{fig:9}. Otherwise, proceed to step 3 in Figure \ref{fig:9}.
+            \item Each shareholder checks the validity of the proof 
+            $\pi_{proof}^j$, i.e., the \textbf{verification phase of PPPVSS protocol}.
+            \item After a set $\mathcal{C}$ containing at least $n-t$ 
+            shareholders publish their shares in the public ledger, 
+            $P_j\in\mathcal{C}$ reveals $l$ secrets.
+            \item Every shareholder verifies the validity of secrets by 
+            reproducing the commitments using the commitment keys (/public keys 
+            of target people).
+            \item At this point, if every party in $\mathcal{C}$ has opened 
+            their secrets correctly, go to step 4' in Figure \ref{fig:9}. 
+            Otherwise, proceed to step 3 in Figure \ref{fig:9}.
         \end{itemize}
     \end{enumerate}
     \end{tcolorbox}

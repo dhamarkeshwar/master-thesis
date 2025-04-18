@@ -1,0 +1,123 @@
+\section{Packed Shamir Secret Sharing}
+\label{sec:packed-shamir}
+$(n,t,\ell)$-Packed Shamir secret sharing (\cite{../10.1145/129712.129780},\cite{../crypto-1984-905})
+ scheme is a threshold secret sharing scheme which is a variant of $(n,t)$-Shamir's 
+ secret sharing scheme \cite{../10.1145/359168.359176} where $n>t+\ell-1$. In a nutshell, the $t+\ell-1$ 
+ degree secret polynomial with coefficients in $\mathbb{Z}_q$ which evaluates to $\ell$ 
+ secrets is secret shared amongst $n$ parties such that any $t+\ell$ parties can 
+ reconstruct back the secret polynomial. Recall that Shamir's secret sharing scheme 
+ requires at least $t+1$ parties to reconstruct the secret polynomial in contrast to 
+ the $t+\ell$ parties in the Packed Shamir secret sharing scheme. The scheme is
+ summarized in the Figure \ref{../fig:packed-shamir}.
+\input{figures/packed_shamir.tex}
+
+One can observe that all the secret shares of a secret polynomial chosen by the dealer form a codeword in 
+$[n,t+l,n-t-l+1]-$RS code. If the adversary is malicious and can corrupt at most $t$ parties, then from 
+corollary \ref{../cor:detectable-correctable RS}, the honest shareholders can detect the errors if 
+$2t\leq n-l$ and moreover all such errors can be corrected if $3t\leq n-l$. Also, one can use 
+the Berlekamp-Welch algorithm \cite{../welch1986error} to correct the errors.\par
+
+But Shamir secret sharing scheme is designed particularly to defend against passive adversaries and not 
+against malicious adversaries. A class of threshold secret sharing schemes which are designed to defend 
+against malicious adversaries is Verifiable Secret Sharing (VSS). There are many VSS schemes in the literature, 
+and as of writing this report the efficient VSS schemes based on Shamir secret sharing are $\Pi_F$, 
+$\Pi_P$ and $\Pi_{LA}$ \cite{../cryptoeprint:2023/1669} which are alternatives to the original VSS schemes 
+from Feldman \cite{DBLP:conf/focs/Feldman87}, Pedersen \cite{../crypto-1991-1671} and the more recent 
+ABCP \cite{../cryptoeprint:2023/992}. VSS schemes based on Shamir secret sharing allow shareholders to 
+verify the correctness of the shares obtained during both the sharing and reconstruction phases. This enables 
+these VSS schemes to defend against malicious adversaries who can actively corrupt $t$ parties as long as 
+$t\leq\frac{n-1}{2}$. Publicly Verifiable Secret Sharing (PVSS) is an extension of VSS where anyone can 
+verify the validity of the secret shares during the sharing phase. The main tools used in VSS and PVSS 
+schemes are the \textbf{Sigma Protocols} which we overview in the next section \ref{sec:sigma-protocols}.
+
+\section{Sigma Protocols}
+\label{sec:sigma-protocols}
+The agenda of this subsection is to give a brief formal background about some important primitives 
+used in the PVSS ,$\Pi_S$ \cite{../cryptoeprint:2023/1669}, and the PPVSS ,$\Lambda_{RO}$ \cite{../cryptoeprint:2025/576}, schemes.
+Let $X$ and $W$ be two sets with $R$ being a relation on $X\times W$, and $L=\{x\in X :\exists w\in W, xRw\}$
+be the language defined by $R$ where $xRw$ says that $w$ is a witness for a given $x\in L$. 
+Also, let $\mathcal{R}$ be a PPT algorithm such that $\mathcal{R}(1^\lambda)$ outputs pairs 
+$(x,w)$ with $x\in L$ and $xRw$ where $\lambda$ is a security parameter.\par
+
+Given a relation $R$ and its corresponding language $L$, a \textbf{Sigma ($\sum$) Protocol} 
+is a $3$-round \textit{interactive} protocol between two Probabilistic Polynomial Time (PPT) algorithms, 
+a prover $P$ 
+and a verifier $V$. For some $x\in L$ with $xRw$, in the first round $P$ sends a 
+commitment $a$ to $V$. To which $V$ sends a challenge $d$ to $P$ in the second round 
+and finally $P$ responds back with the response $z$ to $V$ in the third round. 
+$V$ outputs \textbf{true} or \textbf{false} upon the proof verification on transcript
+$trans := (a, d, z)$. 
+Informally, with a $\sum-$protocol a prover $P$ tries to convince
+a verifier $V$ that they know a witness $w$ for a given statement $x\in L$ without 
+revealing any information about $w$. To state it formally, a $\sum-$protocol is 
+supposed to satisfy \textit{completeness}, \textit{Honest Verifier Zero Knowledge} (HVZK)
+and \textit{Special Soundness} which are defined as follows.
+
+\begin{definition}[Completeness]
+  A $\sum-$protocol is said to be \textbf{complete} for $\mathcal{R}$ if
+  the verifier $V$ always accepts the honest prover $P$ for any $x\in L$.
+\end{definition}
+
+\begin{definition}[HVZK]
+  A $\sum-$protocol is said to be \textbf{HVZK} for $\mathcal{R}$ if there exist a PPT algorithm $S$ 
+  that simulates $trans$ of the scheme corresponding to a given $x\in L$ with any witness $w$ of $x$. 
+  That is, given $x\in L$,
+  \begin{align*}
+    trans(P(x,w)\leftrightarrow V(x)) &\approx trans(S(x) \leftrightarrow V(x))&& \text{, for any witness $w$ of $x$.}
+  \end{align*}
+  Where $trans(P(\cdot)\leftrightarrow V(\cdot))$ is the transcript of the $\sum-$protocol amongst 
+  $P$ and $V$ and $\approx$ denotes the indistinguishability of the two transcripts.
+\end{definition}
+
+\begin{definition}[Special Soundness]
+  A $\sum-$protocol is said to satisfy \textbf{Special Soundness} for $\mathcal{R}$, 
+  if there exists a PPT extractor $\mathcal{E}$ for any two valid transcripts, $(a,d,z)$ and 
+  $(a,d',z')$, corresponding to a given $x\in L$ with only a unique witness $w$ and $d\neq d'$ such that $\mathcal{E}(a,d,z,d',z')$ outputs the 
+  witness $w$. 
+\end{definition}
+
+It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protocol can be made into a
+Non Interactive Zero Knowledge (NIZK) Proof of Knowledge (PoK) or Argument of Knowledge (AoK) in the 
+Random Oracle ($RO$) model using Fiat-Shamir transform \cite{../10.1007/3-540-47721-7_12}. 
+In the following subsections, we recall two important NIZK PoK schemes which are used in $\Pi_S$ and 
+$\Lambda_{RO}$ schemes.
+
+\subsection{Chaum-Pedersen Protocol for DL Equality}
+\label{subsec:chaum-pedersen}
+Recall $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL). 
+For some $g,h\in \mathbb{G}$ consider the following relation:
+\begin{align*}
+  R_{DLEQ} &= \{(g,h,a,b),x : a=g^x, b=h^x\}.
+\end{align*}
+In \cite{../10.1007/3-540-48071-4_7}, Chaum and Pedersen proposed a NIZK PoK scheme for the DL Equality 
+relation, $R_{DLEQ}$. Informally, a prover $P$ can convince a verifier $V$ that they know $x$ such that
+it can be used with both $g$ and $h$ to obtain $a$ and $b$ respectively. This protocol is widely used in
+many cryptographic applications like threshold decryption, e-voting and Randomness Beacons. 
+We summarize the protocol in Figure \ref{../fig:chaum-pedersen}.
+\input{../figures/chaum-pedersen.tex}
+
+\subsection{NIZK PoK for Polynomial DL}
+\label{subsec:polynomial-dl}
+Recall $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete Logarithm (DL) and $g$ 
+being its generator. Consider the following relation for some polynomial $f\in\mathbb{Z}_q[X]_t$ with
+degree $t<n$:
+\begin{align*}
+  R_{PDL} &= \{(g,x_1,\dots,x_n,F(x_1),\dots,F(x_n)),f(X) : F(x_i)=g^{f(x_i)}, 1\leq i\leq n\}.
+\end{align*}
+In \cite{../cryptoeprint:2023/1669}, Baghery formally introduced a NIZK PoK scheme for the Polynomial DL 
+relation, $R_{PDL}$, which is a generalization of Schnorr's ID protocol \cite{../crypto-1989-1727}. Informally, 
+a prover $P$ can convince a verifier $V$ that they know a $t$ degree polynomial $f$ such that 
+it can be used with $g$ to obtain $F(x_i)$ for $1\leq i\leq n$. This protocol is used to construct the PPVSS 
+$\Lambda_{RO}$ \cite{../cryptoeprint:2025/576}, which was essential in building an efficient e-voting protocol. 
+We summarize the protocol in Figure \ref{../fig:polynomial-dl}.
+\input{../figures/polynomial-dl.tex}
+
+In the next section we will give a brief overview of the Publicly Verifiable Secret Sharing (PVSS) and its 
+security guarantees.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "thesis"
+%%% End: 

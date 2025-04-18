@@ -1,0 +1,203 @@
+\section{Notation}
+Let $(\mathbb{G},\times)$ be a cyclic group of prime order $q$ with hard Discrete Log (DL) and its generator 
+being $g$. 
+% isomorphic to a subgroup of the multiplicative modular group $\mathbb{Z}_p^*$, where $p$ is prime. 
+Also, we write $\mathbb{Z}_{q}[X]_d$ to denote the set of all $d$ degree 
+polynomials univariate in $X$ with coefficients in the finite field $\mathbb{Z}_q$. For remainder of the 
+chapter we let $n>t$ for some positive integers $n$ and $t$.
+
+\section{Coding Theory}
+\label{sec:linear-codes}
+This subsection is a brief recall of linear codes and their properties.
+
+\begin{definition}[Codeword]
+  A \textbf{codeword} of length $n$ is a vector $c\in \mathbb{Z}_q^n$.
+\end{definition}
+
+\begin{definition}[Linear Code]\cite{../gallian2024contemporary}
+  If $\mathcal{C}$ be a vector subspace of $\mathbb{Z}_q^n$ with dimension $k$, then $\mathcal{C}$ is 
+  said to be a \textbf{linear code}(/ linear $q-$ary code) of length $n$ and dimension $k$.
+\end{definition}
+
+In the remainder of the subsection, we let $\mathcal{C}$ be a linear $q-$ary code of length $n$ and 
+dimension $k$.
+
+\begin{definition}[Hamming distance]
+  The hamming distance $d$ of two codewords of equal length is the number of positions at which the 
+  codewords differ. Also, the hamming distance of $\mathcal{C}$, $d(\mathcal{C})$ is defined to be the 
+  minimum hamming distance of any two codewords in $\mathcal{C}$.
+\end{definition}
+
+\begin{definition}[Hamming weight]
+  The hamming weight $wt$ of a codeword $c$ is the number of non-zero positions in $c$. Also, the hamming weight of
+  $\mathcal{C}$, $wt(\mathcal{C})$ is defined to be the minimum hamming weight of any codeword in $\mathcal{C}$.
+\end{definition}
+
+\begin{lemma}\cite{../gallian2024contemporary}\label{lem:distance}
+  Given a tuple of codewords of equal length $n$, $(u, v, w)$, let $d(u,v)$ and $wt(w)$ denote the hamming 
+  distance of $u, v$ and the hamming weight of $w$ respectively. Then $d(u,v) = wt(u-v)$ and 
+  $d(u,v)\leq d(u,w)+d(w,v)$.
+\end{lemma}
+
+\begin{definition}[error]
+  A vector $r$ is said to be an \textbf{error} of a codeword $c\in\mathcal{C}$ if 
+  $r=c+e$ for some $e\neq 0$ and $e$ is called error term of $r$.
+\end{definition}
+
+It is trivial to observe that the hamming distance of error $r$ of $c\in\mathcal{C}$ is the minimum of the 
+hamming distances of $r$ with each codeword in $\mathcal{C}$.
+
+\begin{definition}[Detectable Error]
+  An error $r$ of $c\in\mathcal{C}$ is said to be \textbf{detectable} in $\mathcal{C}$ if 
+  $r\notin\mathcal{C}$, otherwise it is said to be an \textbf{undetectable}.
+\end{definition}
+
+\begin{theorem}\cite{../gallian2024contemporary}\label{th:detectable-error}
+  An error $r$ of $c\in\mathcal{C}$ is detectable if the hamming distance of $c$ 
+  and $r$ is less than the hamming distance of $\mathcal{C}$, more precisely 
+  $d(r,c)<d(\mathcal{C})$.
+\end{theorem}
+\begin{proof}
+  Consider the negation of the statement, i.e., the hamming distance of $c$ and $r$ is less than 
+  the hamming distance of $\mathcal{C}$ and $r$ is an undetectable error in $\mathcal{C}$, mathematically 
+  we have $d(r,c)<d(\mathcal{C})$ and $r\in\mathcal{C}$. The distance of any two codewords in 
+  $\mathcal{C}$ should be at least $d(\mathcal{C})$ implying $d(r,c)\geq d(\mathcal{C})$, which is a 
+  contradiction to the negation of our statement.
+\end{proof}
+
+The theorem \ref{th:detectable-error} says that any error of a codeword in $\mathcal{C}$ is 
+detectable as long as their hamming distance is strictly less than the hamming distance of
+$\mathcal{C}$ itself.
+
+\begin{definition}[Correctable Error]
+  A detectable error $r$ of $c\in\mathcal{C}$ is said to be \textbf{correctable} if one can obtain its 
+  error term $e$ such that $c+e=r$.
+\end{definition}
+
+\begin{theorem}\cite{../gallian2024contemporary}\label{th:correctable-error}
+  One can find the error term $e$ of the detectable error $r$ of $c\in\mathcal{C}$ if 
+  $wt(e)<\frac{d(\mathcal{C})}{2}$.
+\end{theorem}
+\begin{proof}
+  We have the following triangular inequality from lemma \ref{lem:distance} for any $w\in\mathcal{C}$ with 
+  $w\neq c$:
+  \begin{align}\label{eq:triangular-inequality}
+    d(\mathcal{C})\leq d(w,c)&\leq d(w,r)+d(r,c).
+  \end{align}
+  From the equation \eqref{eq:triangular-inequality}, we get 
+  \begin{align}\label{eq:triangular-inequality-2}
+    d(w,r)\geq d(\mathcal{C})-d(r,c).
+  \end{align} 
+  Since, $w\neq c$ we always will have 
+  \begin{align}\label{eq:triangular-inequality-3}
+    d(w,r)>d(r,c).
+  \end{align}. 
+  From the equations \eqref{eq:triangular-inequality-2} and \eqref{eq:triangular-inequality-3}, we have the 
+  following result:
+  \begin{align*}
+    d(\mathcal{C})-d(r,c)>d(r,c) \implies d(\mathcal{C})>2d(r,c) \iff d(\mathcal{C})>2wt(e).
+  \end{align*}
+\end{proof}
+
+If one wants to correct a detectable error of a codeword in $\mathcal{C}$ then from theorem 
+\ref{th:correctable-error}, its hamming distance with the codeword should be strictly less than half 
+the hamming distance of $\mathcal{C}$ itself.
+
+\begin{definition}[Dual Code]
+  The vector subspace $\mathcal{C}^{\perp}$ is called a Dual (Code) of $\mathcal{C}$ if it is 
+  orthogonal to $\mathcal{C}$.
+\end{definition}
+
+\begin{definition}[Generating Matrix]
+  The $k\times n-$matrix $\mathcal{G}$ is said to be a generating matrix of $\mathcal{C}$ if it 
+  generates $\mathcal{C}$, more precisely, the rows of $G$ form a basis for $\mathcal{C}$. Also, $\mathcal{G}$ is said to be in its 
+  \textbf{standard form} if it is of the form
+  \begin{align*}
+    \mathcal{G} = \begin{bmatrix}
+      I_k & P
+    \end{bmatrix},
+  \end{align*}
+  where $I_k$ is the $k\times k$ identity matrix and $P$ is some $k\times (n-k)$ matrix.
+\end{definition}
+
+\begin{definition}[Parity Check Matrix]
+  Consider the linear transformation $\phi$ as follows:
+  \begin{align*}
+    \phi:& \mathbb{Z}_q^n \rightarrow \mathbb{Z}_q^{n-k},
+  \end{align*}
+  where kernel of $\phi$ is $\mathcal{C}$. Then the matrix associated to $\phi$, $\mathcal{H}$, 
+  is called the \textbf{parity check matrix} of $\mathcal{C}$.
+\end{definition}
+
+\begin{lemma}\cite{../gallian2024contemporary}
+  If $\mathcal{G}$ is a generating matrix of $\mathcal{C}$ in its standard form, i.e., $\mathcal{G} = \begin{bmatrix}
+    I_k & P
+  \end{bmatrix}$, then $\mathcal{H}$ being a parity check matrix of $\mathcal{C}$ is given by
+  \begin{align*}
+    \mathcal{H} = \begin{bmatrix}
+      -P^T & I_{n-k}
+    \end{bmatrix},
+  \end{align*}
+  where $I_{n-k}$ is the $(n-k)\times (n-k)$ identity matrix where $P^T$ is the transpose of $P$.
+\end{lemma}
+
+One can easily check if a codeword is in $\mathcal{C}$ by multiplying it with its corresponding parity 
+check matrix $\mathcal{H}$.
+
+\subsection{Reed Solomon Codes}
+\label{subsec:reed-solomon}
+Consider the set of all univariate polynomials in $X$ of degree at most $t$ over $\mathbb{Z}_q$, denoted by 
+$\mathbb{Z}_q[X]_{\leq t}$. It is trivial to observe that $\mathbb{Z}_q[X]_{\leq t}$ is isomorphic to 
+the $t+1$ dimensional vector space $\mathbb{Z}_q^{t+1}$, where each vector consists the coefficients of 
+a unique polynomial in $\mathbb{Z}_q[X]_{\leq t}$. Now, consider the following set of codewords 
+determined by the evaluation of the polynomials in $\mathbb{Z}_q[X]_{\leq t}$ at $n$ \textbf{distinct} 
+points $x_1,\dots,x_n\in \mathbb{Z}_q$:
+
+\begin{align}\label{eq:reed-solomon code}
+  RS &= \{(f(x_1),\dots,f(x_n)) : f\in \mathbb{Z}_q[X]_{\leq t}, x_i\neq x_j \text{ for }i\neq j\}.
+\end{align}  
+
+\begin{lemma}
+  Assume $n>t$. The hamming distance of any two codewords in $RS$ is at least $n-t$. Furthermore, $RS$ is 
+  a linear code of length $n$ and dimension $t+1$.
+\end{lemma}
+\begin{proof}
+  For $n>t$, saying that the hamming distance of any two codewords is at least $n-t$ is same as saying 
+  that the two codewords in $RS$ are equal in at most $t$ positions. Assume by contradiction that 
+  there exists two \textbf{distinct} $t$ degree polynomials $f,g$ in $\mathbb{Z}_q[X]$ with corresponding 
+  codewords in $RS$ are equal in $t+1$ positions, i.e., their hamming distance is $n-t-1$. As 
+  $\mathbb{Z}_q$ is an integral domain, any $t+1$ distinct points in the set 
+  $\mathbb{Z}_q\times\mathbb{Z}_q$ will determine a unique $t$ degree polynomial in $\mathbb{Z}_q[X]_t$. 
+  As a consequence, we should have $f=g$ in $\mathbb{Z}_q[X]$ which is a contradiction.\par 
+
+  The remainder of the proof is by a consequence of the first part. More precisely, each codeword in 
+  $RS$ determined by a polynomial in $\mathbb{Z}_q[X]_{\leq t}$ is actually a unique representation of the 
+  polynomial itself as it consists at least $t+1$ distinct evaluations of that polynomial where $n>t$. 
+  That is, $RS$ is isomorphic to $\mathbb{Z}_q[X]_{\leq t}$ as a vector space which has dimension $t+1$.
+\end{proof}
+
+\begin{definition}[Reed Solomon Code]
+  The $q-$ary linear code $RS$ of length $n$ and dimension $t+1$ defined in \eqref{eq:reed-solomon code} 
+  is called a \textbf{$[n, t+1, n-t]-$Reed Solomon Code}\cite{../doi:10.1137/0108018} in $\mathbb{Z}_q$.
+\end{definition}
+
+\begin{corollary}\label{cor:detectable-correctable RS}
+  All errors in a $[n, t+1, n-t]-$Reed Solomon (RS) code are detectable if their hamming distances with 
+  RS are at most $t$ and $2t<n$. Moreover, all errors of hamming distance with RS being at most $t$ can 
+  be corrected if $3t<n$.
+\end{corollary}
+\begin{proof}
+  We have that any error of RS has hamming distance at most $t$ with RS. From theorem 
+  \ref{th:detectable-error}, any error of a codeword in $RS$ is detectable if its hamming 
+  distance is strictly less than the hamming distance of $RS$ itself, i.e., $t<n-t$, which is equivalent 
+  to $2t<n$.\par
+
+  To be able to correct the errors of hamming distance at most $t$ with RS, we need $t<\frac{n-t}{2}$ from 
+  theorem \ref{th:correctable-error} which is equivalent to $3t<n$.
+\end{proof}
+
+In this report, we will use $[n, t+1, n-t]-$Reed Solomon code of the following form:
+\begin{align}\label{eq:reed-solomon code-2}
+  RS &= \{(f(1),\dots,f(n)) : f\in \mathbb{Z}_q[X]_{\leq t}\}.
+\end{align}
+

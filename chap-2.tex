@@ -1,5 +1,33 @@
-\chapter{The Next Chapter}
+\chapter{Packed Pre-Constructed Publicly Verifiable Secret Sharing}
 \label{cha:2}
+In most of the real time distributed applications, each participant runs as a dealer once to share their 
+secrets with other participants. To retrieve back the secret, remaining participants need to open their 
+shares and perform a bunch of operations to reconstruct the secret, which requires a lot of communication 
+amongst the participants. During the whole time of secret reconstruction one could have asked to the dealer 
+itself to reveal the secret which will save a lot of time and communication. This is the main motivation 
+behind the work of \textit{Pre-Constructed Publicly Verifiable Secret Sharing} (PPVSS) \cite{cryptoeprint:2025/576}, 
+where the authors have given the complete description of PPVSS and an example $\Lambda_{RO}$ to improve 
+the original e-voting protocol proposed by Schoenmakers \cite{5581ccd9530540479539d21d1d39ae96}.\par
+
+In this chapter we will introduce Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS) which merely 
+is an extension to the notion of PPVSS. As Packed Shamir Secret Sharing \ref{sec:packed-shamir} allows a 
+dealer to share multiple secrets encoded in a single polynomial, we want to add this feature to PPVSS. In the 
+subsequent sections we will give our definitions for PPPVSS, give a construction of our packed secret sharing 
+scheme and finally show some security guarantees our scheme can achieve.\par
+
+\section{Definitions}
+\label{sec:pppvss-definitions}
+
+The following definition directly follows the definition of PPVSS in \cite{cryptoeprint:2025/576}.
+
+\begin{definition}[Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS)]
+    A Packed PPVSS scheme should have four algorithms, namely, Initial, Share, Verify and Reconstruction whose 
+    descriptions are as follows:
+    \begin{itemize}
+        \item \textbf{Initial}$(1^\lambda)\rightarrow$:
+    \end{itemize}
+\end{definition}
+
 
 %%% Local Variables: 
 %%% mode: latex

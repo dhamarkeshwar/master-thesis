@@ -1,0 +1,43 @@
+% \section{Publicly Verifiable Secret Sharing (PVSS)}
+% \label{sec:pvss}
+% Publicly Verifiable Secret Sharing (PVSS) is an extension of Non-Interactive Verifiable Secret Sharing 
+% (NI-VSS). Unlike NI-VSS where only the parties who possess the secret shares can verify the 
+% correctness of the secret sharing, anyone including external entities can verify the correctness of 
+% the secret sharing in PVSS.\par 
+
+% Given a $t$ degree polynomial $f\in\mathbb{Z}_q[X]$, let $\mathcal{P}:\mathbb{Z}_q\rightarrow\mathbb{G}$ be a group 
+% isomorphism where $0\mapsto g$ with $g$ being a random generator of $\mathbb{G}$ and 
+% $Enc:\mathbb{G}\rightarrow\mathbb{G}$ be a public-key encryption scheme and let $\mathcal{P}(f_0)$ be the 
+% secret to be secret shared where $f_0=f(0)$. Find a generalization of PVSS in figure \ref{fig:pvss}.
+
+% \input{figures/pvss.tex}
+
+% \begin{theorem}
+  
+% \end{theorem}
+
+
+% In practice, there are two types of PVSS schemes, where 
+% the secret is the first type if $f_0$ and in the latter type the secret is $g^{f_0}$ for some generator 
+% $g\in\mathbb{G}$ and $f_0=f(0)$. In this report, we will recall the latter type of PVSS schemes.
+
+\section{Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS)}
+\label{sec:ppvss}
+PPVSS was first introduced in \cite{../cryptoeprint:2025/576}, which is used as a building block to 
+construct a new e-voting protocol based on Schoenmakers' PVSS \cite{../5581ccd9530540479539d21d1d39ae96}. 
+Interestingly, the authors in \cite{../cryptoeprint:2025/576} observed that the original e-voting protocol 
+published in 1999 by Schoenmakers is unusually efficient to be just based on a PVSS, which led them to 
+discover that Schoenmakers PVSS is actually a PPVSS. What sets PPVSS apart from standard PVSS schemes 
+is that it can be used to construct versatile applications, such as e-voting, and can also improve 
+efficiency of some existing protocols. The subtle difference between PPVSS and PVSS is that the secret 
+itself is committed by the prover along with all its corresponding secret shares.
+
+\section{Conclusion}
+The final section of the chapter gives an overview of the important results
+of this chapter. This implies that the introductory chapter and the
+concluding chapter don't need a conclusion.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "thesis"
+%%% End: 

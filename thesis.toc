@@ -13,27 +13,27 @@
 \contentsline {chapter}{\chapternumberline {2}Preliminaries}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Notation}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Coding Theory}{3}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Reed Solomon Codes}{4}{subsection.2.2.1}%
-\contentsline {section}{\numberline {2.3}Packed Shamir Secret Sharing}{4}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Sigma Protocols}{4}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Chaum-Pedersen Protocol for DL Equality}{6}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}NIZK PoK for Polynomial DL}{6}{subsection.2.4.2}%
-\contentsline {section}{\numberline {2.5}Publicly Verifiable Secret Sharing (PVSS)}{7}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS)}{8}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Conclusion}{8}{section.2.7}%
-\contentsline {chapter}{\chapternumberline {3}The Next Chapter}{9}{chapter.3}%
-\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{12}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Computational Complexity}{12}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{14}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Communication Complexity}{14}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{14}{subsection.4.2.1}%
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{17}{chapter.5}%
-\contentsline {appendix}{\chapternumberline {A}The First Appendix}{21}{appendix.A}%
-\contentsline {section}{\numberline {A.1}More Lorem}{21}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{21}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{22}{subsection.A.1.2}%
-\contentsline {section}{\numberline {A.2}Lorem 51}{22}{section.A.2}%
-\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{23}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Lorem 20-24}{23}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Lorem 25-27}{24}{section.B.2}%
-\contentsline {chapter}{Bibliography}{25}{appendix*.19}%
+\contentsline {subsection}{\numberline {2.2.1}Reed Solomon Codes}{5}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Packed Shamir Secret Sharing}{6}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Sigma Protocols}{8}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Chaum-Pedersen Protocol for DL Equality}{9}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}NIZK PoK for Polynomial DL}{9}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS)}{10}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Conclusion}{11}{section.2.6}%
+\contentsline {chapter}{\chapternumberline {3}Packed Pre-Constructed Publicly Verifiable Secret Sharing}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Definitions}{13}{section.3.1}%
+\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{16}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Computational Complexity}{16}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{18}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Communication Complexity}{18}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{18}{subsection.4.2.1}%
+\contentsline {chapter}{\chapternumberline {5}Conclusion}{21}{chapter.5}%
+\contentsline {appendix}{\chapternumberline {A}The First Appendix}{25}{appendix.A}%
+\contentsline {section}{\numberline {A.1}More Lorem}{25}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{25}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{26}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}Lorem 51}{26}{section.A.2}%
+\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{27}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Lorem 20-24}{27}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Lorem 25-27}{28}{section.B.2}%
+\contentsline {chapter}{Bibliography}{29}{appendix*.20}%
