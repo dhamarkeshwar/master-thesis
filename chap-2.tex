@@ -24,15 +24,138 @@ The following definition directly follows the definition of PPVSS in \cite{crypt
     A Packed PPVSS scheme should have four algorithms, namely, Initial, Share, Verify and Reconstruction whose 
     descriptions are as follows:
     \begin{itemize}
-        \item \textbf{Initial} $(1^\lambda)\rightarrow\{PK_i\}_{i=1}^n\sqcup\{PK_j\}_{j=-(\ell-1)}^0$: 
+        \item \textbf{Initial} $(1^\lambda)\rightarrow(\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0)$: 
           When given $1^\lambda$, each party $P_i$ for $1\leq i\leq n$ registers their public key $PK_i$ in a 
           public ledger and withholds the corresponding secret key $sk_i$. Also, all parties and the dealer $D$ 
-          agree on $\ell$ commitment keys or public keys whose secret keys are known to some target people.
-        \item \textbf{Share} $(n,t,f_0,\{PK_i\}_{i=1}^n\sqcup\{PK_j\}_{j=-(l-1)}^0)\rightarrow(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$: 
-          It secret shares 
+          agree on $\ell$ commitment keys or public keys whose secret keys are known to some target people. 
+          Note that the message space of the public-key scheme is a subgroup of $(\mathbb{G},\times)$.
+        \item \textbf{Share} $(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0)$\par$\rightarrow(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$:\par 
+          It secret shares $\{f_j\}_{j=(\ell-1)}^0$ to obtain the shares $\{f_i\}_{i=1}^n$. For $1\leq i\leq n$, uses 
+          the public key $PK_i$ to encrypt $f_i$ and obtain the encrypted share $y_i$. Now, it uses the commitment 
+          key $h_j$ ( or public key $PK_j$) to commit(/encrypt) $f_j$ for $-(\ell-1)\leq j\leq0$ and performs the 
+          group operation $\times$ to multiply all the commitments(/encryptions) to obtain $y_0$. 
+          Finally, it uses a NIZK proof $\pi_{PPPVSS}$ protocol to prove that $y_0$ is a valid commitment of $\ell$ 
+          secrets and $y_i$ are valid encryptions of the corresponding shares. Finally, it returns $(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$.
+        \item \textbf{Verify} $(n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})\rightarrow$ \textbf{true/false}: 
+          This algorithm(which can be performed by anyone) checks if the NIZK proof $\pi_{PPPVSS}$ is valid for 
+          $\{y_0,y_1,\dots,y_n\}$ and then returns true, otherwise false.
+        \item \textbf{Reconstruct}: There are two approaches based on cooperation of the dealer $D$ and are as follows:
+          \begin{itemize}
+            \item \textbf{(Optimistic)} $Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\text{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]$\par$\rightarrow(\{f_j\}_{j=-(\ell-1)}^0\text{ or }false)$:
+              \begin{itemize}
+                \item Given the commitment keys $\{h_j\}_{j=-(\ell-1)}^0$, $y_0$ and $\ell$ secrets, $\{f_j,r_j\}_{j=-(\ell-1)}^0$, 
+                 a verifier checks if $y_0$ is a valid commitment of the $\ell$ secrets. If so, it returns 
+                 $\{f_j\}_{j=-(\ell-1)}^0$; otherwise it returns $false$.
+                \item Given the public keys with their corresponding secret keys,\par $\{(PK_j,SK_j)\}_{j=-(\ell-1)}^0$ 
+                 a verifier checks if $y_0$ is a valid product of each cipher text of $f_j$ for $-(\ell-1)\leq j\leq 0$. 
+                 If so, it returns $\{f_j\}_{j=-(\ell-1)}^0$; otherwise it returns $false$.
+              \end{itemize}
+            \item \textbf{(Pessimistic)} $Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]\rightarrow(\{f_j\}_{j=-(\ell-1)}^0\text{ or }false))$: 
+              Given any $t+\ell$ encrypted shares along with corresponding secret keys, it outputs the secrets 
+              $\{f_j\}_{j=-(\ell-1)^0}$ or $false$. This can be done in two phases as follows: 
+                \begin{itemize}
+                  \item \textbf{Decryption of the shares}, each party $P_i\in\mathcal{Q}$ decrypts $y_i$ to obtain 
+                    $f_i$ using its secret key $SK_i$. Then it generates a NIZK proof $\pi_i^{Dec}$ which proves that 
+                    $f_i$ is the correct decryption of $y_i$. Now, $P_i$ publishes $(f_i,\pi_i^{Dec})$.
+                  \item \textbf{Share pooling}, a verifier $V$ (not necessarily from the shareholders) checks if proof 
+                   $\pi_i^{Dec}$ is correct for each $P_i\in\mathcal{Q}$. If any check fails, then $V$ returns $false$; 
+                   otherwise $V$ applies a reconstruction procedure to the set of valid shares, $\{f_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}$, 
+                   and returns $\{f_j\}_{j=-(\ell-1)}^0$.
+                \end{itemize}
+          \end{itemize}
     \end{itemize}
 \end{definition}
 
+We need following security guarantees (inspired from PPVSS \cite{cryptoeprint:2025/576}) for a PPPVSS to be 
+secure.
+
+\begin{itemize}
+  \item \textbf{Correctness}: If the dealer and parties follow the protocol, then the \textit{\textbf{Verify}} 
+    algorithm returns \textit{\textbf{true}} and the \textit{\textbf{Reconstruct}} algorithm returns $\{f_j\}_{j=-(\ell-1)}^0$ 
+    irrespective of which approach. More formally, for any integers $n>1$ and $t+\ell-1<n$, a PPPVSS is said 
+    to be correct for\par 
+    $\left(\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\right)\leftarrow$\textbf{Initial} $(1^\lambda)$ when:
+    \begin{align*}
+      Pr\begin{bmatrix}
+        (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+        &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big):\\
+        \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})
+      \end{bmatrix} = 1,
+    \end{align*}
+
+    \begin{align*}
+      Pr\begin{bmatrix}
+        (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+        &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big):\\
+        \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\\
+        &\textit{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]\bigvee\\
+        \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
+        &f_j^{'}=f_j,-(\ell-1)\leq j\leq 0
+      \end{bmatrix} = 1,
+    \end{align*}
+  \item \textbf{Verifiability}: If \textit{\textbf{Verify}} returns \textit{\textbf{true}}, then with high 
+    probability $\{y_i\}_{i=1}^n$ are valid encryptions of shares of some $\ell$ secrets, and $y_0$ is a 
+    valid commitment of the same $\ell$ secrets (or a product of valid ciphers of $\ell$ secrets under 
+    $\{PK_j\}_{j=-(\ell-1)}^0$). Moreover, if the check in \textit{\textbf{(Pessimistic)}} $Reconstruction^{pes}$ 
+    passes then the decrypted values are indeed shares of the secret distributed by the dealer. Alternatively, 
+    if the check in \textit{\textbf{Optimistic}} $Reconstruct^{opt}$ passes then the input values $\{f_j\}_{j=-(\ell-1)}^0$ 
+    are the actual secrets of whom the shares are encrypted. More formally, given $\lambda$, for any integers 
+    $n\geq 2t+\ell$, $\ell\geq 1$ and $t\geq 0$, a PPPVSS is said to be verifiable if for any $\mathcal{PPT}$ adversaries $\mathcal{A}$, 
+    we have:
+    \begin{align*}
+      Pr\begin{bmatrix}
+        \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
+        (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+        &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
+        \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\\
+        &\textit{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]\bigvee\\
+        \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
+        \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})\\
+        &\bigwedge \{f_j^{'}\}_{j=-(\ell-1)}^0\neq \{f_j\}_{j=-(\ell-1)}^0
+      \end{bmatrix} \leq negl(\lambda),
+    \end{align*}
+    where $\mathcal{Q}$ is the set of honest parties.
+  \item \textbf{IND1-Secrecy (Indistinguishability of Secrets)}: Before reconstruction phase, any amount of public 
+    information along with secret keys of at most $t$ parties excluding $\{SK_j\}_{j=-(\ell-1)}^)$ will give 
+    absolutely no information about the secrets $\{f_j\}_{j=-(\ell-1)}^0$. More formally, for integers $n>1$ and 
+    $t+\ell-1<n$, the PPPVSS is said to satisfy \textit{IND1-Secrecy} if for any $\mathcal{PPT}$ adversary $\mathcal{A}$ 
+    corrupting at most $t$ parties, excluding the owners of $\{SK_j\}_{j=-(\ell-1)}^0$, has negligible 
+    advantage in the following game \cite{cryptoeprint:2025/576} played against a challenger.
+    \begin{itemize}
+      \item The challenger runs \textit{\textbf{Initial}} $(1^\lambda)$ of PPPVSS to obtain 
+        $\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0$ and sends all public 
+        information along with secret information of all corrupted parties to $\mathcal{A}$.
+      \item The challenger chooses two set of secrets, $s_0=\{f_j\}_{j=-(\ell-1)}^0$ and 
+        $s_1=\{f_j^{'}\}_{j=-(\ell-1)}^0$ at random in the space of secrets. Furthermore, it chooses $b\in\{0,1\}$ 
+        uniformly at random and runs \par 
+        \textit{\textbf{Share}} $(n,t,s_0,\{PK_i\}_{i=1}^n\bigsqcup\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0)$ 
+        algorithm of the PPPVSS scheme and obtains $(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$. Finally, it sends 
+        all public information generated in \textit{Share} phase together with $s_b$.
+      \item $\mathcal{A}$ guesses a bit $b'\in\{0,1\}$.
+    \end{itemize}
+    The advantage of $\mathcal{A}$ is defined to be $|Pr[b'=b]-\frac{1}{2}|$.
+\end{itemize}
+
+It can be seen that PPPVSS is a natural extension of PPVSS, where we secret share possibly \textit{more than one} 
+secret in contrast to \textit{only one} secret in PPVSS. But one has to be careful when obtaining the commitment 
+of the secrets which is obtained via multiplication of encryptions (/commitments) of actual secrets. 
+More precisely, $y_0$ should be well formed, i.e., a dealer should not be able to cheat to obtain $y_0$ by 
+taking multiplications of random group elements, it precisely has to be multiplication of encryptions 
+(/commitments) of the actual secrets.\par 
+
+A general construction of Shamir based PPVSS is given in \cite{cryptoeprint:2025/576}, and we extend this idea 
+to give a Packed Shamir based PPPVSS which is outlined in the figure \ref{fig:packed-shamir-PPPVSS}. In next section, we will give a practical PPPVSS scheme which in fact 
+is a natural extension of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576} (which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}).
+
+\input{figures/shamir_PPPVSS}
+
+\section{A practical PPPVSS scheme}
+
+The scheme we present in figure \ref{fig:packed-shamir-PPPVSS-ro} is a direct extension of $\Lambda_{RO}$, which 
+
+
+\input{figures/main_shamir_PPPVSS_ro.tex}
+ 
 
 %%% Local Variables: 
 %%% mode: latex

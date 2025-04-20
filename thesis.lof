@@ -16,9 +16,11 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces A NIZK PoK for Polynomial DL based on Schoenmakers' PVSS}}{10}{figure.caption.14}%
 \contentsline {figure}{\numberline {2.4}{\ignorespaces PPVSS Scheme}}{12}{figure.caption.15}%
 \addvspace {10pt}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces PPPVSS Scheme}}{17}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces PPPVSS}}{18}{figure.caption.17}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{16}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{19}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{20}{figure.caption.18}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{23}{figure.caption.19}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

@@ -6,8 +6,8 @@
         \textbf{Initialization:}
             All parties $\{P_i\}_{i=1}^n$ and dealer $D$ agree on the prime field $\mathbb{Z}_q$, a group $(\mathbb{G},\times)$ of 
             order $q$ with a generator $g$, random oracle $\mathcal{H}$. Also, each party 
-            $P_i$ registers their public key $PK_i$ in the public ledger and all agree on $PK_0\neq g$, a commitment 
-            key or a public key whose secret key is known to a target person.
+            $P_i$ registers their public key $PK_i$ in the public ledger and all agree on a commitment 
+            key or a public key, $PK_0\neq g$, whose secret key is known to a target person.
 
         \vspace{0.5em}
         \textbf{Share:}
@@ -21,7 +21,7 @@
                  \begin{itemize}
                     \item Samples a $t-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
                     computes $c_i=PK_i^{r_i}$ where $r_i=r(i)$ for $0\leq i\leq n$.
-                    \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,\dots,y_n,c_0,\dots,c_n))$ is computed.
+                    \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,\dots,y_n,c_0,\dots,c_n)$ is computed.
                     \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{PDL}=(d,z(X))$ is obtained. 
                  \end{itemize}
             \item $D$ broadcasts the encryptions of the shares along with the encryption(/commitment) of the secret 
@@ -32,7 +32,7 @@
         \vspace{0.5em}
         \textbf{Verification:}
             Given public keys $\{PK_i\}_{i=1}^n$ and public(commitment) key $PK_0$, any entity can check 
-            $\pi_{PDL}$ to verify the correctness of the encrypted shares $\{y_i\}_{i=1}^n$ and the secret $y_0$. 
+            $\pi_{PDL}$ to verify the correctness of the encrypted shares $\{y_i\}_{i=1}^n$ and $y_0$ being the encryption(/commitment) of the secret. 
             They will output \textbf{true} or \textbf{false} based on the verification of the proof. The 
             procedure is outlined as follows:
         \begin{itemize}
@@ -47,10 +47,10 @@
             cooperation of the dealer $D$ which are as follows:
             \begin{itemize}
                 \item \textbf{Optimistic Reconstruction:} $D$ publishes $f_0$, then any verifier (not necessarily shareholders) 
-                when giveen $g,PK_0,y_0$ can check if $y_0=PK_0^{f_0}$ and returns $g^{f_0}$ 
-                if the check passes, if not they output \textbf{false}.
+                when given $g,PK_0,y_0$ can check if $y_0=PK_0^{f_0}$ and returns $g^{f_0}$ 
+                if the check passes, if not they return \textbf{false}.
                 \item \textbf{Pessimistic Reconstruction:} If $D$ refuses to reveal $f_0$, then any set 
-                $\mathcal{Q}$ consisting at least $t+1$ honest shareholders will do the following (which 
+                $\mathcal{Q}$ consisting at least $t+1$ shareholders will do the following (which 
                 is same as the reconstruction step in the PVSS $\Pi_S$ protocol):
                 \begin{itemize}
                     \item Each party $P_i\in\mathcal{Q}$ decrypts their share $y_i$ using their private key $SK_i$ 
