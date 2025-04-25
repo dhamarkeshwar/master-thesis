@@ -249,3 +249,61 @@ eprint = {
       year = {2023},
       url = {https://eprint.iacr.org/2023/992}
 }
+
+@inproceedings{10.5555/1496711.1496734,
+author = {Adida, Ben},
+title = {Helios: web-based open-audit voting},
+year = {2008},
+publisher = {USENIX Association},
+address = {USA},
+abstract = {Voting with cryptographic auditing, sometimes called open-audit voting, has remained, for the most part, a theoretical endeavor. In spite of dozens of fascinating protocols and recent ground-breaking advances in the field, there exist only a handful of specialized implementations that few people have experienced directly. As a result, the benefits of cryptographically audited elections have remained elusive.We present Helios, the first web-based, open-audit voting system. Helios is publicly accessible today: anyone can create and run an election, and any willing observer can audit the entire process. Helios is ideal for on-line software communities, local clubs, student government, and other environments where trustworthy, secret-ballot elections are required but coercion is not a serious concern. With Helios, we hope to expose many to the power of open-audit elections.},
+booktitle = {Proceedings of the 17th Conference on Security Symposium},
+pages = {335–348},
+numpages = {14},
+location = {San Jose, CA},
+series = {SS'08}
+}
+
+@inproceedings{10.1145/2815400.2815417,
+author = {van den Hooff, Jelle and Lazar, David and Zaharia, Matei and Zeldovich, Nickolai},
+title = {Vuvuzela: scalable private messaging resistant to traffic analysis},
+year = {2015},
+isbn = {9781450338349},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2815400.2815417},
+doi = {10.1145/2815400.2815417},
+abstract = {Private messaging over the Internet has proven challenging to implement, because even if message data is encrypted, it is difficult to hide metadata about who is communicating in the face of traffic analysis. Systems that offer strong privacy guarantees, such as Dissent [36], scale to only several thousand clients, because they use techniques with superlinear cost in the number of clients (e.g., each client broadcasts their message to all other clients). On the other hand, scalable systems, such as Tor, do not protect against traffic analysis, making them ineffective in an era of pervasive network monitoring.Vuvuzela is a new scalable messaging system that offers strong privacy guarantees, hiding both message data and metadata. Vuvuzela is secure against adversaries that observe and tamper with all network traffic, and that control all nodes except for one server. Vuvuzela's key insight is to minimize the number of variables observable by an attacker, and to use differential privacy techniques to add noise to all observable variables in a way that provably hides information about which users are communicating. Vuvuzela has a linear cost in the number of clients, and experiments show that it can achieve a throughput of 68,000 messages per second for 1 million users with a 37-second end-to-end latency on commodity servers.},
+booktitle = {Proceedings of the 25th Symposium on Operating Systems Principles},
+pages = {137–152},
+numpages = {16},
+location = {Monterey, California},
+series = {SOSP '15}
+}
+
+@inproceedings {180263,
+author = {David Isaac Wolinsky and Henry Corrigan-Gibbs and Bryan Ford and Aaron Johnson},
+title = {Dissent in Numbers: Making Strong Anonymity Scale},
+booktitle = {10th USENIX Symposium on Operating Systems Design and Implementation (OSDI 12)},
+year = {2012},
+isbn = {978-1-931971-96-6},
+address = {Hollywood, CA},
+pages = {179--182},
+url = {https://www.usenix.org/conference/osdi12/technical-sessions/presentation/wolinsky},
+publisher = {USENIX Association},
+month = oct
+}
+
+@article{RABIN1983256,
+title = {Transaction protection by beacons},
+journal = {Journal of Computer and System Sciences},
+volume = {27},
+number = {2},
+pages = {256-267},
+year = {1983},
+issn = {0022-0000},
+doi = {https://doi.org/10.1016/0022-0000(83)90042-9},
+url = {https://www.sciencedirect.com/science/article/pii/0022000083900429},
+author = {Michael O. Rabin},
+abstract = {Protocols for implementing contract signing, confidential disclosures, and certified mail in an electronic mail system are proposed. These transactions are provably impossible without a trusted intermediary. However, they can be implemented with just a small probability of a participant cheating his partner, by use of a beacon emitting random integers. Applications include privacy protection of personal information in data banks, as well as the protection of business transactions.}
+}

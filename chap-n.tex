@@ -1,5 +1,25 @@
 \chapter{Revisiting a Randomness Beacon Protocol}
 \label{cha:n}
+
+Randomness Beacon \cite{RABIN1983256} is required in applications like e-voting \cite{10.5555/1496711.1496734} 
+and anonymous messaging (\cite{180263},\cite{10.1145/2815400.2815417}) to provide fresh random values to all the 
+parties. In 2020, Cascudo and David published ALBATROSS \cite{cryptoeprint:2020/644}, the state-of-the art randomness 
+beacon protocol based on a PVSS as a building block where each party in the randomness beacon protocol acts as a dealer once, so that all 
+parties can influence the output randomness. Interestingly, we observed that each party is expected to reveal 
+their secrets (they secret shared as a dealer) as part of the randomness beacon protocol, but to prove that the 
+secrets are valid and not just some random evaluations of the secret polynomial they have to reveal the whole 
+secret polynomial itself. As a consequence, if some entity wants to verify the secrets' validity then they have to 
+simulate the whole sharing phase of the underlying PVSS protocol, which is very expensive because all the rest of the 
+parties are expected to do the simulation of that party as a dealer. For reference, if there are $n$ parties, then 
+$n-1$ parties should simulate the sharing phase of the protocol, which in total is $\mathcal{O}(n^2)$ simulations.\par
+
+In this chapter, we present our randomness beacon protocol in figures \ref{fig:randomness_beacon} and \ref{fig:randomness_beacon_cont} 
+which in many cases is efficient than ALBATROSS. To put simply, we replaced the building block being PVSS with 
+our PPPVSS $\Lambda_{RO}$ \ref{fig:packed-shamir-PPPVSS-ro}. In the subsequent sections, we will discuss the 
+computational and communication costs of our protocol and compare it with the ALBATROSS. We will show that out protocol 
+performs more efficient compared to ALBATROSS in many cases and also address the cases where we are not computationally efficient.
+More interestingly, we will show that in terms of communication, we outperform ALBATROSS.
+
 \input{figures/commit_reveal.tex}
 \input{figures/recovery_output.tex}
 \section{Computational Complexity}
@@ -37,8 +57,11 @@ See table \ref{tab:comp_alba_pppvss_no group mul} for an overview.
 \end{itemize}
 
 \subsection{Computational Cost analysis}
-The dealer has to do a bit more work in the case of our protocol in contrast to 
-ALBATROSS
+The dealer has to do a bit more work in the case of our protocol in contrast to ALBATROSS, more explicitly, 
+they have to compute $\ell$ more group exponentiations and polynomial evaluations. But as a consequence, 
+we decrease computational cost in the \textit{Reveal} phase whenever $l < \frac{n(n-t-1)}{2(n-1)}$, roughly 
+speaking, if the number of secrets are less than half of the honest parties then we always perform better in 
+terms of computation when compared to the ALBATROSS.
 
 
 \section{Communication Complexity}
@@ -58,6 +81,9 @@ See table \ref{tab:dealer_comm} for an overview.
 \end{itemize}
 
 \subsection{Communication Cost analysis}
+The best to offer from our randomness beacon protocol is the communication cost. Though the dealer has to communicate only 
+one extra group element compared to ALBATROSS in the commit phase, as a consequence for a fixed number of secrets the 
+dealers' communication cost is constant as opposed to linear in number of corrupted parties in ALBATROSS. 
 
 %%% Local Variables: 
 %%% mode: latex

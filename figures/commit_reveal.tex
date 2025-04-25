@@ -4,10 +4,10 @@
         Our protocol with PPPVSS is run between a set $\mathcal{P}$ of $n$ 
         parties $P_1, \dots, P_n$ who have access to a public ledger where they 
         can post information for later verification. It is assumed that the 
-        Setup phase of $\Pi_{PPPVSS}$ is already done and the public keys 
-        $\text{pk}_i$ of each party $P_i$ along with $\{\mathbb{P}_i\}_{i=1}^{l}$ 
+        Setup phase of $\Lambda_{RO}^{packed}$ is already done and the public keys 
+        $\text{pk}_i$ of each party $P_i$ along with $\{\mathbb{P}_i\}_{i=1}^{\ell}$ 
         being Commitment keys (or public keys of target people) to encrypt the 
-        $l$ secrets are already registered in the ledger. In addition, the 
+        $\ell$ secrets are already registered in the ledger. In addition, the 
         parties have agreed on a Vandermonde $(n - 2t) \times (n - t)$-matrix 
         $M = M(\omega, n - 2t, n - t)$ with $\omega \in \mathbb{Z}_q^*$.
 
@@ -16,12 +16,12 @@
         \begin{itemize}
             \item Shareholder $P_j$ executes the Distribution phase of the 
             PPPVSS as Dealer for $\ell = n - 2t$ secrets, publishing commitments 
-            (/encryptions) of secrets, $y_{-(l-1)}^j, \dots, y_{-1}^j, y_0^j$, 
+            (/encryptions) of secrets, $y_{-(\ell-1)}^j, \dots, y_{-1}^j, y_0^j$, 
             and encryptions of shares $\{y_i^j\}_{i=1}^n$ along with 
             $\pi_{proof}^{j}$, which is a NIZK PoK for proving the correctness of 
             committed(/encrypted) secrets and encrypted secret shares on the 
-            public ledger, also learning the secrets $h^{s_0^j},...,h^{s_{-(l-1)}^j}$ 
-            and their corresponding exponents\\ $s_0^j, \dots, s_{-(l-1)}^j$.
+            public ledger, also learning the secrets $h^{s_0^j},...,h^{s_{-(\ell-1)}^j}$ 
+            and their corresponding exponents\\ $s_0^j, \dots, s_{-(\ell-1)}^j$.
         \end{itemize}
         
         \item [2.]\textbf{Reveal:}
@@ -30,13 +30,13 @@
             $\pi_{proof}^j$, i.e., the \textbf{verification phase of PPPVSS protocol}.
             \item After a set $\mathcal{C}$ containing at least $n-t$ 
             shareholders publish their shares in the public ledger, 
-            $P_j\in\mathcal{C}$ reveals $l$ secrets.
+            $P_j\in\mathcal{C}$ reveals $\ell$ secrets.
             \item Every shareholder verifies the validity of secrets by 
             reproducing the commitments using the commitment keys (/public keys 
             of target people).
             \item At this point, if every party in $\mathcal{C}$ has opened 
-            their secrets correctly, go to step 4' in Figure \ref{fig:9}. 
-            Otherwise, proceed to step 3 in Figure \ref{fig:9}.
+            their secrets correctly, go to step 4' in Figure \ref{fig:randomness_beacon_cont}. 
+            Otherwise, proceed to step 3 in Figure \ref{fig:randomness_beacon_cont}.
         \end{itemize}
     \end{enumerate}
     \end{tcolorbox}

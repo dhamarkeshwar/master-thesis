@@ -264,15 +264,15 @@ and \textit{Special Soundness} which are defined as follows.
 
 \begin{definition}[Completeness]
   A $\sum-$protocol is said to be \textbf{complete} for $\mathcal{R}$ if
-  the verifier $V$ always accepts the honest prover $P$ for any $x\in L$.
+  the honest verifier $V$ always accepts the honest prover $P$ for any $x\in L$.
 \end{definition}
 
 \begin{definition}[HVZK]
-  A $\sum-$protocol is said to be \textit{Honest Verifier Zero Knowledge}(\textbf{HVZK}) for $\mathcal{R}$ if there exist a PPT algorithm $S$ 
+  A $\sum-$protocol is said to be \textit{Honest Verifier Zero Knowledge}(\textbf{HVZK}) for $\mathcal{R}$ if there exist a PPT algorithm $\mathcal{S}$ 
   that simulates $trans$ of the scheme corresponding to a given $x\in L$ with any witness $w$ of $x$. 
   That is, given $x\in L$,
   \begin{align*}
-    trans(P(x,w)\leftrightarrow V(x)) &\approx trans(S(x) \leftrightarrow V(x))&& \text{, for any witness $w$ of $x$.}
+    trans(P(x,w)\leftrightarrow V(x)) &\approx trans(\mathcal{S}(x) \leftrightarrow V(x))&& \text{, for any witness $w$ of $x$.}
   \end{align*}
   Where $trans(P(\cdot)\leftrightarrow V(\cdot))$ is the transcript of the $\sum-$protocol amongst 
   $P$ and $V$ and $\approx$ denotes the indistinguishability of the two transcripts.
@@ -289,7 +289,8 @@ It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protoco
 Non Interactive Zero Knowledge (NIZK) Proof of Knowledge (PoK) or Argument of Knowledge (AoK) in the 
 Random Oracle ($RO$) model using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}. 
 In the following subsections, we recall two important NIZK PoK schemes which are used in $\Pi_S$ and 
-$\Lambda_{RO}$ schemes.
+$\Lambda_{RO}$ schemes. Also, we will introduce a NIZK AoK scheme which will be used in one of 
+our new protocols.
 
 \subsection{Chaum-Pedersen Protocol for DL Equality}
 \label{subsec:chaum-pedersen}
@@ -311,18 +312,42 @@ Recall $\mathbb{G}$ being the cyclic group of prime order $q$ with hard Discrete
 being its generator. Consider the following relation for some polynomial $f\in\mathbb{Z}_q[X]_t$ with
 degree $t<n$:
 \begin{align*}
-  R_{PDL} &= \{(g,x_1,\dots,x_n,F(x_1),\dots,F(x_n)),f(X) : F(x_i)=g^{f(x_i)}, 1\leq i\leq n\}.
+  R_{PDL} &= \{(g,x_1,\dots,x_n,F_1,\dots,F_n),f(X) : (F_i=g^{f(x_i)}, 1\leq i\leq n)\wedge(x_i\neq x_j, i\neq j)\}.
 \end{align*}
+The $R_{PDL}$ is based on the Polynomial Discrete Logarithm formally introduced in \cite{cryptoeprint:2023/1669}, 
+and we recall its definition in the following.
+
+\begin{definition}[Polynomial Discrete Logarithm]
+  Let $g$ be a generator for the prime order $q$ cyclic group $\mathbb{G}$. Given $F_1,\dots,F_n$ and distinct elements $x_1,\dots,x_n$ in 
+  $\mathbb{Z}_q$, find a polynomial $f\in\mathbb{Z}_q[X]$ with degree at most $t$, where $F_i=g^{f(x_i)}$ 
+  for $1\leq i\leq n$ and $t\leq n-1$.\par
+
+  In other words, an algorithm $\mathcal{A}$ is said to have an advantage $\epsilon$ in solving PDL if 
+  \begin{align*}
+    Pr[\mathcal{A}(x_1,\dots,x_n,g,g^{f(x_1)},\dots,g^{f(x_n)})]\geq\epsilon,
+  \end{align*}
+  where $f\in\mathbb{Z}_q[X]$ is at most a $t$ degree polynomial with $t\leq n-1$ and the probability is over a 
+  chosen random generator $g$ of $\mathbb{G}$ with $q=|\mathbb{G}|$ being prime and distinct $x_1,\dots,x_n$ 
+  elements in $\mathbb{Z}_q$.
+\end{definition}
+
+\begin{theorem}\cite{cryptoeprint:2023/1669}\label{th:PDL security}
+  Let $(g,x_1,\dots,x_n,F_1,\dots,F_n)\in L_{PDL}$ be a statement with its corresponding witness being 
+  $f\in\mathbb{Z}_q[X]_{\leq t}$ where $L_{PDL}$ is the language defined by the relation $R_{PDL}$. 
+  Assuming PDL is hard, for $0\leq t\leq n-1$, the protocol $\pi_{PDL}$ \ref{fig:polynomial-dl} (described in figure \ref{fig:polynomial-dl}) 
+  is a NIZK PoK for $R_{PDL}$ in the $RO$ model.
+\end{theorem}
+
 In \cite{cryptoeprint:2023/1669}, Baghery formally introduced a NIZK PoK scheme for the Polynomial DL 
 relation, $R_{PDL}$, which is a generalization of Schnorr's ID protocol \cite{crypto-1989-1727}. Informally, 
 a prover $P$ can convince a verifier $V$ that they know a $t$ degree polynomial $f$ such that 
-it can be used with $g$ to obtain $F(x_i)$ for $1\leq i\leq n$. This protocol is used to construct the PPVSS 
+it can be used with $g$ to obtain $F_i$ for $1\leq i\leq n$. This protocol is used to construct the PPVSS 
 $\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, which was essential in building an efficient e-voting protocol. 
 We summarize the protocol in Figure \ref{fig:polynomial-dl}.
 \input{figures/polynomial-dl.tex}
 
 In the next section we will give a brief overview of the Pre-Constructed Publicly Verifiable Secret Sharing 
-(PPVSS) and its security guarantees.
+(PPVSS).
 
 \section{Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS)}
 \label{sec:ppvss}
@@ -349,9 +374,8 @@ In summary, we recalled some basic concepts of linear codes and Reed Solomon cod
 recalled the Packed Shamir secret sharing scheme which is a generalization of the Shamir Secret Sharing scheme \cite{10.1145/359168.359176} 
 that was originally designed to defend against passive adversaries and showed its correspondence with 
 Reed Solomon codes. As one of the goals of this thesis is to explore threshold secret sharing schemes that 
-can defend against malicious adversaries, we then briefly recalled PPVSS \cite{cryptoeprint:2025/576} and an example based on 
-PVSS introduced in \cite{cryptoeprint:2023/1669}. Moving forward, in the next chapter we will introduce a new scheme called Packed Pre-Constructed Publicly 
-Verifiable Secret Sharing (PPPVSS) scheme and give an example whose inspiration is drawn from $\Lambda_{RO}$.
+can defend against malicious adversaries, we then briefly recalled PPVSS \cite{cryptoeprint:2025/576}. Moving forward, in the next chapter we will introduce a new scheme called Packed Pre-Constructed Publicly 
+Verifiable Secret Sharing (PPPVSS) scheme and give two examples whose inspiration is drawn from $\Lambda_{RO}$.
 
 %%% Local Variables: 
 %%% mode: latex

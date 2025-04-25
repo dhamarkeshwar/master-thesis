@@ -12,45 +12,45 @@ The style file: abbrv.bst
 Database file #1: references.bib
 Warning--entry type for "welch1986error" isn't style-file defined
 --line 222 of file references.bib
-You've used 19 entries,
+You've used 23 entries,
             2118 wiz_defined-function locations,
-            631 strings with 7925 characters,
-and the built_in function-call counts, 6850 in all, are:
-= -- 706
-> -- 241
-< -- 12
-+ -- 97
-- -- 75
-* -- 386
-:= -- 1043
-add.period$ -- 68
-call.type$ -- 19
-change.case$ -- 91
+            662 strings with 8704 characters,
+and the built_in function-call counts, 8669 in all, are:
+= -- 909
+> -- 301
+< -- 15
++ -- 121
+- -- 95
+* -- 487
+:= -- 1298
+add.period$ -- 83
+call.type$ -- 23
+change.case$ -- 113
 chr.to.int$ -- 0
-cite$ -- 19
-duplicate$ -- 306
-empty$ -- 595
-format.name$ -- 75
-if$ -- 1560
+cite$ -- 23
+duplicate$ -- 406
+empty$ -- 733
+format.name$ -- 95
+if$ -- 1992
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 15
-newline$ -- 100
-num.names$ -- 44
-pop$ -- 132
+int.to.str$ -- 23
+missing$ -- 19
+newline$ -- 120
+num.names$ -- 52
+pop$ -- 156
 preamble$ -- 1
-purify$ -- 74
+purify$ -- 92
 quote$ -- 0
-skip$ -- 255
+skip$ -- 346
 stack$ -- 0
-substring$ -- 403
-swap$ -- 119
-text.length$ -- 12
+substring$ -- 512
+swap$ -- 170
+text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 72
+type$ -- 88
 warning$ -- 0
-while$ -- 65
-width$ -- 21
-write$ -- 225
+while$ -- 79
+width$ -- 25
+write$ -- 277
 (There was 1 warning)

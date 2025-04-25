@@ -2,7 +2,7 @@
     \centering
     \begin{tcolorbox}[title=\textbf{Chaum-Pedersen Protocol for DLEQ}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
         Let $(g,h,a,b)\in L_{DLEQ}$ be a statement with its corresponding witness being $x$ where $L_{DLEQ}$
-        is the language defined by the relation $R_{DLEQ}$.
+        is the language defined by the relation $R_{DLEQ}$ and $\mathcal{H}$ be a Random Oracle ($RO$).
         
         \vspace{0.5em}
         \textbf{Prover}
@@ -10,7 +10,7 @@
             \item Samples $r\in_{R}\mathbb{Z}_q$ uniformly at random and sets 
                 $c_1=g^r$ and $c_2=h^r$.
             \item Sets $d\leftarrow \mathcal{H}(a,b,c_1,c_2)$, where $\mathcal{H}$ is 
-                an agreed upon Random Oracle (RO).
+                an agreed upon Random Oracle ($RO$).
             \item Sets $z\equiv r+dx \pmod{q}$ and returns the proof(/transcript) $\pi:= (d,z)$.
         \end{itemize}
         

@@ -6,6 +6,11 @@ D.~Adams.
 \newblock Del Rey (reprint), 1995.
 \newblock ISBN-13: 978-0345391803.
 
+\bibitem{10.5555/1496711.1496734}
+B.~Adida.
+\newblock Helios: web-based open-audit voting.
+\newblock In {\em Proceedings of the 17th Conference on Security Symposium}, SS'08, page 335–348, USA, 2008. USENIX Association.
+
 \bibitem{cryptoeprint:2023/992}
 S.~Atapoor, K.~Baghery, D.~Cozzo, and R.~Pedersen.
 \newblock {VSS} from distributed {ZK} proofs and applications.
@@ -72,6 +77,11 @@ T.~P. Pedersen.
 \newblock Non-interactive and information-theoretic secure verifiable secret sharing.
 \newblock In {\em Advances in Cryptology - CRYPTO '91, 11th Annual International Cryptology Conference, Santa Barbara, California, USA, August 11-15, 1991, Proceedings}, volume 576 of {\em Lecture Notes in Computer Science}, pages 129--140. Springer, 1991.
 
+\bibitem{RABIN1983256}
+M.~O. Rabin.
+\newblock Transaction protection by beacons.
+\newblock {\em Journal of Computer and System Sciences}, 27(2):256--267, 1983.
+
 \bibitem{doi:10.1137/0108018}
 I.~S. Reed and G.~Solomon.
 \newblock Polynomial codes over certain finite fields.
@@ -92,9 +102,19 @@ A.~Shamir.
 \newblock How to share a secret.
 \newblock {\em Commun. ACM}, 22(11):612–613, Nov. 1979.
 
+\bibitem{10.1145/2815400.2815417}
+J.~van~den Hooff, D.~Lazar, M.~Zaharia, and N.~Zeldovich.
+\newblock Vuvuzela: scalable private messaging resistant to traffic analysis.
+\newblock In {\em Proceedings of the 25th Symposium on Operating Systems Principles}, SOSP '15, page 137–152, New York, NY, USA, 2015. Association for Computing Machinery.
+
 \bibitem{welch1986error}
 L.~R. Welch and E.~Berlekamp.
 \newblock Error correction for algebraic block codes, December 1986.
 \newblock U.S. Patent 4,633,470.
+
+\bibitem{180263}
+D.~I. Wolinsky, H.~Corrigan-Gibbs, B.~Ford, and A.~Johnson.
+\newblock Dissent in numbers: Making strong anonymity scale.
+\newblock In {\em 10th USENIX Symposium on Operating Systems Design and Implementation (OSDI 12)}, pages 179--182, Hollywood, CA, Oct. 2012. USENIX Association.
 
 \end{thebibliography}
