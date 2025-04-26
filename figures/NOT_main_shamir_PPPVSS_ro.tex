@@ -16,7 +16,7 @@
               sets $\{g^{f_j}:f_j=f(j)\}_{j=-(\ell-1)}^0$ as the set of all secrets.
             \item For each $1\leq i\leq n$, $D$ encrypts $f(i)=f_i$ with $PK_i$ to obtain 
               $y_i=PK_i^{f_i}$. $D$ also commits(/encrypts) to the secrets $\{f_j\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
-              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ to obtain $\{y_j=h_j^{f_j}\}_{j=-(\ell-1)}^0$ (or $\{y_j=h_j^{f_j}\}_{j=-(\ell-1)}^0$). 
+              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ to obtain $\{y_j=h_j^{f_j}\}_{j=-(\ell-1)}^0$ (or $\{y_j=PK_j^{f_j}\}_{j=-(\ell-1)}^0$). 
             \item $D$ uses the PDL proof scheme \ref{subsec:polynomial-dl} to generate $\pi_{PDL}$ as follows:
             \begin{itemize}
                \item Samples a $t+\ell-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 

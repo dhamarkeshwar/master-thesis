@@ -219,9 +219,9 @@ $(n,t,\ell)$-Packed Shamir secret sharing (\cite{10.1145/129712.129780},\cite{cr
 \input{figures/packed_shamir.tex}
 
 One can observe that all the secret shares of a secret polynomial chosen by the dealer form a codeword in 
-$[n,t+l,n-t-l+1]-$RS code. If the adversary is malicious and can corrupt at most $t$ parties, then from 
+$[n,t+\ell,n-t-\ell+1]-$RS code. If the adversary is malicious and can corrupt at most $t$ parties, then from 
 corollary \ref{cor:detectable-correctable RS}, the honest shareholders can detect the errors if 
-$2t\leq n-l$ and moreover all such errors can be corrected if $3t\leq n-l$. Also, one can use 
+$2t\leq n-\ell$ and moreover all such errors can be corrected if $3t\leq n-\ell$. Also, one can use 
 the Berlekamp-Welch algorithm \cite{welch1986error} to correct the errors.\par
 
 But Shamir secret sharing scheme is designed particularly to defend against passive adversaries and not 

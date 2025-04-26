@@ -1,0 +1,63 @@
+\begin{figure}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
+    \begin{tcolorbox}[title=\textbf{a PPPVSS based on Packed Shamir secret sharing \ref{sec:packed-shamir}}, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        
+        \textbf{Initialization:}
+            All parties $\{P_i\}_{i=1}^n$ and dealer $D$ agree on the prime field $\mathbb{Z}_q$. Also, each party 
+            $P_i$ registers their public key $PK_i$ in the public ledger and all agree on a set of commitment 
+            keys or public keys, $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$, whose secret keys are known to target entities with 
+            the cipher text space being a group $(\mathcal{G},\times)$. More importantly, all entities agree 
+            on two NIZK proof protocols, one for the dealer during sharing phase $\pi_{PPPVSS}^{share}$ and the 
+            other for Pessimistic reconstruction phase $\pi_{PPPVSS}^{pes}$.
+
+        \vspace{0.5em}
+        \textbf{Share:}
+        \begin{itemize}
+            \item Dealer $D$ samples a $t+\ell$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
+              sets $\{f(j)=f_j\}_{j=-(\ell-1)}^0$ as the set of all secrets.
+            \item For each $1\leq i\leq n$, $D$ computes $f(i)=f_i$ and and encrypts it with $PK_i$ to obtain 
+              $y_i=Enc(PK_i,f_i)$. $D$ also encrypts(/commits) to the secrets $\{f_j\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
+              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ to obtain $\{y_j\}_{j=-(\ell-1)}^0$. 
+            \item $D$ uses the agreed upon proof system $\pi_{PPPVSS}^{share}$ to prove that they have encrypted the shares and 
+              commitments(/encryptions) of $\ell$ secrets corresponding to the correct polynomial that evaluates 
+              to $\ell$ secrets.
+            \item $D$ broadcasts $\{y_{-(\ell-1)},\dots,y_0,\dots,y_n,\pi_{PPPVSS}^{share}\}$.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Verification:}
+            Given public keys $\{PK_i\}_{i=1}^n$ and commitment(/public) keys $\{h_j,PK_j\}_{j=-(\ell-1)}^0$, 
+            any entity can check $\pi_{PPPVSS}^{share}$ to verify the correctness of the encrypted shares $\{y_i\}_{i=1}^n$ and 
+            $\{y_j\}_{j=-(\ell-1)}^0$ being the commitments(/encryptions) of the $\ell$ secrets, and outputs 
+            \textbf{true} or \textbf{false} accordingly.
+
+        \vspace{0.5em}
+        \textbf{Reconstruction:}
+            Similar to \cite{cryptoeprint:2025/576}, there are two approaches to reconstruct the secrets 
+            $\{f_j\}_{j=-(\ell-1)}^0$ based on the cooperation of the dealer $D$ which are as follows:
+            \begin{itemize}
+                \item \textbf{Optimistic Reconstruction:} $D$ publishes $\{f_j\}_{j=-(\ell-1)}^0$, then any verifier (not necessarily shareholders) 
+                when given $\{y_j,h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ can check if each $y_j$ is a valid commitment(/encryption) 
+                of the secret $f_j$ and returns \textbf{false} if the check fails; otherwise returns 
+                $\{f_j\}_{j=-(\ell-1)}^0$.
+                \item \textbf{Pessimistic Reconstruction:} If $D$ refuses to reveal $\{f_j\}_{j=-(\ell-1)}^0$, then any set 
+                $\mathcal{Q}$ consisting at least $t+\ell$ shareholders will do the following:
+                \begin{itemize}
+                    \item Each party $P_i\in\mathcal{Q}$ decrypts their share $y_i$ using their private key $SK_i$ 
+                      corresponding to $PK_i$ to obtain $f_i$ and then they publish $f_i$ 
+                      along with proof $\pi_{PPPVSS}^{pes}$ which proves that the $f_i$ is the correct 
+                      decryption of $y_i$.
+                    \item If $\mathcal{Q}$ consists at least $t+\ell$ honest parties, they can use the 
+                    lagrange interpolation to compute the secrets $\{f_j\}_{j=-(\ell-1)}^0$ as follows:
+                    \begin{align*}
+                        f_j &= \sum_{i\in \mathcal{Q}} f_i \left[\prod_{k\in \mathcal{Q}, k\neq i}\frac{-k-j}{i-j}\right] &&, j\in\{-(\ell-1),\dots,0\} \\
+                    \end{align*}
+                    where $\lambda_i=\prod_{k\neq i}\frac{k}{k-i}$ are lagrange coefficients.
+                \end{itemize}
+            \end{itemize}
+    \end{tcolorbox}
+    }
+    \caption[PPPVSS Scheme]{a PPPVSS based on Packed Shamir secret sharing}
+    \label{fig:version-packed-shamir-PPPVSS}
+\end{figure}

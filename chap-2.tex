@@ -138,32 +138,52 @@ called secure:
           \end{bmatrix} = 1,
         \end{align*}
     \end{itemize}
-  \item \textbf{Verifiability}: If \textit{\textbf{Verify}} returns \textit{\textbf{true}}, then with high 
-    probability $\{y_i\}_{i=1}^n$ are valid encryptions of shares of some $\ell$ secrets, and $y_0$ is a 
-    valid well-formed commitment of the same $\ell$ secrets constructed by taking a product of valid commitments (/ciphers) of 
-    $\ell$ secrets under $\{h_j\textit{ or }PK_j\}_{j=-(\ell-1)}^0$. Moreover, if the check in \textit{\textbf{(Pessimistic)}} $Reconstruction^{pes}$ 
-    passes then the decrypted values are indeed shares of the secret distributed by the dealer. Alternatively, 
-    if the check in \textit{\textbf{(Optimistic)}} $Reconstruct^{opt}$ passes then the input values $\{f_j\}_{j=-(\ell-1)}^0$ 
-    are the actual secrets of whom the shares are encrypted. More formally, given $\lambda$, for any integers 
-    $n\geq 2t+\ell$, $\ell\geq 1$ and $t\geq 0$, a PPPVSS is said to be verifiable if for any $\mathcal{PPT}$ adversary $\mathcal{A}$, 
-    we have:
-    \begin{align*}
-      Pr\begin{bmatrix}
-        \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
-        (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
-        &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
-        \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\\
-        &\textit{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]\bigvee\\
-        \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
-        \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})\\
-        &\bigwedge \{f_j^{'}\}_{j=-(\ell-1)}^0\neq \{f_j\}_{j=-(\ell-1)}^0
-      \end{bmatrix} \leq negl(\lambda),
-    \end{align*}
-    where $\mathcal{Q}$ is the set of honest parties.
+  \item \textbf{Verifiability}: If \textit{\textbf{Verify}} returns \textit{\textbf{true}}, then 
+    \textit{\textbf{(Optimistic)}} $Reconstruct^{opt}$ and/or \textit{\textbf{(Pessimistic)}} $Reconstruct^{pes}$ 
+    output being $\{f_j\}_{j=-(\ell-1)}^0$ are the actual secrets of whom the shares are encrypted. Moreover, 
+    $\{y_i\}_{i=1}^n$ are valid encryptions of the shares of actual secret shares of those $\ell$ secrets with 
+    high probability and either of the following two statements is true.
+    \begin{itemize}
+      \item $\{y_j\}_{j=-(\ell-1)}^0$ are valid commitments(/encryptions) of those $\ell$ secrets with high 
+        probability. More formally, given $\lambda$, for any integers 
+        $n\geq 2t+\ell$, $\ell\geq 1$ and $t>0$, a PPPVSS is said to be verifiable if for any 
+        $\mathcal{PPT}$ adversary $\mathcal{A}$, we have:
+        \begin{align*}
+          Pr\begin{bmatrix}
+            \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
+            (\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+            &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
+            \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[\{h_j,f_j,r_j,y_j\}_{j=-(\ell-1)}^0\\
+            &\textit{ or }\{PK_j,SK_j,y_j\}_{j=-(\ell-1)}^0]\bigvee\\
+            \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
+            \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})\\
+            \bigwedge f_j^{'}\neq f_j&\text{ for some }-(\ell-1)\leq j\leq 0
+          \end{bmatrix} \leq negl(\lambda),
+        \end{align*}
+        where $\mathcal{Q}$ is the set of honest parties.
+      \item $y_0$ is a valid well-formed commitment of the same $\ell$ secrets constructed by taking a 
+        product of valid commitments (/ciphers) of $\ell$ secrets under 
+        $\{h_j\textit{ or }PK_j\}_{j=-(\ell-1)}^0$. More formally, given $\lambda$, for any integers 
+        $n\geq 2t+\ell$, $\ell\geq 1$ and $t>0$, a PPPVSS is said to be verifiable if for any 
+        $\mathcal{PPT}$ adversary $\mathcal{A}$, we have:
+        \begin{align*}
+          Pr\begin{bmatrix}
+            \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
+            (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+            &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
+            \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\\
+            &\textit{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]\bigvee\\
+            \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
+            \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})\\
+            \bigwedge f_j^{'}\neq f_j&\text{ for some }-(\ell-1)\leq j\leq 0
+          \end{bmatrix} \leq negl(\lambda),
+        \end{align*}
+        where $\mathcal{Q}$ is the set of honest parties.
+    \end{itemize}
   \item \textbf{IND1-Secrecy (Indistinguishability of Secrets)}: Before reconstruction phase, any amount of public 
     information along with secret keys of at most $t$ parties excluding $\{SK_j\}_{j=-(\ell-1)}^0$ will give 
     absolutely no information about the secrets $\{f_j\}_{j=-(\ell-1)}^0$. More formally, for integers $n>1$ and 
-    $t+\ell-1<n$, the PPPVSS is said to satisfy \textit{IND1-Secrecy} if for any $\mathcal{PPT}$ adversary $\mathcal{A}$ 
+    $t+\ell\leq n$, the PPPVSS is said to satisfy \textit{IND1-Secrecy} if for any $\mathcal{PPT}$ adversary $\mathcal{A}$ 
     corrupting at most $t$ parties, excluding the owners of $\{SK_j\}_{j=-(\ell-1)}^0$, has negligible 
     advantage in the following game \cite{cryptoeprint:2025/576} played against a challenger.
     \begin{itemize}
@@ -174,28 +194,31 @@ called secure:
         $s_1=\{f_j^{'}\}_{j=-(\ell-1)}^0$ at random in the space of secrets. Furthermore, it chooses $b\in\{0,1\}$ 
         uniformly at random and runs \par 
         \textit{\textbf{Share}} $(n,t,s_0,\{PK_i\}_{i=1}^n\bigsqcup\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0)$ 
-        algorithm of the PPPVSS scheme and obtains $(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$. Finally, it sends 
-        all public information generated in \textit{Share} phase together with $s_b$.
+        algorithm of the PPPVSS scheme and obtains $(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$ or 
+        $(\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})$. Finally, it sends all public information generated in 
+        \textit{Share} phase together with $s_b$.
       \item $\mathcal{A}$ guesses a bit $b'\in\{0,1\}$.
     \end{itemize}
     The advantage of $\mathcal{A}$ is defined to be $|Pr[b'=b]-\frac{1}{2}|$.
 \end{itemize}
 
 It can be seen that PPPVSS is a natural extension of PPVSS, where we secret share possibly \textit{more than one} 
-secret in contrast to \textit{only one} secret in PPVSS. But one has to be careful when obtaining the commitment 
-of the secrets which is obtained via multiplication of encryptions (/commitments) of actual secrets. 
-More precisely, $y_0$ should be well formed, i.e., a dealer should not be able to cheat to obtain $y_0$ by 
-taking multiplications of random group elements, it precisely has to be multiplication of encryptions 
-(/commitments) of the actual secrets.\par 
+secret in contrast to \textit{only one} secret in PPVSS. But one has to be very careful in the case where they 
+obtain the commitment of the secrets which is obtained via multiplication of encryptions (/commitments) of 
+actual secrets. More precisely, $y_0$ should be well formed, i.e., a dealer should not be able to cheat to 
+obtain $y_0$ by taking multiplications of random group elements, it precisely has to be multiplication of 
+encryptions (/commitments) of the actual secrets.\par 
 
 A general construction of Shamir based PPVSS is given in \cite{cryptoeprint:2025/576}, and we extend this idea 
-to give a Packed Shamir based PPPVSS which is outlined in the figure \ref{fig:packed-shamir-PPPVSS}. 
+to give two Packed Shamir based PPPVSS outlined in figures \ref{fig:version-packed-shamir-PPPVSS} and \ref{fig:packed-shamir-PPPVSS}. 
 In next section, we will give a practical PPPVSS scheme.
 
+\input{figures/v1_shamir_PPPVSS.tex}
 \input{figures/shamir_PPPVSS}
 
-\section{A NIZK AoK for \textit{modified}-PDL}
+\section{NIZK AoK protocols for PDL problem}
 \label{sec:aok_polynomial_dl}
+\subsection{Version 1}
 Consider the set $\{g_j\}_{j=-(\ell-1)}^0$ containing $\ell$ distinct generators chosen uniformly at random of 
 the prime order $q$ cyclic group $\mathcal{G}$ different from $g$, where $\ell<\varphi(q)$ and $\varphi(q)$ are 
 the total number of distinct generators of the cyclic group $\mathbb{G}$. Consider the following relation for 
@@ -274,7 +297,7 @@ in the figure \ref{fig:mod-polynomial-dl}.
         \prod_{j=-(\ell-1)}^{0}g_j^{z(x_j)-z'(x_j)}=F_0^{d-d'} \iff \prod_{j=-(\ell-1)}^{0}g_j^{\frac{z(x_j)-z'(x_j)}{d-d'}}=F_0.
       \end{align}
       Hence, equations \ref{eq:i_Equality} and \ref{eq:0_Equality} imply that $f_i=\frac{z(x_i)-z'(x_i)}{d-d'}$ for 
-      $-(\ell-1)\leq i\leq n$ when all $n+\ell$ checks pass. Moreover, as $z(X)$ is at most a $t+\ell-1$ degree 
+      $-(\ell-1)\leq i\leq n$. Moreover, as $z(X)$ is at most a $t+\ell-1$ degree 
       polynomial in $\mathbb{Z}_q[X]$, an extractor $\mathcal{E}$ can construct the unique $t+\ell-1$-degree 
       polynomial $f\in\mathbb{Z}_q[X]$, being the witness (resp. solution) for $R_{PDL}^{mod}$ relation (resp. \textit{modified}-PDL problem), 
       from any $t+\ell$ evaluation points in $\{f_i\}_{i=-(\ell-1)}^n$ whenever $n\geq t$.
@@ -291,15 +314,145 @@ in the figure \ref{fig:mod-polynomial-dl}.
 \end{proof}
 \input{figures/mod-polynomial-dl.tex}
 
+\subsection{Version 2}
+Consider the set $\{g_i\}_{i=-(\ell-1)}^n$ containing $n+\ell$ distinct generators chosen uniformly at random of 
+the prime order $q$ cyclic group $\mathcal{G}$, where $n+\ell\leq\varphi(q)$ and $\varphi(q)$ is 
+the total number of distinct generators of the cyclic group $\mathbb{G}$. Consider the following relation for 
+some polynomial $f\in\mathbb{Z}_q[X]_{t+\ell}$ with $t\leq n$:
+\begin{align}\label{eq:relation_mod_v1_PDL}
+  R_{PDL}^{mod-v1} = \{(\{g_i,x_i\}_{i=-(\ell-1)}^n,&\{F_i\}_{i=0}^n),f(X) :\nonumber\\
+   &F_i=g_i^{f(x_i)}, 1\leq i\leq n, F_0=(\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)})(\prod_{i=1}^{n}F_i)\},
+\end{align}
+where all $x_i$'s are distinct in $\mathbb{Z}_q$. The $R_{PDL}^{mod-v1}$ is based on \textit{modified-v1}-PDL (inspired from the PDL in \cite{cryptoeprint:2023/1669}) 
+which is defined in the following.
+
+\begin{definition}[\textit{modified-v1}- Polynomial Discrete Logarithm]
+  Let\par 
+  $\{g_i\}_{i=-(\ell)-1}^n$ be a set of distinct generators for the prime order $q$ cyclic 
+  group $\mathbb{G}$. Given $\{F_i\}_{i=0}^n$ and distinct elements $x_{-(\ell-1)},\dots,x_0,\dots,x_n$ in 
+  $\mathbb{Z}_q$, find a polynomial $f\in\mathbb{Z}_q[X]$ with degree at most $t+\ell-1$, where 
+  $F_i=g_i^{f(x_i)}$ for $1\leq i\leq n$ and $F_0=(\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)})(\prod_{i=1}^{n}F_i)$.\par
+
+  In other words, an algorithm $\mathcal{A}$ is said to have an advantage $\epsilon$ in solving \textit{modified-v1}-PDL if 
+  \begin{align*}
+    Pr[\mathcal{A}(x_{-(\ell-1)},\dots,x_0,\dots,x_n,\{g_i\}_{i=-(\ell-1)}^n,\prod_{i=-(\ell-1)}^{n}g_i^{f(x_i)})]\geq\epsilon,
+  \end{align*}
+  where $f\in\mathbb{Z}_q[X]$ is at most a $t+\ell-1$ degree polynomial with $t\leq n$ and the probability is over 
+  distinct generators $g_{-(\ell-1)},\dots,g_0,\dots,g_n$ of $\mathbb{G}$ and distinct $x_{-(\ell-1)},\dots,x_0,\dots,x_n$ 
+  elements in $\mathbb{Z}_q$.
+\end{definition}
+
+We now will present a new NIZK AoK for the aforementioned relation $R_{PDL}^{mod-v1}$, which is inspired from \ref{fig:polynomial-dl}, 
+in the figure \ref{fig:mod-v1-polynomial-dl}.
+
+\begin{theorem}[A NIZK Argurement of Knowledge for $R_{PDL}^{mod-v1}$]\label{th:modified_v1_PDL security}
+  Let\par $(\{g_i,x_i\}_{i=-(\ell-1)}^n,\{F_i\}_{i=0}^n)\in L_{PDL}^{mod-v1}$ be a statement 
+  with its corresponding witness being $f\in\mathbb{Z}_q[X]_{\leq t+\ell-1}$ where $L_{PDL}^{mod-v1}$ is the 
+  language defined by the relation $R_{PDL}^{mod-v1}$. Assuming \textit{modified-v1}-PDL is computationally hard, for 
+  $0\leq t\leq n$, the protocol $\pi_{PDL}^{mod-v1}$ (described in figure \ref{fig:mod-polynomial-dl}) is a 
+  NIZK AoK for $R_{PDL}^{mod-v1}$ in  the $RO$ model.
+\end{theorem}
+\begin{proof}
+  The corresponding proof is similar to the proof of theorem \ref{th:modified_PDL security}. 
+  Formally, we will prove the security of the interactive setting (i.e., without $RO$ being used) and then 
+  using Fiat-Shamir transform it can be extended for the non-interactive setting in the $RO$ model. 
+
+  \begin{itemize}
+    \item \textit{\textbf{Correctness}}: If both prover and verifier are honest, then we have 
+      \begin{align}\label{eq:verify_v1}
+        \prod_{i=-(\ell-1)}^{0}g_i^{z(i)}&=\prod_{i=-(\ell-1)}^{0}g_i^{r(i)+df(i)}\nonumber\\
+        &=\prod_{i=-(\ell-1)}^{n}g_i^{r(i)}(g_i^{f(i)})^d\nonumber\\
+        &=\Gamma F_0^d,
+      \end{align}
+      which imply that verification returns \textit{true} and honest verifier accepts the honest prover.
+    \item \textit{\textbf{Special Soundness}}: Let $(\Gamma,d,z(X))$, $(\Gamma,d',z'(X))$ 
+      be two acceptable transcripts where response polynomials will differ as a consequence of different challenge 
+      values. Then we have the following from equation \ref{eq:verify_v1}:
+      \begin{align*}
+        \prod_{i=-(\ell-1)}^{n}g_i^{z(x_i)}=\Gamma F_0^d,\prod_{i=-(\ell-1)}^{n}g_i^{z'(x_i)}=\Gamma F_0^{d'};
+      \end{align*}
+      which implies,
+      \begin{align}\label{eq:Equality_v1}
+        \prod_{i=-(\ell-1)}^{n}g_i^{z(x_i)-z'(x_i)}=F_0^{d-d'} &\iff \prod_{i=-(\ell-1)}^{n}g_i^{\frac{z(x_i)-z'(x_i)}{d-d'}}=F_0,
+      \end{align}
+      [\textit{if and only if because $d-d'$ is always invertible in $\mathbb{Z}_q$ for $d\neq d'\pmod{q}$}]. 
+      Hence, equations \ref{eq:Equality_v1} and \ref{eq:verify_v1} imply that $f_i=\frac{z(x_i)-z'(x_i)}{d-d'}$ for 
+      $-(\ell-1)\leq i\leq n$. Moreover, as $z(X)$ is at most a $t+\ell-1$ degree 
+      polynomial in $\mathbb{Z}_q[X]$, an extractor $\mathcal{E}$ can construct the unique $t+\ell-1$-degree 
+      polynomial $f\in\mathbb{Z}_q[X]$, being the witness (resp. solution) for $R_{PDL}^{mod-v1}$ relation (resp. \textit{modified-v1}-PDL problem), 
+      from any $t+\ell$ evaluation points in $\{f_i\}_{i=-(\ell-1)}^n$ whenever $n\geq t$.
+    \item \textit{\textbf{Honest Verifier Zero Knowledge (HVZK)}}: Given the statement\par $(\{g_i,x_i\}_{i=-(\ell-1)}^n,\{F_i\}_{i=0}^n)\in L_{PDL}^{mod-v1}$  
+      and a challenge value $d$, a simulator $\mathcal{S}$ can choose a polynomial $z'\in\mathbb{Z}_q[X]_{\leq t+\ell-1}$ uniformly 
+      at random and sets $\Gamma'=\frac{\prod_{i=-(\ell-1)}^{n}g_i^{z'(x_i)}}{F_0^d}$ for $1\leq i\leq n$. 
+      Now, $\mathcal{S}$ returns $(\Gamma',z'(X))$ as the simulated proof. As $z(X)$ is a random 
+      up to degree $t+\ell-1$-polynomial in $\mathbb{Z}_q[X]$ and $z'(X)$ is chosen uniformly at random, 
+      the simulated proof of $\mathcal{S}$ is indistinguishable from the real one.
+  \end{itemize}
+  As the interactive scheme is public coin, satisfies \textit{completeness}, (computational) \textit{Special Soundness} 
+  and (computational) \textit{HVZK}, then in the random oracle ($RO$) model, using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}, 
+  it can be turned into a NIZK Argument of Knowledge for $R_{PDL}^{mod-v1}$ (defined in equation \ref{eq:relation_mod_v1_PDL}).
+\end{proof}
+\input{figures/mod-v1-polynomial-dl.tex}
+
 \section{Practical PPPVSS schemes}
 
-The scheme we present in figures \ref{fig:initial-packed-shamir-PPPVSS-ro} and \ref{fig:packed-shamir-PPPVSS-ro} is a direct extension of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576} 
-(which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}). Fundamentally, we make use of the two NIZK 
-PoK protocols, $\pi_{PDL}$ and $\pi_{DLEQ}$, to construct our PPPVSS. We give its security proofs in the following. 
+The scheme we present in figures \ref{fig:initial-packed-shamir-PPPVSS-ro} and \ref{fig:packed-shamir-PPPVSS-ro}, which are direct extensions of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576} 
+(which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}). Fundamentally, we make use of the NIZK 
+PoK protocols, $\pi_{DLEQ}$, $\pi_{PDL}$, and the NIZK AoK protocol, $\pi_{PDL}^{mod}$, to construct our PPPVSSs. We give its security proofs in the following. 
 
 \input{figures/NOT_main_shamir_PPPVSS_ro.tex}
 
 \input{figures/main_shamir_PPPVSS_ro.tex}
+
+\begin{theorem}
+  $\Lambda_{RO}^{'}$ is secure.
+\end{theorem}
+\begin{proof}
+  This directly follows from the proof of $\Lambda_{RO}$ in \cite{cryptoeprint:2025/576} as we mainly make use of 
+  $\pi_{PDL}$ and $\pi_{DLEQ}$. For the sake of completeness, we give the proof as follows: 
+  \begin{itemize}
+    \item \textbf{Correctness}: Assume the dealer $D$ and parties $\{P_i\}_{i=1}^n$ follow the protocol. Given a 
+    setup from initial phase of the protocol for an input $1^\lambda$ we have $(y_{-(\ell-1)},\dots,y_n,(d,z(X)))$ from 
+    the sharing phase of the $\Lambda_{RO}^{'}$ where 
+    $y_i=h_i^{f_i}$ (or $y_i=PK_i^{f_i}$) for $-(\ell-1)\leq i\leq 0$ and $y_i=PK_i^{f_i}$ for $1\leq i\leq n$, 
+    $d$ is an output 
+    from the random oracle $\mathcal{H}$ for the input $(y_{-(\ell-1)},\dots,y_n,c_{-(\ell-1)},\dots,c_n)$ and $z(X)=r(x)+df(X)$ 
+    is a $t+\ell-$degree polynomial such that $f(X)$ is the secret polynomial, $r(X)$ is the polynomial (also secret to $D$) 
+    chosen uniformly at random, $c_i=h_i^{r(i)}$ or $c_i=PK_i^{r(i)}$ for $-(\ell-1)\leq i\leq 0$ and 
+    $c_i=PK_i^{r(i)}$ for $1\leq i\leq n$.\par 
+
+    Now with $(y_{-(\ell-1)}\dots,y_n,(d,z(X)))$, a verifier checks that the following part of the verification phase evaluates to $d$ 
+    when additionally given with $\ell$ commitment keys for the secrets and $n$ public keys for the shares:
+    \begin{align*}
+      &\mathcal{H}(y_{-(\ell-1)}\dots,y_n,\frac{h_{-(\ell-1)}^{z(-(\ell-1))}}{y_{-(\ell-1)}^d},\dots,\frac{h_0^{z(0)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})\\
+      =&\mathcal{H}(y_{-(\ell-1)},\dots,y_n,\frac{h_{-(\ell-1)}^{r(-(\ell-1))+df(-(\ell-1))}}{h_{-(\ell-1)}^{df(-(\ell-1))}},\dots,\frac{h_0^{r(0)+df(0)}}{h_0^{df(0)}},\frac{PK_1^{r(1)+df(1)}}{PK_1^{df(1)}},\dots,\frac{PK_n^{r(n)+df(n)}}{h_n^{df(n)}})\\
+      =&\mathcal{H}(y_{-(\ell-1)},\dots,y_n,h_{-(\ell-1)}^{r(-(\ell-1))},\dots,h_0^{r(0)},PK_1^{r(1)},\dots,PK_n^{r(n)}).
+    \end{align*}
+    Verifier computes $d$ even when up to $\ell$ public keys of some target entities are used instead of the commitment 
+    keys for the secrets.\par 
+    
+    Moreover, the reconstruction phase always yields $\{g^{f_i}\}_{i=-(\ell-1)}^0$ in both the approaches. Explicitly, it is 
+    clear in the optimistic phase that yields $\{g^{f_i}\}_{i=-(\ell-1)}^0$ after one checks $\{y_i=h_i^{f_i}\}$ or $y_i=PK_i^{f_i}$ for $-(\ell-1)\leq i\leq n$,  
+    when given $(g,\{y_i,f_i,h_i\text{ or }PK_i\}_{i=-(\ell-1)}^0)$. The Pessimistic case also yields 
+    $\{g^{f_i}\}_{i=-(\ell-1)}^0$ which inherently is the reconstruction step from the PVSS $\Pi_S$ \cite{cryptoeprint:2023/1669}. 
+    In essence, we just proved that if the dealer and parties follow the protocol, then verification step returns 
+    true and the Reconstruction phase returns the actual secrets.
+
+    \item \textbf{Verifiability}: We need to show that if verify algorithm returns true then for $1\leq i\leq n$, 
+    $y_i$ is a valid encryption of $i$'th share of the secrets $\{g^{f_i}\}_{i=-(\ell-1)}^0$ which is intended to party $P_i$ and 
+    for $-(\ell-1)\leq i\leq 0$, $y_i$ is the valid commitment(/encryption) of the secret $g^{f_i}$ and 
+    reconstruct algorithm returns $\{g^{f_i}\}_{i=-(\ell-1)}^0$ irrespective of the approach with high probability. The 
+    trick to do that is to leverage the special soundness property of underlying proof systems.\par
+
+    Assuming verification phase outputs true, consider the verification equation of the interactive version of the NIZK PoK $\pi_{PDL}$ output by the dealer 
+    during the sharing phase as follows (WLOG assume the secrets are encrypted using the $\ell$ encryption keys of some target entities).
+
+    \begin{align*}
+      PK_i^{z(i)}&=c_iy_i^d
+    \end{align*}
+
+  \end{itemize}
+\end{proof}
 
 \begin{theorem}
   $\Lambda_{RO}^{packed}$ is secure
@@ -319,7 +472,7 @@ PoK protocols, $\pi_{PDL}$ and $\pi_{DLEQ}$, to construct our PPPVSS. We give it
       Now with $(y_0,y_1,\dots,y_n,(d,z(X)))$, a verifier checks that the following part of the verification phase evaluates to $d$ 
       for $\ell$ commitment keys:
       \begin{align*}
-        &\mathcal{H}(y_0,y_1,\dots,y_n,\prod_{j=-(\ell-1)}^{0}\frac{h_j^{z(j)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})\\
+        &\mathcal{H}(y_0,y_1,\dots,y_n,\frac{\prod_{j=-(\ell-1)}^{0}h_j^{z(j)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})\\
         =&\mathcal{H}(y_0,y_1,\dots,y_n,\prod_{j=-(\ell-1)}^{0}\frac{h_j^{r(j)+df(j)}}{h_j^{df(j)}},\frac{PK_1^{r(1)+df(1)}}{PK_1^{df(1)}},\dots,\frac{PK_n^{r(n)+df(n)}}{h_n^{df(n)}})\\
         =&\mathcal{H}(y_0,y_1,\dots,y_n,\prod_{j=-(\ell-1)}^{0}h_j^{r(j)},PK_1^{r(1)},\dots,PK_n^{r(n)}).
       \end{align*}

@@ -22,20 +22,22 @@
 \contentsline {section}{\numberline {2.6}Conclusion}{11}{section.2.6}%
 \contentsline {chapter}{\chapternumberline {3}Packed Pre-Constructed Publicly Verifiable Secret Sharing}{13}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Definitions}{13}{section.3.1}%
-\contentsline {section}{\numberline {3.2}A NIZK AoK for \textit {modified}-PDL}{18}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Practical PPPVSS schemes}{20}{section.3.3}%
-\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Computational Complexity}{27}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{30}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Communication Complexity}{30}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{31}{subsection.4.2.1}%
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{33}{chapter.5}%
-\contentsline {appendix}{\chapternumberline {A}The First Appendix}{37}{appendix.A}%
-\contentsline {section}{\numberline {A.1}More Lorem}{37}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{37}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{38}{subsection.A.1.2}%
-\contentsline {section}{\numberline {A.2}Lorem 51}{38}{section.A.2}%
-\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{39}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Lorem 20-24}{39}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Lorem 25-27}{40}{section.B.2}%
-\contentsline {chapter}{Bibliography}{41}{appendix*.24}%
+\contentsline {section}{\numberline {3.2}NIZK AoK protocols for PDL problem}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Version 1}{18}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Version 2}{20}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Practical PPPVSS schemes}{22}{section.3.3}%
+\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Computational Complexity}{33}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{36}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Communication Complexity}{36}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{37}{subsection.4.2.1}%
+\contentsline {chapter}{\chapternumberline {5}Conclusion}{39}{chapter.5}%
+\contentsline {appendix}{\chapternumberline {A}The First Appendix}{43}{appendix.A}%
+\contentsline {section}{\numberline {A.1}More Lorem}{43}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{43}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{44}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}Lorem 51}{44}{section.A.2}%
+\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{45}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Lorem 20-24}{45}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Lorem 25-27}{46}{section.B.2}%
+\contentsline {chapter}{Bibliography}{47}{appendix*.26}%
