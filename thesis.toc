@@ -26,18 +26,19 @@
 \contentsline {subsection}{\numberline {3.2.1}Version 1}{18}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Version 2}{20}{subsection.3.2.2}%
 \contentsline {section}{\numberline {3.3}Practical PPPVSS schemes}{22}{section.3.3}%
-\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{33}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Computational Complexity}{33}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{36}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Communication Complexity}{36}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{37}{subsection.4.2.1}%
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{39}{chapter.5}%
-\contentsline {appendix}{\chapternumberline {A}The First Appendix}{43}{appendix.A}%
-\contentsline {section}{\numberline {A.1}More Lorem}{43}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{43}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{44}{subsection.A.1.2}%
-\contentsline {section}{\numberline {A.2}Lorem 51}{44}{section.A.2}%
-\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{45}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Lorem 20-24}{45}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Lorem 25-27}{46}{section.B.2}%
-\contentsline {chapter}{Bibliography}{47}{appendix*.26}%
+\contentsline {section}{\numberline {3.4}A compact PVSS scheme}{25}{section.3.4}%
+\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{35}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Computational Complexity}{35}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{38}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Communication Complexity}{38}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{39}{subsection.4.2.1}%
+\contentsline {chapter}{\chapternumberline {5}Conclusion}{41}{chapter.5}%
+\contentsline {appendix}{\chapternumberline {A}The First Appendix}{45}{appendix.A}%
+\contentsline {section}{\numberline {A.1}More Lorem}{45}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{45}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{46}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}Lorem 51}{46}{section.A.2}%
+\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{47}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Lorem 20-24}{47}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Lorem 25-27}{48}{section.B.2}%
+\contentsline {chapter}{Bibliography}{49}{appendix*.28}%

@@ -1,0 +1,61 @@
+\begin{figure}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
+    \begin{tcolorbox}[title=$\Pi_{S}^{compact}$, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        
+        \textbf{Initialization:}
+            All parties $\{P_i\}_{i=1}^n$ and dealer $D$ agree on the prime field $\mathbb{Z}_q$, a group 
+            $(\mathbb{G},\times)$ of order $q$ with a generator $g$, random oracle $\mathcal{H}$. Also, each party 
+            $P_i$ registers their public key $PK_i$ in the public ledger.
+
+        \vspace{0.5em}
+        \textbf{Share:}
+        \begin{itemize}
+            \item Dealer $D$ samples a $t$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
+              sets $g^{f_0}$ as secret where $f_0=f(0)$.
+            \item For each $1\leq i\leq n$, $D$ encrypts $f(i)=f_i$ with $PK_i$ to obtain 
+              $y_i=PK_i^{f_i}$. $D$ multiplies the encryptions of shares to obtain 
+              $y_0=\prod_{i=1}^{n}y_i$. 
+            \item $D$ uses the \textit{modified-v1} PDL proof scheme \ref{subsec:v1} to generate $\pi_{PDL}^{mod-v1}$ as follows:
+            \begin{itemize}
+               \item Samples a $t$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
+               computes $c_0=(\prod_{i=1}^{n}PK_i^{r(i)})$.
+               \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,c_0)$ is computed.
+               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{PDL}^{mod-v1}=(d,z(X))$ is obtained. 
+            \end{itemize}
+            \item $D$ broadcasts the encryptions of the shares along with the commitment $y_0$ of the shares
+              with $\pi_{PDL}^{mod-v1}$ which proves the validity of the commitment of the encrypted shares, i.e., broadcasts 
+              $\{y_i\}_{i=0}^n$ and $(d,z(X))$.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Verification:}
+            Given public keys $\{PK_i\}_{i=1}^n$, any entity can check 
+            $\pi_{PDL}^{mod-v1}$ to verify the correctness of the commitment $y_0$. 
+            They will output \textbf{true} or \textbf{false} based on the verification of the proof. The 
+            procedure is outlined as follows:
+        \begin{itemize}
+            \item The entity checks if $z(X)$ is a $t$degree polynomial or not.
+            \item Checks if $d=\mathcal{H}(y_0,\prod_{i=1}^{n}{PK_i^{z(i)}}{y_0^d})$.
+            \item Outputs \textbf{true} if both of the above checks are satisfied, otherwise \textbf{false}.
+        \end{itemize}
+
+        \vspace{0.5em}
+        \textbf{Reconstruction:}
+            Any set $\mathcal{Q}$ consisting $t+1$ honest shareholders will do the following:
+            \begin{itemize}
+                \item Each party $P_i\in\mathcal{Q}$ decrypts their share $y_i$ using their private key $SK_i$ 
+                    corresponding to $PK_i$ to obtain $g^{f_i}$ and then they publish $g^{f_i}$ 
+                    along with a DLEQ proof \ref{subsec:chaum-pedersen}, $\pi_{DLEQ}$ which proves that 
+                    $g^{f_i}$ is the correct decryption of $y_i$.
+                \item They can use the 
+                lagrange interpolation to compute the secrets $g^{f_0}$ as follows:
+                \begin{align*}
+                    g^{f_0} &= \prod_{i\in\mathcal{Q}}(g^{f_i})^{\prod_{k\in\mathcal{Q},k\neq i}\frac{-k}{i}}= g^{\sum_{i\in\mathcal{Q}}f_i\prod_{k\in\mathcal{Q},k\neq i}\frac{-k}{i}}.\\
+                \end{align*}
+            \end{itemize}
+    \end{tcolorbox}
+    }
+    \caption[PVSS]{$\Pi_{S}^{compact}$, a compact version of $\Pi_{S}$}
+    \label{fig:compact-PVSS-ro}
+\end{figure}

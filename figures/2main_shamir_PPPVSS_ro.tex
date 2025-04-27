@@ -1,0 +1,72 @@
+\begin{figure}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
+    \begin{tcolorbox}[title=\textbf{$\Lambda_{RO}^{packed-compact}$}, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        
+        \textbf{Initialization:}
+            All parties $\{P_i\}_{i=1}^n$ and dealer $D$ agree on the prime field $\mathbb{Z}_q$, a group 
+            $(\mathbb{G},\times)$ of order $q$ with a generator $g$, random oracle $\mathcal{H}$. Also, each party 
+            $P_i$ registers their public key $PK_i$ in the public ledger and all agree on a set distinct of commitment 
+            keys or public keys, $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$, whose secret keys are known to target entities.
+
+        \vspace{0.5em}
+        \textbf{Share:}
+        \begin{itemize}
+            \item Dealer $D$ samples a $t+\ell$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
+              sets $\{g^{f_i}:f_i=f(i)\}_{i=-(\ell-1)}^0$ as the set of all secrets.
+            \item For each $1\leq i\leq n$, $D$ encrypts $f(i)=f_i$ with $PK_i$ to obtain 
+              $y_i=PK_i^{f_i}$. $D$ also encrypts(/commits) to the secrets $\{f_j\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
+              keys $\{h_i\text{ or }PK_i\}_{i=-(\ell-1)}^0$ and multiplies them together with encryptions of 
+              shares to obtain $y_0=(\prod_{i=-(\ell-1)}^0h_i^{f_i})\prod_{i=1}^{n}y_i$ (or $y_0=(\prod_{i=-(\ell-1)}^0PK_j^{f_j})(\prod_{i=1}^{n}y_i)$). 
+            \item $D$ uses the \textit{modified-v1} PDL proof scheme \ref{subsec:v1} to generate $\pi_{PDL}^{mod-v1}$ as follows:
+            \begin{itemize}
+               \item Samples a $t+\ell-1$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
+               computes $c_0=(\prod_{i=-(\ell-1)}^0h_i^{r(i)})(\prod_{i=1}^{n}PK_i^{r(i)})$(or $c_0=\prod_{i=-(\ell-1)}^nPK_i^{r(i)}$).
+               \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,c_0)$ is computed.
+               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{PDL}^{mod-v1}=(d,z(X))$ is obtained. 
+            \end{itemize}
+            \item $D$ broadcasts the encryptions of the shares along with the commitment $y_0$ of the secrets and its shares
+              with $\pi_{PDL}^{mod-v1}$ which proves the validity of the encrypted shares and committed 
+              secret, i.e., broadcasts $\{y_i\}_{i=0}^n$ and $(d,z(X))$.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Verification:}
+            Given public keys $\{PK_i\}_{i=1}^n$ and commitment(/public) keys $\{h_i\text{ or }PK_i\}_{i=-(\ell-1)}^0$, any entity can check 
+            $\pi_{PDL}^{mod-v1}$ to verify the correctness of the commitment $y_0$. 
+            They will output \textbf{true} or \textbf{false} based on the verification of the proof. The 
+            procedure is outlined as follows:
+        \begin{itemize}
+            \item The entity checks if $z(X)$ is a $t+\ell-1$degree polynomial or not.
+            \item Checks if $d=\mathcal{H}(y_0,\frac{(\prod_{i=-(\ell-1)}^{0}h_i^{z(i)})(\prod_{i=1}^{n}PK_i^{z(i)})}{y_0^d})$ or 
+            $d=\mathcal{H}(y_0,\frac{\prod_{i=-(\ell-1)}^{n}PK_i^{z(i)}}{y_0^d})$.
+            \item Outputs \textbf{true} if both of the above checks are satisfied, otherwise \textbf{false}.
+        \end{itemize}
+
+        \vspace{0.5em}
+        \textbf{Reconstruction:}
+            There are two approaches to reconstruct the secrets 
+            $\{f_i\}_{i=-(\ell-1)}^0$ based on the cooperation of the dealer $D$ which are as follows:
+            \begin{itemize}
+                \item \textbf{Optimistic Reconstruction:} $D$ publishes $\{f_i\}_{i=-(\ell-1)}^0$, then any verifier (not necessarily shareholders) 
+                when given $\{h_i\text{ or }PK_i\}_{i=-(\ell-1)}^0,\{y_i\}_{i=0}^n$ can check if $y_0=(\prod_{i=-(\ell-1)}^0h_i^{f_i})(\prod_{i=1}^{n}y_i)$ (or $y_0=(\prod_{i=-(\ell-1)}^0PK_i^{f_i})(\prod_{i=1}^{n}y_i)$) 
+                and returns $\{g^{f_i}\}_{i=-(\ell-1)}^0$ if the check passes, if not they return \textbf{false}.
+                \item \textbf{Pessimistic Reconstruction:} If $D$ refuses to reveal $\{f_i\}_{i=-(\ell-1)}^0$, then any set 
+                $\mathcal{Q}$ consisting at least $t+\ell$ shareholders will do the following:
+                \begin{itemize}
+                    \item Each party $P_i\in\mathcal{Q}$ decrypts their share $y_i$ using their private key $SK_i$ 
+                      corresponding to $PK_i$ to obtain $g^{f_i}$ and then they publish $g^{f_i}$ 
+                      along with a DLEQ proof \ref{subsec:chaum-pedersen}, $\pi_{DLEQ}$ which proves that 
+                      $g^{f_i}$ is the correct decryption of $y_i$.
+                    \item If $\mathcal{Q}$ consists at least $t+\ell$ honest parties, they can use the 
+                    lagrange interpolation to compute the secrets $\{g^{f_j}\}_{j=-(\ell-1)}^0$ as follows:
+                    \begin{align*}
+                        g^{f_j} &= \prod_{i\in\mathcal{Q}}(g^{f_i})^{\prod_{k\in\mathcal{Q},k\neq i}\frac{-k-j}{i-j}}= g^{\sum_{i\in\mathcal{Q}}f_i\prod_{k\in\mathcal{Q},k\neq i}\frac{-k-j}{i-j}}.\\
+                    \end{align*}
+                \end{itemize}
+            \end{itemize}
+    \end{tcolorbox}
+    }
+    \caption[PPPVSS]{$\Lambda_{RO}^{packed-compact}$, a compact version of $\Lambda_{RO}^{packed}$}
+    \label{fig:compact-packed-shamir-PPPVSS-ro}
+\end{figure}

@@ -443,6 +443,12 @@ INPUT figures/NOT_main_shamir_PPPVSS_ro.tex
 INPUT ./figures/main_shamir_PPPVSS_ro.tex
 INPUT ./figures/main_shamir_PPPVSS_ro.tex
 INPUT figures/main_shamir_PPPVSS_ro.tex
+INPUT ./figures/2main_shamir_PPPVSS_ro.tex
+INPUT ./figures/2main_shamir_PPPVSS_ro.tex
+INPUT figures/2main_shamir_PPPVSS_ro.tex
+INPUT ./figures/PVSS.tex
+INPUT ./figures/PVSS.tex
+INPUT figures/PVSS.tex
 INPUT ./chap-n.tex
 INPUT ./chap-n.tex
 OUTPUT chap-n.aux

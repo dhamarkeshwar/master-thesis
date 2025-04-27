@@ -219,6 +219,7 @@ In next section, we will give a practical PPPVSS scheme.
 \section{NIZK AoK protocols for PDL problem}
 \label{sec:aok_polynomial_dl}
 \subsection{Version 1}
+\label{subsec:v0}
 Consider the set $\{g_j\}_{j=-(\ell-1)}^0$ containing $\ell$ distinct generators chosen uniformly at random of 
 the prime order $q$ cyclic group $\mathcal{G}$ different from $g$, where $\ell<\varphi(q)$ and $\varphi(q)$ are 
 the total number of distinct generators of the cyclic group $\mathbb{G}$. Consider the following relation for 
@@ -315,6 +316,7 @@ in the figure \ref{fig:mod-polynomial-dl}.
 \input{figures/mod-polynomial-dl.tex}
 
 \subsection{Version 2}
+\label{subsec:v1}
 Consider the set $\{g_i\}_{i=-(\ell-1)}^n$ containing $n+\ell$ distinct generators chosen uniformly at random of 
 the prime order $q$ cyclic group $\mathcal{G}$, where $n+\ell\leq\varphi(q)$ and $\varphi(q)$ is 
 the total number of distinct generators of the cyclic group $\mathbb{G}$. Consider the following relation for 
@@ -397,12 +399,15 @@ in the figure \ref{fig:mod-v1-polynomial-dl}.
 \section{Practical PPPVSS schemes}
 
 The scheme we present in figures \ref{fig:initial-packed-shamir-PPPVSS-ro} and \ref{fig:packed-shamir-PPPVSS-ro}, which are direct extensions of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576} 
-(which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}). Fundamentally, we make use of the NIZK 
-PoK protocols, $\pi_{DLEQ}$, $\pi_{PDL}$, and the NIZK AoK protocol, $\pi_{PDL}^{mod}$, to construct our PPPVSSs. We give its security proofs in the following. 
+(which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}), also find one more of our scheme in 
+figure \ref{fig:compact-packed-shamir-PPPVSS-ro}. Fundamentally, we make use of the NIZK 
+PoK protocols, $\pi_{DLEQ}$, $\pi_{PDL}$, and the NIZK AoK protocols, $\pi_{PDL}^{mod},\pi_{PDL}^{mod-v1}$, to construct our PPPVSSs. We give its security proofs in the following. 
 
 \input{figures/NOT_main_shamir_PPPVSS_ro.tex}
 
 \input{figures/main_shamir_PPPVSS_ro.tex}
+
+\input{figures/2main_shamir_PPPVSS_ro.tex}
 
 \begin{theorem}
   $\Lambda_{RO}^{'}$ is secure.
@@ -444,18 +449,39 @@ PoK protocols, $\pi_{DLEQ}$, $\pi_{PDL}$, and the NIZK AoK protocol, $\pi_{PDL}^
     reconstruct algorithm returns $\{g^{f_i}\}_{i=-(\ell-1)}^0$ irrespective of the approach with high probability. The 
     trick to do that is to leverage the special soundness property of underlying proof systems.\par
 
-    Assuming verification phase outputs true, consider the verification equation of the interactive version of the NIZK PoK $\pi_{PDL}$ output by the dealer 
-    during the sharing phase as follows (WLOG assume the secrets are encrypted using the $\ell$ encryption keys of some target entities).
+    Assuming verification phase outputs true, consider two acceptable transcripts $(c_{-(\ell-1)},\dots,c_n,d,z(X))$ 
+    of the interactive version of the NIZK PoK $\pi_{PDL}$ output by the dealer during the sharing phase as 
+    follows (WLOG assume the secrets are encrypted using the $\ell$ encryption keys of some target entities).
 
     \begin{align*}
-      PK_i^{z(i)}&=c_iy_i^d
+      PK_i^{z(i)}&=c_iy_i^d, PK_i^{z'(i)}=c_iy_i^{d'},\text{ for } -(\ell-1)\leq i\leq n;
     \end{align*}
+    this implies,
+    \begin{align*}
+      PK_i^{z(i)-z'(i)}=y_i^{d-d'}\iff PK_i^{\frac{z(i)-z'(i)}{d-d'}}=y_i\text{ for }-(\ell-1)\leq i\leq n.
+    \end{align*}
+    If all the $n\geq 2t+\ell$ checks for verification pass, then it means that $\{y_i\}_{-(\ell-1)}^n$ are 
+    valid encryptions(/commitments) of $\ell$ secrets and encryptions of $n$ shares, as a consequence if any 
+    set $\mathcal{Q}$ of $t+\ell$ honest parties decrypt the encryptions of their shares to reconstruct 
+    secrets via pessimistic approach, then the following is obtained,
+    \begin{align*}
+      g^{\frac{z(i)-z'(i)}{d-d'}}=F_i\text{ for }i\in\mathcal{Q}, |\mathcal{Q}|=t+\ell.
+    \end{align*}
+    After the DLEQ proofs $\pi_{DLEQ}$ are checked, as with high probability $z(X),z'(X)$ are exactly $t+\ell-1$ 
+    degree polynomial, an extractor having access to the two acceptable transcripts can construct the secrets 
+    from $f_i=\frac{z(i)-z'(i)}{d-d'}$ which are $\ell$ evaluations of the (with high probability)
+    $t+\ell-1$-degree polynomial $f(X)=\frac{z(X)-z'(X)}{d-d'}$. This implies that pessimistic approach 
+    yields the actual secrets $\{g^{f_i}\}_{i=-(\ell-1)}^0$ with high probability.\par
 
+    Similarly, the optimistic approach also yields the actual secrets $\{g^{f_i}\}_{i=-(\ell-1)}^0$ with 
+    high probability as a consequence of special soundness of $\pi_{PDL}$.
+
+    \item \textbf{IND1-Secrecy} 
   \end{itemize}
 \end{proof}
 
 \begin{theorem}
-  $\Lambda_{RO}^{packed}$ is secure
+  Assuming DDH and PDL assumptions are true, $\Lambda_{RO}^{packed}$ is secure
 \end{theorem}
 \begin{proof}
   We want to prove the \textit{Correctness, Verifiability} and \textit{IND1-Secrecy} properties and it follows 
@@ -500,6 +526,20 @@ PoK protocols, $\pi_{DLEQ}$, $\pi_{PDL}$, and the NIZK AoK protocol, $\pi_{PDL}^
   \end{itemize}
 \end{proof}
  
+\begin{theorem}
+  $\Lambda_{RO}^{packed-compact}$ is secure.
+\end{theorem}
+
+\section{A compact PVSS scheme}
+The relation $\pi_{PDL}^{mod-v1}$ has more potential that a new PVSS can be constructed on top of it. We 
+present it in the figure \ref{fig:compact-PVSS-ro}. 
+
+\input{figures/PVSS.tex}
+
+\begin{theorem}
+  $\Pi_{S}^{compact}$ is secure.
+\end{theorem}
+
 In the next chapter, we will revisit the randomness beacon \cite{cryptoeprint:2020/644} protocol based on PVSS, 
 where we replace the PVSS based on Packed Shamir secret sharing with our PPPVSS. 
 
