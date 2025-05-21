@@ -1,9 +1,10 @@
 \begin{figure}[ht]
     \centering
     \begin{tcolorbox}[title=\textbf{Chaum-Pedersen Protocol for DLEQ}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
-        Let $(g,h,a,b)\in L_{DLEQ}$ be a statement with its corresponding witness being $x$ where $L_{DLEQ}$
-        is the language defined by the relation $R_{DLEQ}$ and $\mathcal{H}$ be a Random Oracle ($RO$).
-        
+        % Let $(g,h,a,b)\in L_{DLEQ}$ be a statement with its corresponding witness being $x$ where $L_{DLEQ}$
+        % is the language defined by the relation $R_{DLEQ}$ and 
+        Let $g$ be the group generator sampled in the setup phase, $[(g,h,a,b),x]\in R_{DLEQ}$ and 
+        $\mathcal{H}$ be a Random Oracle ($RO$).\par
         \vspace{0.5em}
         \textbf{Prover}
         \begin{itemize}

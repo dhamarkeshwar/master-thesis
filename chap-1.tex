@@ -239,38 +239,50 @@ Verifiable Secret Sharing (PPVSS)\cite{cryptoeprint:2025/576} was proposed which
 The main tools used in VSS, PVSS and PPVSS schemes are the \textbf{Sigma Protocols} which we overview in the 
 next section \ref{sec:sigma-protocols}.
 
-\section{Sigma Protocols}
+\section{Zero Knowledge Proofs}
 \label{sec:sigma-protocols}
 The agenda of this subsection is to give a brief formal background about some important primitives 
-used in the PVSS ,$\Pi_S$ \cite{cryptoeprint:2023/1669}, and the PPVSS ,$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, schemes.
-Let $X$ and $W$ be two sets with $R$ being a relation on $X\times W$, and $L=\{x\in X :\exists w\in W, xRw\}$
-be the language defined by $R$ where $xRw$ says that $w$ is a witness for a given $x\in L$. 
-Also, let $\mathcal{R}$ be a PPT algorithm such that $\mathcal{R}(1^\lambda)$ outputs pairs 
-$(x,w)$ with $x\in L$ and $xRw$ where $\lambda$ is a security parameter.\par
+used in the PVSS ,$\Pi_S$ \cite{cryptoeprint:2023/1669}, and the PPVSS ,$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, schemes. 
+A \textit{Zero Knowledge Argument of Knowledge} (ZK AoK)\cite{cryptoeprint:2017/1066} is a protocol between a prover and a verifier
+where the prover tries to convince the verifier that a statement is true without revealing any information 
+about why it is true. Unlike the Zero Knowledge Proof of Knowledge (ZK PoK) where the prover cannot cheat 
+the verifier even with unbounded computational power, a ZK AoK requires the prover to be computationally bounded 
+to not be able to cheat any verifier.\par
+Let $Y,X$ and $W$ be three sets with $R$ being a ternary relation on $Y\times X\times W$. Consider the 
+three PPT interactive algorithms (\textit{Setup}, $P$, $V$), where \textit{Setup} returns a 
+common reference string (CRS) $\sigma$ when input $1^{\lambda}$. Given $\sigma$, the following 
+is the CRS-dependent language of the relation $R$.
+\begin{align*}
+  L_{\sigma}=\{x\in X :\exists w\in W, (\sigma, x, w)\in R\},
+\end{align*}
+where we call $w$ a witness for a statement $x$ if $(\sigma, x, w)\in R$. Also, let $\mathcal{R}$ be 
+a PPT algorithm that returns an element in the relation $R$ when input $1^{\lambda}$.\par
 
-Given a relation $R$ and its corresponding language $L$, a \textbf{Sigma ($\sum$) Protocol} 
+Given a relation $R$ and its corresponding language, a \textbf{$\sum$-protocol} 
 is a $3$-round \textit{interactive} protocol between two Probabilistic Polynomial Time (PPT) algorithms, 
 a prover $P$ 
-and a verifier $V$. For some $x\in L$ with $xRw$, in the first round $P$ sends a 
+and a verifier $V$. For some statement in the language of $R$, in the first round $P$ sends a 
 commitment $a$ to $V$. To which $V$ sends a challenge $d$ to $P$ in the second round 
 and finally $P$ responds back with the response $z$ to $V$ in the third round. 
 $V$ outputs \textbf{true} or \textbf{false} upon the proof verification on transcript
 $trans := (a, d, z)$. 
 Informally, with a $\sum-$protocol a prover $P$ tries to convince
-a verifier $V$ that they know a witness $w$ for a given statement $x\in L$ without 
+a verifier $V$ that they know a witness $w$ for a given statement $x$ in the language without 
 revealing any information about $w$. To state it formally, a $\sum-$protocol is 
 supposed to satisfy \textit{completeness}, \textit{Honest Verifier Zero Knowledge} (HVZK)
 and \textit{Special Soundness} which are defined as follows.
 
 \begin{definition}[Completeness]
   A $\sum-$protocol is said to be \textbf{complete} for $\mathcal{R}$ if
-  the honest verifier $V$ always accepts the honest prover $P$ for any $x\in L$.
+  the honest verifier $V$ always accepts the honest prover $P$ for any statement in the language 
+  defined by $R$.
 \end{definition}
 
 \begin{definition}[HVZK]
   A $\sum-$protocol is said to be \textit{Honest Verifier Zero Knowledge}(\textbf{HVZK}) for $\mathcal{R}$ if there exist a PPT algorithm $\mathcal{S}$ 
-  that simulates $trans$ of the scheme corresponding to a given $x\in L$ with any witness $w$ of $x$. 
-  That is, given $x\in L$,
+  that simulates $trans$ of the scheme corresponding to a given statement, $x$, in the 
+  language that has witness $w$. 
+  That is, given $x$,
   \begin{align*}
     trans(P(x,w)\leftrightarrow V(x)) &\approx trans(\mathcal{S}(x) \leftrightarrow V(x))&& \text{, for any witness $w$ of $x$.}
   \end{align*}
@@ -281,8 +293,8 @@ and \textit{Special Soundness} which are defined as follows.
 \begin{definition}[Special Soundness]
   A $\sum-$protocol is said to satisfy \textbf{Special Soundness} for $\mathcal{R}$, 
   if there exists a PPT extractor $\mathcal{E}$ for any two valid transcripts, $(a,d,z)$ and 
-  $(a,d',z')$, corresponding to a given $x\in L$ with only a unique witness $w$ and $d\neq d'$ such that $\mathcal{E}(a,d,z,d',z')$ outputs the 
-  witness $w$. 
+  $(a,d',z')$, corresponding to a given statement $x$ in the language with only a unique 
+  witness $w$ and $d\neq d'$ such that $\mathcal{E}(a,d,z,d',z')$ outputs the witness $w$. 
 \end{definition}
 
 It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protocol can be made into a
@@ -332,8 +344,7 @@ and we recall its definition in the following.
 \end{definition}
 
 \begin{theorem}\cite{cryptoeprint:2023/1669}\label{th:PDL security}
-  Let $(g,x_1,\dots,x_n,F_1,\dots,F_n)\in L_{PDL}$ be a statement with its corresponding witness being 
-  $f\in\mathbb{Z}_q[X]_{\leq t}$ where $L_{PDL}$ is the language defined by the relation $R_{PDL}$. 
+  Let $[(g,x_1,\dots,x_n,F_1,\dots,F_n),f(X)]\in R_{PDL}$ where $f\in\mathbb{Z}_q[X]_{\leq t}$. 
   Assuming PDL is hard, for $0\leq t\leq n-1$, the protocol $\pi_{PDL}$ \ref{fig:polynomial-dl} (described in figure \ref{fig:polynomial-dl}) 
   is a NIZK PoK for $R_{PDL}$ in the $RO$ model.
 \end{theorem}

@@ -14,19 +14,20 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Packed Shamir Secret Sharing}}{7}{figure.caption.12}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Chaum-Pedersen NIZK PoK for DLEQ}}{9}{figure.caption.13}%
 \contentsline {figure}{\numberline {2.3}{\ignorespaces A NIZK PoK for Polynomial DL based on Schoenmakers' PVSS}}{11}{figure.caption.14}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces PPVSS Scheme}}{12}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces PPVSS Scheme}}{13}{figure.caption.15}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {3.1}{\ignorespaces PPPVSS Scheme}}{27}{figure.caption.16}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces PPPVSS Scheme}}{28}{figure.caption.17}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{29}{figure.caption.18}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{30}{figure.caption.19}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces PPPVSS}}{31}{figure.caption.20}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces PPPVSS}}{32}{figure.caption.21}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces PPPVSS}}{33}{figure.caption.22}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces PVSS}}{34}{figure.caption.23}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{36}{figure.caption.24}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{40}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces PPPVSS Scheme}}{30}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces PPPVSS Scheme}}{31}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{32}{figure.caption.18}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{33}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces PPPVSS}}{34}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces PPPVSS}}{35}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces PPPVSS}}{36}{figure.caption.22}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces PVSS}}{37}{figure.caption.23}%
+\addvspace {10pt}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{40}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{44}{figure.caption.25}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

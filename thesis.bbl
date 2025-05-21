@@ -31,6 +31,11 @@ G.~R. Blakley and C.~Meadows.
 \newblock Security of ramp schemes.
 \newblock In {\em Advances in Cryptology, Proceedings of CRYPTO '84, Santa Barbara, California, USA, August 19-22, 1984, Proceedings}, volume 196 of {\em Lecture Notes in Computer Science}, pages 242--268. Springer, 1984.
 
+\bibitem{cryptoeprint:2017/1066}
+B.~Bünz, J.~Bootle, D.~Boneh, A.~Poelstra, P.~Wuille, and G.~Maxwell.
+\newblock Bulletproofs: Short proofs for confidential transactions and more.
+\newblock Cryptology {ePrint} Archive, Paper 2017/1066, 2017.
+
 \bibitem{cryptoeprint:2017/216}
 I.~Cascudo and B.~David.
 \newblock {SCRAPE}: Scalable randomness attested by public entities.
