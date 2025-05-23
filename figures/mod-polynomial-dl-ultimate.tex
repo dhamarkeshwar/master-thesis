@@ -1,16 +1,16 @@
 \begin{figure}[ht]
     \centering
-    \begin{tcolorbox}[title=$\pi_{PDL}^{mod}$, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
-        Let $(g,x_1,\dots,x_n,F)\in L_{g_1,\dots,g_n}^{mod-PDL}$ be a statement with its corresponding witness being $f\in\mathbb{Z}_q[X]_t$ 
+    \begin{tcolorbox}[title=$\pi_{PDL}^{AOK}$, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        Let $(g,x_1,\dots,x_n,F_1,\dots,F_n)\in L_{g_1,\dots,g_n}^{PDL}$ be a statement with its corresponding witness being $f\in\mathbb{Z}_q[X]_t$ 
         where $L_{g_1,\dots,g_n}^{mod-PDL}$ is the CRS dependent language defined by the relation $R_{PDL}^{mod}$ and $\mathcal{H}$ be a 
         random oracle (RO).
         
         \vspace{0.5em}
         \textbf{Prover}
         \begin{itemize}
-            \item Samples $r\in_{R}\mathbb{Z}_q[X]_{t+\ell-1}$ uniformly at random and sets 
-                $\Gamma_i=g^{r(x_i)}$ for $1\leq i\leq n$ and $\Gamma_0=\prod_{j=-(\ell-1)}^{0}g_j^{r(x_j)}$.
-            \item Sets $d\leftarrow \mathcal{H}(F_0, \dots, F_n, \Gamma_0, \dots, \Gamma_n)$, where $\mathcal{H}$ is 
+            \item Samples $r\in_{R}\mathbb{Z}_q[X]_{t}$ uniformly at random and sets 
+                $\Gamma=\prod_{j=1}^{n}g_i^{r(x_i)}$.
+            \item Sets $d\leftarrow \mathcal{H}(F_1, \dots, F_n, \Gamma)$, where $\mathcal{H}$ is 
                 an agreed upon Random Oracle (RO).
             \item Sets $z(X)\equiv r(X)+df(X) \pmod{q}$ and returns the proof(/transcript) $\pi:= (d,z(X))$.
         \end{itemize}
@@ -18,11 +18,11 @@
         \vspace{0.5em}
         \textbf{Verifier}
         \begin{itemize}
-            \item First checks if $z$ is at most a $t+\ell-1$ degree polynomial in $\mathbb{Z}_q[X]$. If so, they proceed with the next step.
-            \item Checks if $d\leftarrow \mathcal{H}(F_0, \dots, F_n,\frac{\prod_{j=-(\ell-1)}^{0}g_j^{z(x_j)}}{F_0^d},\frac{g^{z(x_1)}}{F_1^d}, \dots, \frac{g^{z(n)}}{F_n^d})$. 
+            \item First checks if $z$ is a $t$ degree polynomial in $\mathbb{Z}_q[X]$. If so, they proceed with the next step.
+            \item Checks if $d\leftarrow \mathcal{H}(F_1, \dots, F_n,\frac{\prod_{i=1}^{n}g_i^{z(x_i)}}{[\prod_{i=1}^{n}F_i]^d})$. 
             \item If first two steps are correct then they output \textbf{true}, otherwise \textbf{false}.
         \end{itemize}
     \end{tcolorbox}
-    \caption{A NIZK AoK for Polynomial DL based on \ref{fig:polynomial-dl}}
-    \label{fig:mod-polynomial-dl}
+    \caption{A NIZK AoK for Polynomial DL}
+    \label{fig:aok-polynomial-dl}
 \end{figure}

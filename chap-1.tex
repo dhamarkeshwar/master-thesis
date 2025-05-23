@@ -360,16 +360,21 @@ We summarize the protocol in Figure \ref{fig:polynomial-dl}.
 In the next section we will give a brief overview of the Pre-Constructed Publicly Verifiable Secret Sharing 
 (PPVSS).
 
-\section{Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS)}
+\section{Pre-Constructed Publicly Verifiable Secret Sharing}
 \label{sec:ppvss}
-PPVSS was first introduced in \cite{cryptoeprint:2025/576}, which is used as a building block to 
-construct an efficient e-voting protocol based on Schoenmakers' PVSS \cite{5581ccd9530540479539d21d1d39ae96}. 
-Interestingly, the authors in \cite{cryptoeprint:2025/576} observed that the original e-voting protocol 
-published in 1999 by Schoenmakers is an unusual application of PVSS, which led them to discover that 
-Schoenmakers PVSS is actually a PPVSS. What sets PPVSS apart from standard PVSS schemes 
-is that it can be used to build versatile applications, such as e-voting, randomness beacons etc., and can 
-also improve efficiency of some existing protocols. The subtle difference between PPVSS and PVSS is that the 
-secret itself is committed by the prover along with all its corresponding secret shares. We now will recall 
+Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) was first introduced in 
+\cite{cryptoeprint:2025/576}, which was used as a building block to 
+construct an efficient e-voting protocol alternative to Schoenmakers' e-voting protocol. 
+Interestingly, the authors in \cite{cryptoeprint:2025/576} observed that the Schoenmakers' e-voting protocol, though 
+not efficient in practice, published in 1999 is an unusual application as it is based on a 
+PVSS, which led them to discover that the underlying PVSS used is actually a PPVSS. 
+What sets PPVSS apart from standard PVSS schemes is that it can be used to build versatile 
+applications, such as e-voting, randomness beacons etc., and can 
+also improve efficiency of some existing protocols. The subtle difference between PPVSS and 
+PVSS is that the secret itself is committed by the prover along with all its corresponding 
+secret shares.\par
+\textbf{TODO Definition of PPVSS}.\par
+We now will recall 
 $\Lambda_{RO}$, the PPVSS scheme introduced in \cite{cryptoeprint:2025/576} which is actually based on 
 $\Pi_S$\cite{cryptoeprint:2023/1669} in figure \ref{fig:ppvss}.\par 
 

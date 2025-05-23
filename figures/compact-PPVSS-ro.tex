@@ -1,0 +1,77 @@
+\begin{figure}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
+    \begin{tcolorbox}[title=\textbf{$\Lambda_{RO}^{compact}$}, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        
+        \textbf{Initialization:}
+            All parties $\{P_i\}_{i=1}^n$ and dealer $D$ agree on the prime field $\mathbb{Z}_q$, a group 
+            $(\mathbb{G},\times)$ of order $q$ with a generator $g$, random oracle $\mathcal{H}$. Also, each party 
+            $P_i$ registers their public key $PK_i$ in the public ledger, where $PK_i=g^{SK_i}$ with 
+            $SK_i$ being their corresponding secret key. Additionally, all parties agree on 
+            a commitment key $h_0$ or a public key $PK_0$ of a target entity.
+
+        \vspace{0.5em}
+        \textbf{Share:}
+        \begin{itemize}
+            \item Dealer $D$ samples a $t$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
+              sets $g^{f_0}$ as the secret.
+            \item For each $1\leq i\leq n$, $D$ encrypts $g^{f_i}$, where $f(i)=f_i$, with 
+              $PK_i$ to obtain $y_i=PK_i^{f_i}$. $D$ also commits(/encrypts) to the secret 
+              $g^{f_0}$ using the commitment(/encryption) key 
+              to obtain $y_0=h_0^{f_0}$ (or $y_0=PK_0^{f_0}$). 
+            \item $D$ uses $\pi_{PDL}^{AoK}$ to generate AoK, $\pi_{share}^{AoK}$ to prove that all 
+              encryptions of secret shares and commitment (or encryption) of the secret are valid, 
+              which is done as follows:
+            \begin{itemize}
+               \item Samples a $t-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
+               computes $c=h_0^{r(i)}(\prod_{i=1}^n PK_i^{r(i)})$(or $c=\prod_{i=0}^nPK_i^{r(i)}$).
+               \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,\dots,y_n,c)$ is computed.
+               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{share}^{AoK}=(d,z(X))$ is obtained. 
+            \end{itemize}
+            \item $D$ broadcasts the encryptions of the shares and commitment(/encryption)
+              of the secret along with $\pi_{share}^{AoK}$ which proves validity of the encrypted
+              shares and committed(/encrypted) secret, i.e., broadcasts $\{y_i\}_{i=0}^n$ and
+              $(d,z(X))$.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Verification:}
+            Given public keys $\{PK_i\}_{i=1}^n$ and commitment(/public) key $h_0\text{ or }PK_0$, 
+            any entity can check $\pi_{share}^{AoK}$ to verify the correctness of the encrypted shares 
+            and commitment(/encryption) of the secret. 
+            They will output \textbf{true} or \textbf{false} based on the verification of the proof. The 
+            procedure is outlined as follows:
+        \begin{itemize}
+            \item The entity checks if $z(X)$ is a $t$degree polynomial or not.
+            \item Checks if $d=\mathcal{H}(y_0,\dots,y_n,\frac{h_0^{z(0)}(\prod_{i=1}^{n}PK_i^{z(i)})}{[\prod_{i=0}^{n}y_i]^d})$ or 
+            $d=\mathcal{H}(y_0,\dots,y_n,\frac{\prod_{i=0}^{n}PK_i^{z(i)}}{[\prod_{i=0}^{n}y_i]^d})$.
+            \item Outputs \textbf{true} if both of the above checks are satisfied, otherwise \textbf{false}.
+        \end{itemize}
+
+        \vspace{0.5em}
+        \textbf{Reconstruction:}
+            There are two approaches to reconstruct the secret $g^{f_0}$ based on the cooperation 
+            of the dealer $D$ which are as follows:
+            \begin{itemize}
+                \item \textbf{Optimistic Reconstruction:} $D$ publishes $f_0$, then any verifier (not necessarily a shareholder) 
+                when given $h_0\text{ or }PK_0,\{y_i\}_{i=0}^n$ can check if $y_0=h_0^{f_0}d$ (or $y_0=PK_0^{f_0}$) 
+                and returns $g^{f_0}$ if the check passes, if not they return \textbf{false}.
+                \item \textbf{Pessimistic Reconstruction:} If $D$ refuses to reveal $f_0$, then any set 
+                $\mathcal{Q}$ consisting at least $t+1$ shareholders will do the following:
+                \begin{itemize}
+                    \item Each party $P_i\in\mathcal{Q}$ decrypts their share $y_i$ using their private key $SK_i$ 
+                      corresponding to $PK_i$ to obtain $g^{f_i}$ and then they publish $g^{f_i}$ 
+                      along with a DLEQ proof (see Chaum-Pedersen protocol), $\pi_{DLEQ}$ which proves that 
+                      $g^{f_i}$ is the correct decryption of $y_i$.
+                    \item If $\mathcal{Q}$ consists at least $t+1$ honest parties, they can use the 
+                    lagrange interpolation to compute the secrets $g^{f_0}$ as follows:
+                    \begin{align*}
+                        g^{f_0} &= \prod_{i\in\mathcal{Q}}(g^{f_i})^{\prod_{k\in\mathcal{Q},k\neq i}\frac{-k}{i}}= g^{\sum_{i\in\mathcal{Q}}f_i\prod_{k\in\mathcal{Q},k\neq i}\frac{-k}{i}}.\\
+                    \end{align*}
+                \end{itemize}
+            \end{itemize}
+    \end{tcolorbox}
+    }
+    \caption[PPPVSS]{$\Lambda_{RO}^{compact}$, a compact version of $\Lambda_{RO}$}
+    \label{fig:compact-PPVSS-ro}
+\end{figure}

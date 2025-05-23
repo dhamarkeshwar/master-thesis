@@ -16,18 +16,22 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces A NIZK PoK for Polynomial DL based on Schoenmakers' PVSS}}{11}{figure.caption.14}%
 \contentsline {figure}{\numberline {2.4}{\ignorespaces PPVSS Scheme}}{13}{figure.caption.15}%
 \addvspace {10pt}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces A NIZK AoK for Polynomial DL}}{17}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces A NIZK AoK for the \textit {modified} Polynomial DL}}{20}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces PVSS}}{22}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces PPPVSS}}{24}{figure.caption.19}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces PPPVSS Scheme}}{30}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces PPPVSS Scheme}}{31}{figure.caption.17}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{32}{figure.caption.18}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{33}{figure.caption.19}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces PPPVSS}}{34}{figure.caption.20}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces PPPVSS}}{35}{figure.caption.21}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces PPPVSS}}{36}{figure.caption.22}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces PVSS}}{37}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces PPPVSS Scheme}}{38}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces PPPVSS Scheme}}{39}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces A NIZK AoK for the \textit {modified} Polynomial DL}}{40}{figure.caption.22}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces A NIZK AoK for Polynomial DL based on \ref {fig:polynomial-dl}}}{41}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces PPPVSS}}{42}{figure.caption.24}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces PPPVSS}}{43}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces PPPVSS}}{44}{figure.caption.26}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces PVSS}}{45}{figure.caption.27}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{40}{figure.caption.24}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{44}{figure.caption.25}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{48}{figure.caption.28}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{52}{figure.caption.29}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

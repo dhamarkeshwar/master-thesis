@@ -6,7 +6,8 @@
         \textbf{Initialization:}
             All parties $\{P_i\}_{i=1}^n$ and dealer $D$ agree on the prime field $\mathbb{Z}_q$, a group 
             $(\mathbb{G},\times)$ of order $q$ with a generator $g$, random oracle $\mathcal{H}$. Also, each party 
-            $P_i$ registers their public key $PK_i$ in the public ledger.
+            $P_i$ registers their public key $PK_i$ in the public ledger, where $PK_i=g^{SK_i}$ with 
+            $SK_i$ being their corresponding secret key.
 
         \vspace{0.5em}
         \textbf{Share:}
@@ -14,29 +15,29 @@
             \item Dealer $D$ samples a $t$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
               sets $g^{f_0}$ as secret where $f_0=f(0)$.
             \item For each $1\leq i\leq n$, $D$ encrypts $f(i)=f_i$ with $PK_i$ to obtain 
-              $y_i=PK_i^{f_i}$. $D$ multiplies the encryptions of shares to obtain 
-              $y_0=\prod_{i=1}^{n}y_i$. 
-            \item $D$ uses the \textit{modified-v1} PDL proof scheme \ref{subsec:v1} to generate $\pi_{PDL}^{mod-v1}$ as follows:
+              $y_i=PK_i^{f_i}$.
+            \item $D$ uses $\pi_{PDL}^{AOK}$ \ref{subsec:v1} to generate AoK $\pi_{share}^{AoK}$ to prove that the 
+              encryptions are valid, which is done as follows:
             \begin{itemize}
-               \item Samples a $t$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
-               computes $c_0=(\prod_{i=1}^{n}PK_i^{r(i)})$.
-               \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,c_0)$ is computed.
-               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{PDL}^{mod-v1}=(d,z(X))$ is obtained. 
+                \item Samples a $t-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
+                computes a single commitment $c=(\prod_{i=1}^{n}PK_i^{r(i)})$.
+                \item Using $\mathcal{H}$, $d=\mathcal{H}(y_1,\dots,y_n,c)$ is computed.
+                \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{share}^{AoK}=(d,z(X))$ is obtained. 
             \end{itemize}
-            \item $D$ broadcasts the encryptions of the shares along with the commitment $y_0$ of the shares
-              with $\pi_{PDL}^{mod-v1}$ which proves the validity of the commitment of the encrypted shares, i.e., broadcasts 
-              $\{y_i\}_{i=0}^n$ and $(d,z(X))$.
+            \item $D$ broadcasts the encryptions of the shares along with $\pi_{share}^{AoK}$ which 
+              proves the validity of the encrypted shares, i.e., broadcasts 
+              $\{y_i\}_{i=1}^n$ and $(d,z(X))$.
         \end{itemize}
         
         \vspace{0.5em}
         \textbf{Verification:}
             Given public keys $\{PK_i\}_{i=1}^n$, any entity can check 
-            $\pi_{PDL}^{mod-v1}$ to verify the correctness of the commitment $y_0$. 
+            $\pi_{share}^{AoK}$ to verify the correctness of encrypted shares $y_1,\dots,y_n$. 
             They will output \textbf{true} or \textbf{false} based on the verification of the proof. The 
             procedure is outlined as follows:
         \begin{itemize}
-            \item The entity checks if $z(X)$ is a $t$degree polynomial or not.
-            \item Checks if $d=\mathcal{H}(y_0,\prod_{i=1}^{n}{PK_i^{z(i)}}{y_0^d})$.
+            \item The entity checks if $z(X)$ is a $t-$degree polynomial or not.
+            \item Checks if $d=\mathcal{H}(y_1,\dots,y_n,\frac{\prod_{i=1}^{n}PK_i^{z(i)}}{[\prod_{i=1}^n y_i]^d})$.
             \item Outputs \textbf{true} if both of the above checks are satisfied, otherwise \textbf{false}.
         \end{itemize}
 
