@@ -14,32 +14,31 @@
         \begin{itemize}
             \item Dealer $D$ samples a $t+\ell$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
               sets $\{g^{f_j}:f_j=f(j)\}_{j=-(\ell-1)}^0$ as the set of all secrets.
-            \item For each $1\leq i\leq n$, $D$ encrypts $f(i)=f_i$ with $PK_i$ to obtain 
-              $y_i=PK_i^{f_i}$. $D$ also encrypts(/commits) to the secrets $\{f_j\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
-              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ and multiplies them together to obtain $y_0=\prod_{j=-(\ell-1)}^0h_j^{f_j}$ (or $y_0=\prod_{j=-(\ell-1)}^0PK_j^{f_j}$). 
-            \item $D$ uses the PDL proof scheme \ref{subsec:polynomial-dl} to generate $\pi_{PDL}$ as follows:
+            \item For each $1\leq i\leq n$, $D$ encrypts $g^{f_i}$ ($f(i)=f_i$) using $PK_i$ to obtain 
+              $y_i=PK_i^{f_i}$. $D$ also encrypts(/commits) to the secrets $\{g^{f_j}\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
+              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ and multiplies them together to obtain $y_0=\prod_{j=-(\ell-1)}^0(h_j\text{ or }PK_j)^{f_j}$. 
+            \item $D$ uses a variant of the modified-PDL proof scheme \ref{sec:aok_polynomial_dl} to generate $\pi_{share}$ as follows:
             \begin{itemize}
                \item Samples a $t+\ell-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
-               computes $c_0=\prod_{j=-(\ell-1)}^0h_j^{r(j)}$(or $c_0=\prod_{j=-(\ell-1)}^0PK_j^{r(j)}$) and 
+               computes $c_0=\prod_{j=-(\ell-1)}^0(h_j\text{ or }PK_j)^{r(j)}$ and 
                $c_i=PK_i^{r(i)}$ for $1\leq i\leq n$.
                \item Using $\mathcal{H}$, $d=\mathcal{H}(y_0,\dots,y_n,c_0,\dots,c_n)$ is computed.
-               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{PDL}=(d,z(X))$ is obtained. 
+               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{share}=(d,z(X))$ is obtained. 
             \end{itemize}
-            \item $D$ broadcasts the encryptions of the shares along with the commitment (or product of the encryptions) of the secrets 
-              with $\pi_{PDL}$ which proves the validity of the encrypted shares and committed 
+            \item $D$ broadcasts the encryptions of the shares along with the commitment of the secrets 
+              with $\pi_{share}$ which proves the validity of the encrypted shares and committed 
               secret, i.e., broadcasts $\{y_i\}_{i=0}^n$ and $(d,z(X))$.
         \end{itemize}
         
         \vspace{0.5em}
         \textbf{Verification:}
-            Given public keys $\{PK_i\}_{i=1}^n$ and commitment(/public) keys $\{h_j,PK_j\}_{j=-(\ell-1)}^0$, any entity can check 
-            $\pi_{PDL}$ to verify the correctness of the encrypted shares $\{y_i\}_{i=1}^n$ and $y_0$ being the commitment(/product of the encryptions) of the secrets. 
+            Given public keys $\{PK_i\}_{i=1}^n$ and commitment(/public) keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$, any entity can check 
+            $\pi_{share}$ to verify the correctness of the encrypted shares $\{y_i\}_{i=1}^n$ and $y_0$ being the commitment of the secrets. 
             They will output \textbf{true} or \textbf{false} based on the verification of the proof. The 
             procedure is outlined as follows:
         \begin{itemize}
             \item The entity checks if $z(X)$ is a $t+\ell-$degree polynomial or not.
-            \item Checks if $d=\mathcal{H}(y_0,y_1,\dots,y_n,\frac{\prod_{j=-(\ell-1)}^{0}h_j^{z(j)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})$ or 
-            $d=\mathcal{H}(y_0,y_1,\dots,y_n,\frac{\prod_{j=-(\ell-1)}^{0}PK_j^{z(j)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})$.
+            \item Checks if $d=\mathcal{H}(y_0,y_1,\dots,y_n,\frac{\prod_{j=-(\ell-1)}^{0}(h_j\text{ or }PK_j)^{z(j)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})$.
             \item Outputs \textbf{true} if both of the above checks are satisfied, otherwise \textbf{false}.
         \end{itemize}
 
@@ -49,8 +48,8 @@
             $\{f_j\}_{j=-(\ell-1)}^0$ based on the cooperation of the dealer $D$ which are as follows:
             \begin{itemize}
                 \item \textbf{Optimistic Reconstruction:} $D$ publishes $\{f_j\}_{j=-(\ell-1)}^0$, then any verifier (not necessarily shareholders) 
-                when given $g,\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0,y_0$ can check if $y_0=\prod_{j=-(\ell-1)}^0h_j^{f_j}$ (or $y_0=\prod_{j=-(\ell-1)}^0PK_j^{f_j}$) 
-                and returns $\{g^{f_j}\}_{j=-(\ell-1)}^0$ if the check passes, if not they return \textbf{false}.
+                when given $g,\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0,y_0$ can check if $y_0=\prod_{j=-(\ell-1)}^0(h_j\text{ or }PK_j)^{f_j}$ 
+                and then returns $\{g^{f_j}\}_{j=-(\ell-1)}^0$ when the check passes, if not they return \textbf{false}.
                 \item \textbf{Pessimistic Reconstruction:} If $D$ refuses to reveal $\{f_j\}_{j=-(\ell-1)}^0$, then any set 
                 $\mathcal{Q}$ consisting at least $t+\ell$ shareholders will do the following:
                 \begin{itemize}
@@ -67,6 +66,6 @@
             \end{itemize}
     \end{tcolorbox}
     }
-    \caption[PPPVSS]{$\Lambda_{RO}^{packed}$, a packed version of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576}}
+    \caption[PPPVSS]{$\Lambda_{RO}^{packed}$, an alternative packed version of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576}}
     \label{fig:packed-shamir-PPPVSS-ro}
 \end{figure}

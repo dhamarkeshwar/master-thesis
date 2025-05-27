@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  23 MAY 2025 02:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  28 MAY 2025 01:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -865,30 +865,7 @@ Sidefoothsep and sidefootwidth: 7pt and 101pt
 Sidefootvsep and sidefootheight: 13.6pt and 594.32022pt
 ******************************************************
 
-(./thesis.aux (./chap-0.aux) (./chap-1.aux) (./chap-2.aux
-
-LaTeX Warning: Label `eq:v1_i_Equality' multiply defined.
-
-
-LaTeX Warning: Label `eq:v1_0_Equality' multiply defined.
-
-) (./chap-3.aux
-
-LaTeX Warning: Label `th:modified_PDL security' multiply defined.
-
-
-LaTeX Warning: Label `eq:0_verify' multiply defined.
-
-
-LaTeX Warning: Label `eq:0_Equality' multiply defined.
-
-
-LaTeX Warning: Label `fig:mod-polynomial-dl' multiply defined.
-
-
-LaTeX Warning: Label `fig:compact-PVSS-ro' multiply defined.
-
-) (./chap-n.aux) (./conclusion.aux) (./app-A.aux) (./app-n.aux))
+(./thesis.aux (./chap-0.aux) (./chap-1.aux) (./chap-3.aux) (./chap-n.aux) (./conclusion.aux) (./app-A.aux) (./app-n.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
@@ -937,7 +914,7 @@ Package hyperref Info: Link coloring ON on input line 52.
 \@outlinefile=\write5
 \openout5 = `thesis.out'.
 
-<logokuleng-en.pdf, id=179, 216.81pt x 99.9735pt>
+<logokuleng-en.pdf, id=147, 216.81pt x 99.9735pt>
 File: logokuleng-en.pdf Graphic file (type pdf)
 <use logokuleng-en.pdf>
 Package pdftex.def Info: logokuleng-en.pdf  used on input line 52.
@@ -987,17 +964,17 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 
 ]
-Overfull \hbox (1.13972pt too wide) in paragraph at lines 91--91
+Overfull \hbox (1.13972pt too wide) in paragraph at lines 93--93
 []|\T1/lmr/m/n/10.95 PPVSS| 
  []
 
 
-Overfull \hbox (8.59174pt too wide) in paragraph at lines 91--91
+Overfull \hbox (8.59174pt too wide) in paragraph at lines 93--93
 []|\T1/lmr/m/n/10.95 PPPVSS| 
  []
 
 
-Overfull \hbox (3.93379pt too wide) in paragraph at lines 106--106
+Overfull \hbox (3.93379pt too wide) in paragraph at lines 108--108
 []|$\U/msb/m/n/10.95 Z[]\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ][]$| 
  []
 
@@ -1075,250 +1052,112 @@ Underfull \hbox (badness 3250) in paragraph at lines 13--14
 
 )
 
-[10] (./figures/ppvss.tex
+[10]
 
-LaTeX Warning: Float too large for page by 68.98949pt on input line 72.
+[11]
+Overfull \hbox (1.23288pt too wide) in paragraph at lines 410--414
+[]\T1/lmr/bx/it/10.95 (Pessimistic) $\OML/cmm/m/it/10.95 Reconstruction[]\OT1/cmr/m/n/10.95 [\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 y[]; SK[]\OMS/cmsy/m/n/10.95 g[]\OT1/cmr/m/n/10.95 ] \OMS/cmsy/m/n/10.95 ! \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 f[][]false\OT1/cmr/m/n/10.95 )$\T1/lmr/m/it/10.95 :
+ []
 
-)
 
-[11])
 
 [12]
-
-[13]
-\openout2 = `chap-2.aux'.
-
- (./chap-2.tex
-
-[14
-
-
-
-
-]
-
-[15] (./figures/mod-polynomial-dl-ultimate.tex
-Underfull \hbox (badness 3250) in paragraph at lines 15--16
-[]\T1/lmr/m/n/10.95 Sets $\OML/cmm/m/it/10.95 z\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ^^Q \OML/cmm/m/it/10.95 r\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) + \OML/cmm/m/it/10.95 df\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 )([]\OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 and re-turns the
- []
-
-)
-Overfull \hbox (1.58836pt too wide) in paragraph at lines 65--72
-\T1/lmr/m/it/10.95 guage de-fined by the re-la-tion $\OML/cmm/m/it/10.95 R[]$\T1/lmr/m/it/10.95 , with its cor-re-spond-ing wit-ness be-ing $\OML/cmm/m/it/10.95 f \OMS/cmsy/m/n/10.95 2 \U/msb/m/n/10.95 Z[]\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ][]$\T1/lmr/m/it/10.95 .
- []
-
-
-
-[16]
-
-[17]
-
-[18]
-Overfull \hbox (3.31248pt too wide) detected at line 160
+Overfull \hbox (17.27565pt too wide) detected at line 474
 []
  []
 
-(./figures/mod-polynomial-dl.tex
-Underfull \hbox (badness 3250) in paragraph at lines 15--16
-[]\T1/lmr/m/n/10.95 Sets $\OML/cmm/m/it/10.95 z\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ^^Q \OML/cmm/m/it/10.95 r\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) + \OML/cmm/m/it/10.95 df\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 )([]\OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 and re-turns the
- []
+(./figures/ppvss.tex
 
-)
+LaTeX Warning: Float too large for page by 68.98949pt on input line 72.
 
-[19]
 
-[20] (./figures/PVSS.tex) (./figures/compact-PPVSS-ro.tex
 
-LaTeX Warning: Float too large for page by 55.4148pt on input line 77.
+[13]))
 
-)
+[14]
 
-[21]
-
-[22])
-
-[23]
-
-[24]
+[15]
 \openout2 = `chap-3.aux'.
 
  (./chap-3.tex
 
-[25
+[16
 
 
 
 
-]
-Overfull \hbox (20.45677pt too wide) in paragraph at lines 51--54
-\T1/lmr/m/it/10.95 per-formed by any-one) checks if the NIZK proof $\OML/cmm/m/it/10.95 ^^Y[]$ \T1/lmr/m/it/10.95 is valid for $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 y[]; y[]; [] ; y[]\OMS/cmsy/m/n/10.95 g$
- []
+] (./figures/v1_shamir_PPPVSS.tex) (./figures/shamir_PPPVSS.tex)
 
-
-Overfull \hbox (51.22527pt too wide) in paragraph at lines 56--56
-[]\T1/lmr/bx/it/10.95 (Optimistic) $\OML/cmm/m/it/10.95 Reconstruction[]\OT1/cmr/m/n/10.95 [\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 h[]; f[]; r[]; y[]\OMS/cmsy/m/n/10.95 g[][]f\OML/cmm/m/it/10.95 PK[]; SK[]; y[]\OMS/cmsy/m/n/10.95 g[]\OT1/cmr/m/n/10.95 ]$ 
- []
-
-
-
-[26]
-Overfull \hbox (68.9616pt too wide) in paragraph at lines 65--65
-[]\T1/lmr/bx/it/10.95 (Optimistic) $\OML/cmm/m/it/10.95 Reconstruction[]\OT1/cmr/m/n/10.95 [(\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 h[]; f[]; r[]\OMS/cmsy/m/n/10.95 g[]\OML/cmm/m/it/10.95 ; y[]\OT1/cmr/m/n/10.95 )[](\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 PK[]; SK[]\OMS/cmsy/m/n/10.95 g[]\OML/cmm/m/it/10.95 ; y[]\OT1/cmr/m/n/10.95 )]$ 
- []
-
-
-Overfull \hbox (27.54793pt too wide) in paragraph at lines 67--70
-[]\T1/lmr/m/it/10.95 Given the com-mit-ment keys $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 h[]\OMS/cmsy/m/n/10.95 g[]$\T1/lmr/m/it/10.95 , $\OML/cmm/m/it/10.95 y[]$ \T1/lmr/m/it/10.95 and $\OML/cmm/m/it/10.95 `$ \T1/lmr/m/it/10.95 se-crets, $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 f[]; r[]\OMS/cmsy/m/n/10.95 g[]$\T1/lmr/m/it/10.95 ,
- []
-
-
-Overfull \hbox (53.8777pt too wide) in paragraph at lines 74--78
-[]\T1/lmr/bx/it/10.95 (Pessimistic) $\OML/cmm/m/it/10.95 Reconstruction[]\OT1/cmr/m/n/10.95 [\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 y[]; SK[]\OMS/cmsy/m/n/10.95 g[]\OT1/cmr/m/n/10.95 ] \OMS/cmsy/m/n/10.95 ! \OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 f[]\OMS/cmsy/m/n/10.95 g[][]\OML/cmm/m/it/10.95 false\OT1/cmr/m/n/10.95 ))$\T1/lmr/m/it/10.95 :
- []
-
-
-Overfull \hbox (25.09682pt too wide) detected at line 109
+[17]
+Overfull \hbox (25.92436pt too wide) detected at line 271
 []
  []
 
-
-
-[27]
-Overfull \hbox (40.26443pt too wide) detected at line 120
-[]
- []
-
-
-Overfull \hbox (0.22655pt too wide) detected at line 128
-[]
- []
-
-
-Overfull \hbox (25.28413pt too wide) detected at line 139
-[]
- []
-
-
-Overfull \hbox (82.36592pt too wide) detected at line 162
-[]
- []
-
-
-
-[28]
-Overfull \hbox (59.06004pt too wide) detected at line 180
-[]
- []
-
-
-Overfull \hbox (1.95415pt too wide) in paragraph at lines 196--200
-\T1/lmr/m/n/10.95 PVSS scheme and ob-tains $\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 y[]\OMS/cmsy/m/n/10.95 g[]\OML/cmm/m/it/10.95 ; ^^Y[]\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 or $\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 y[]\OMS/cmsy/m/n/10.95 g[]\OML/cmm/m/it/10.95 ; ^^Y[]\OT1/cmr/m/n/10.95 )$\T1/lmr/m/n/10.95 .
- []
-
-
-
-[29] (./figures/v1_shamir_PPPVSS.tex) (./figures/shamir_PPPVSS.tex)
-Overfull \hbox (7.02057pt too wide) in paragraph at lines 236--239
-\T1/lmr/m/it/10.95 group $\U/msb/m/n/10.95 G$ \T1/lmr/m/it/10.95 gen-er-ated by $\OML/cmm/m/it/10.95 g$\T1/lmr/m/it/10.95 . Given $\OML/cmm/m/it/10.95 F[]; [] ; F[]$ \T1/lmr/m/it/10.95 and dis-tinct el-e-ments $\OML/cmm/m/it/10.95 x[]; [] ; x[]; [] ; x[]$
- []
-
-
-
-[30]
-
-[31] (./figures/mod-polynomial-dl.tex
-Underfull \hbox (badness 3250) in paragraph at lines 15--16
+(./figures/mod-polynomial-dl-init.tex
+Underfull \hbox (badness 3250) in paragraph at lines 16--17
 []\T1/lmr/m/n/10.95 Sets $\OML/cmm/m/it/10.95 z\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ^^Q \OML/cmm/m/it/10.95 r\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) + \OML/cmm/m/it/10.95 df\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 )([]\OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 and re-turns the
  []
 
 )
 
-[32]
+[18]
 
-[33] (./figures/mod-v1-polynomial-dl.tex
-Underfull \hbox (badness 3250) in paragraph at lines 15--16
-[]\T1/lmr/m/n/10.95 Sets $\OML/cmm/m/it/10.95 z\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ^^Q \OML/cmm/m/it/10.95 r\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 ) + \OML/cmm/m/it/10.95 df\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 )([]\OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 and re-turns the
- []
-
-) (./figures/NOT_main_shamir_PPPVSS_ro.tex
+[19] (./figures/NOT_main_shamir_PPPVSS_ro.tex
 Underfull \hbox (badness 10000) in paragraph at lines 69--69
 []\T1/lmr/bx/n/10.95 Verification: \T1/lmr/m/n/10.95 Given pub-lic keys $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 PK[]\OMS/cmsy/m/n/10.95 g[]$ \T1/lmr/m/n/10.95 and com-mit-ment(/public) keys
  []
 
 
-LaTeX Warning: Float too large for page by 102.78653pt on input line 72.
+LaTeX Warning: Float too large for page by 75.90442pt on input line 72.
 
 ) (./figures/main_shamir_PPPVSS_ro.tex
-Underfull \hbox (badness 10000) in paragraph at lines 69--69
-[]\T1/lmr/m/n/10.95 Checks if $\OML/cmm/m/it/10.95 d \OT1/cmr/m/n/10.95 = \OMS/cmsy/m/n/10.95 H\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 y[]; y[]; [] ; y[]; []; []; [] ; []\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 or $\OML/cmm/m/it/10.95 d \OT1/cmr/m/n/10.95 =
- []
-
-
-LaTeX Warning: Float too large for page by 102.79755pt on input line 72.
-
-) (./figures/2main_shamir_PPPVSS_ro.tex
-Underfull \hbox (badness 10000) in paragraph at lines 69--69
+Underfull \hbox (badness 10000) in paragraph at lines 68--68
 []\T1/lmr/bx/n/10.95 Verification: \T1/lmr/m/n/10.95 Given pub-lic keys $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 PK[]\OMS/cmsy/m/n/10.95 g[]$ \T1/lmr/m/n/10.95 and com-mit-ment(/public) keys
  []
 
 
-Underfull \hbox (badness 1708) in paragraph at lines 69--69
-\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 h[][]PK[]\OMS/cmsy/m/n/10.95 g[]$\T1/lmr/m/n/10.95 , any en-tity can check $\OML/cmm/m/it/10.95 ^^Y[]$ \T1/lmr/m/n/10.95 to ver-ify the cor-rect-ness of the
- []
-
-
-LaTeX Warning: Float too large for page by 76.98915pt on input line 72.
+LaTeX Warning: Float too large for page by 74.53688pt on input line 71.
 
 )
 
-[34]
-Overfull \hbox (54.16869pt too wide) detected at line 433
+[20]
+Overfull \hbox (54.16869pt too wide) detected at line 473
 []
  []
 
 
 
-[35]
-Overfull \hbox (4.13193pt too wide) in paragraph at lines 467--472
+[21]
+Overfull \hbox (4.13193pt too wide) in paragraph at lines 507--512
 \T1/lmr/m/n/10.95 After the DLEQ proofs $\OML/cmm/m/it/10.95 ^^Y[]$ \T1/lmr/m/n/10.95 are checked, as with high prob-a-bil-ity $\OML/cmm/m/it/10.95 z\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; z[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X\OT1/cmr/m/n/10.95 )$
  []
 
 
 
-[36]
-Overfull \hbox (7.20143pt too wide) in paragraph at lines 506--512
-\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 g; \OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 h[]\OMS/cmsy/m/n/10.95 g[]\OML/cmm/m/it/10.95 ; y[]; \OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 f[]\OMS/cmsy/m/n/10.95 g[]\OT1/cmr/m/n/10.95 )$\T1/lmr/m/n/10.95 . The Pes-simistic case also yields $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 g[]\OMS/cmsy/m/n/10.95 g[]$
- []
+[22]
 
+[23]
 
-Overfull \hbox (42.85869pt too wide) in paragraph at lines 519--521
-\T1/lmr/m/n/10.95 gives a ZKP for a wit-ness of $\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 g; \OMS/cmsy/m/n/10.95 ^^@\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ` \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 1)\OML/cmm/m/it/10.95 ; [] ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; [] ; n; F[]; [] ; ; SK[]f[]; [] ; SK[]f[]\OT1/cmr/m/n/10.95 )$ 
- []
+[24]
 
-(./figures/PVSS.tex))
+[25])
 
-[37]
+[26]
 
-[38]
+[27]
 
-[39]
+[28]
 
-[40]
+[29]
 
-[41]
+[30]
 
-[42]
-
-[43]
-
-[44]
-
-[45]
+[31]
 \openout2 = `chap-n.aux'.
 
  (./chap-n.tex
 
-[46
+[32
 
 
 
@@ -1350,16 +1189,16 @@ Overfull \hbox (82.65535pt too wide) in paragraph at lines 3--38
 
 )
 
-[47]
+[33]
 
-[48]
+[34]
 Overfull \hbox (8.18344pt too wide) in paragraph at lines 36--47
 \T1/lmr/m/n/10.95 share-holder who has not opened the se-cret poly-no-mial, each shareholder/re-
  []
 
 
 
-[49] (./tables/communication.tex
+[35] (./tables/communication.tex
 Underfull \hbox (badness 4072) in paragraph at lines 5--5
 []|\T1/lmr/bx/n/10.95 Recovery \T1/lmr/m/it/10.95 (by share-
  []
@@ -1371,66 +1210,66 @@ Overfull \hbox (64.56491pt too wide) in paragraph at lines 3--10
 
 )
 
-[50])
+[36])
 
-[51]
+[37]
 
-[52]
+[38]
 \openout2 = `conclusion.aux'.
 
  (./conclusion.tex)
 
-[53
+[39
 
 
 
 
 ]
 
-[54
+[40
 
 
 
 ]
 
-[55]
+[41]
 
-[56]
+[42]
 \openout2 = `app-A.aux'.
 
  (./app-A.tex
 
-[57
+[43
 
 
 ])
 
-[58]
+[44]
 \openout2 = `app-n.aux'.
 
  (./app-n.tex
 
-[59
+[45
 
 
 
 
 ])
 
-[60] (./thesis.bbl
+[46] (./thesis.bbl
 bibitemlist
 
 
-[61
+[47
 
 
 
 
 ]
 
-[62])
+[48])
 
-[63]
+[49]
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
 
@@ -1440,31 +1279,27 @@ bibitemlist
 \tf@lot=\write8
 \openout8 = `thesis.lot'.
 
- (./thesis.aux (./chap-0.aux) (./chap-1.aux) (./chap-2.aux) (./chap-3.aux) (./chap-n.aux) (./conclusion.aux) (./app-A.aux) (./app-n.aux))
+ (./thesis.aux (./chap-0.aux) (./chap-1.aux) (./chap-3.aux) (./chap-n.aux) (./conclusion.aux) (./app-A.aux) (./app-n.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: F977B094D5006DE72153D0BD7861D91E;7283.
+(rerunfilecheck)             Checksum: DDE20364B654195BFBE648AC755E3C8D;5526.
  ) 
 Here is how much of TeX's memory you used:
- 30236 strings out of 473190
- 572626 string characters out of 5715800
- 1142410 words of memory out of 5000000
- 52693 multiletter control sequences out of 15000+600000
+ 30090 strings out of 473190
+ 569832 string characters out of 5715800
+ 1124230 words of memory out of 5000000
+ 52622 multiletter control sequences out of 15000+600000
  657172 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 98i,18n,107p,701b,777s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
-Output written on thesis.pdf (71 pages, 609585 bytes).
+ 98i,18n,107p,701b,707s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
+Output written on thesis.pdf (57 pages, 583190 bytes).
 PDF statistics:
- 1004 PDF objects out of 1200 (max. 8388607)
- 871 compressed objects within 9 object streams
- 223 named destinations out of 1000 (max. 500000)
- 362 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 815 PDF objects out of 1000 (max. 8388607)
+ 697 compressed objects within 7 object streams
+ 174 named destinations out of 1000 (max. 500000)
+ 298 words of extra memory for PDF output out of 10000 (max. 10000000)
 

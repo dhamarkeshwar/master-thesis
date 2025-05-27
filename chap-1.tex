@@ -236,7 +236,7 @@ these VSS schemes to defend against malicious adversaries who can actively corru
 $t\leq\frac{n-1}{2}$ (In contrast to $t<\frac{n}{3}$ in Shamir secret sharing). Publicly Verifiable Secret Sharing (PVSS) is an extension of VSS where anyone can 
 verify the validity of the secret shares during the sharing phase. More recently, Pre-Constructed Publicly 
 Verifiable Secret Sharing (PPVSS)\cite{cryptoeprint:2025/576} was proposed which is an extension of PVSS. 
-The main tools used in VSS, PVSS and PPVSS schemes are the \textbf{Sigma Protocols} which we overview in the 
+The main tools used in VSS, PVSS and PPVSS schemes are the \textbf{Zero Knowledge Proofs} which we overview in the 
 next section \ref{sec:sigma-protocols}.
 
 \section{Zero Knowledge Proofs}
@@ -372,26 +372,148 @@ What sets PPVSS apart from standard PVSS schemes is that it can be used to build
 applications, such as e-voting, randomness beacons etc., and can 
 also improve efficiency of some existing protocols. The subtle difference between PPVSS and 
 PVSS is that the secret itself is committed by the prover along with all its corresponding 
-secret shares.\par
-\textbf{TODO Definition of PPVSS}.\par
+secret shares. The relevance of this section is that we will generalize the PPVSS to the case 
+where there is more than one secret and use them to revisit a real time application 
+to improve its efficiency. Because of its importance in this thesis, we will recall the 
+definitions of a PPVSS and an example subsequently.\par
+
+\subsection{Definitions}
+\label{sec:ppvss-definitions}
+
+The following definitions are directly taken from \cite{cryptoeprint:2025/576}.
+
+\begin{definition}[PPVSS]
+    A PPVSS scheme should have four algorithms, namely, Initial, Share, Verify and Reconstruction whose 
+    descriptions are as follows:
+    \begin{itemize}
+        \item \textbf{Initial} $(1^\lambda)\rightarrow(\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_0\text{ or }(PK_0,SK_0)\})$: 
+          When given $1^\lambda$, each party $P_i$ for $1\leq i\leq n$ registers their public key $PK_i$ in a 
+          public ledger and withholds the corresponding secret key $SK_i$. Also, all parties and the dealer $D$ 
+          agree on a commitment key or public key whose secret key is known to a target person. 
+          Note that the message space of the public-key scheme is a subgroup of $(\mathbb{G},\times)$.
+        \item \textbf{Share} $(n,t,f_0,\{PK_i\}_{i=1}^n\bigsqcup\{h_0\text{ or }PK_0\})$\par
+          $\rightarrow(\{y_i\}_{i=0}^n,\pi_{PPVSS})$:\par 
+          It secret shares $f_0$ to obtain the shares $\{f_i\}_{i=1}^n$. For $1\leq i\leq n$, uses 
+          the public key $PK_i$ to encrypt $f_i$ and obtain the encrypted share $y_i$. Now, it uses the commitment 
+          key $h_0$ ( or public key $PK_0$) to commit(/encrypt) $f_0$ to obtain $y_0$. 
+          In the next step, it uses a NIZK proof $\pi_{PPVSS}$ protocol to prove that $y_0$ is a valid 
+          commitment(/encryption) of the secret and $\{y_i\}_{i=1}^n$ has valid encryptions of the corresponding shares. Finally, it returns $(\{y_i\}_{i=0}^n,\pi_{PPVSS})$.\par
+        \item \textbf{Verify} $(n,t,\{y_i\}_{i=0}^n,\pi_{PPVSS})\rightarrow$ \textbf{true/false}: 
+          This algorithm(which can be performed by anyone) checks if the NIZK proof $\pi_{PPVSS}$ is valid for 
+          $\{y_0,\dots,y_n\}$ and then returns true, otherwise false.\par
+        \item \textbf{Reconstruct}: There are two approaches based on cooperation of the dealer $D$ and are as follows:
+          \begin{itemize}
+            \item \textbf{(Optimistic)} $Reconstruction^{opt}[\{h_0,f_0,r_0,y_0\}\text{ or }\{PK_0,SK_0,y_0\}]$\par$\rightarrow(f_0\text{ or }false)$:
+              
+              Given the input a verifier checks if $y_0$ is a valid commitment(/encryption) of the secret. 
+                 If so, it returns $f_0$; otherwise it returns $false$.
+            \item \textbf{(Pessimistic)} $Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+1}]\rightarrow(f_0\text{ or }false)$: 
+              Given any $t+1$ encrypted shares along with corresponding secret keys, it outputs the secret 
+              $f_0$ or $false$. This can be done in two phases as follows: 
+                \begin{itemize}
+                  \item \textbf{Decryption of the shares}, each party $P_i\in\mathcal{Q}$ decrypts $y_i$ to obtain 
+                    $f_i$ using its secret key $SK_i$. Then it generates a NIZK proof $\pi_i^{Dec}$ which proves that 
+                    $f_i$ is the correct decryption of $y_i$. Now, $P_i$ publishes $(f_i,\pi_i^{Dec})$.
+                  \item \textbf{Share pooling}, a verifier $V$ (not necessarily from the shareholders) checks if proof 
+                   $\pi_i^{Dec}$ is correct for each $P_i\in\mathcal{Q}$. If any check fails, then $V$ returns $false$; 
+                   otherwise $V$ applies a reconstruction procedure to the set of valid shares, $\{f_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+1}$, 
+                   and returns $f_0$.
+                \end{itemize}
+          \end{itemize}
+    \end{itemize}
+\end{definition}
+
+A PPVSS is said to be secure:
+
+\begin{itemize}
+  \item \textbf{Correctness}: If the dealer and parties follow the protocol, then the \textit{\textbf{Verify}} 
+    algorithm returns \textit{\textbf{true}} and the \textit{\textbf{Reconstruct}} algorithm returns $f_0$ 
+    irrespective of which approach. For any integer $n\geq t+1$ with $t\geq0$, a PPVSS is said 
+    to be correct for
+    $\left(\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_0\text{ or }(PK_0,SK_0)\}\right)\leftarrow$\textbf{Initial} $(1^\lambda)$ when 
+    it satisfies the following based on the output of the \textit{Share} algorithm.\par
+   When \textit{Share} algorithm outputs a commitment(/encryption) of the secret, then
+        \begin{align*}
+          Pr\begin{bmatrix}
+            (\{y_i\}_{i=0}^n,\pi_{PPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,f_0,\{PK_i\}_{i=1}^n\bigsqcup\\
+            &\{h_0\text{ or }PK_0\}:\\
+            \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\{y_i\}_{i=0}^n,\pi_{PPVSS})
+          \end{bmatrix} = 1,
+        \end{align*}
+    
+        \begin{align*}
+          Pr\begin{bmatrix}
+            (\{y_i\}_{i=0}^n,\pi_{PPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,f_0,\{PK_i\}_{i=1}^n\bigsqcup\\
+            &\{h_0\text{ or }PK_0\}),\\
+            f_0^{'}&\leftarrow Reconstruction^{opt}[\{h_0,f_0,r_0,y_0\}\\
+            &\textit{ or }\{PK_0,SK_0,y_0\}\bigvee\\
+            f_0^{'}&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+1}]:\\
+            &f_0^{'}=f_0
+          \end{bmatrix} = 1.
+        \end{align*}
+  \item \textbf{Verifiability}: If \textit{\textbf{Verify}} returns \textit{\textbf{true}}, then 
+    \textit{\textbf{(Optimistic)}} $Reconstruct^{opt}$ and/or \textit{\textbf{(Pessimistic)}} $Reconstruct^{pes}$ 
+    output being $f_0$ is the actual secret of whom the shares are encrypted. Moreover, 
+    $\{y_i\}_{i=1}^n$ are valid encryptions of the shares of same secret with 
+    high probability if the following statement is true.\par
+    $y_0$ is a valid commitment(/encryption) of the secret with high 
+        probability. More formally, given $\lambda$, for any integers 
+        $n\geq 2t+1$ and $t\geq0$, a PPVSS is said to be verifiable if for any 
+        $\mathcal{PPT}$ adversary $\mathcal{A}$, we have:
+        \begin{align*}
+          Pr\begin{bmatrix}
+            \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_0\text{ or }(PK_0,SK_0)\}\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
+            (\{y_i\}_{i=0}^n,\pi_{PPVSS})&\leftarrow \mathcal{A} \big(n,t,f_0,\{PK_i\}_{i=1}^n\bigsqcup\\
+            &\{h_0\text{ or }PK_0\}\big),\\
+            f_0^{'}&\leftarrow Reconstruction^{opt}[\{h_0,f_0,r_0,y_0\}\\
+            &\textit{ or }\{PK_0,SK_0,y_0\}]\bigvee\\
+            f_0^{'}&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+1}]:\\
+            \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\{y_i\}_{i=0}^n,\pi_{PPVSS})
+            \bigwedge f_0^{'}\neq f_0
+          \end{bmatrix} \leq negl(\lambda),
+        \end{align*}
+        where $\mathcal{Q}$ is the set of honest parties.
+  \item \textbf{IND1-Secrecy (Indistinguishability of Secrets)}: Before reconstruction phase, any amount of public 
+    information along with secret keys of at most $t$ parties excluding $SK_0$ will give 
+    absolutely no information about the secret $f_0$. More formally, for integers $n>1$ and 
+    $t+1\leq n$, the PPVSS is said to satisfy \textit{IND1-Secrecy} if for any $\mathcal{PPT}$ adversary $\mathcal{A}$ 
+    corrupting at most $t$ parties, excluding the owners of $SK_0$, has negligible 
+    advantage in the following game played against a challenger.
+    \begin{itemize}
+      \item The challenger runs \textit{\textbf{Initial}} $(1^\lambda)$ of PPVSS to obtain 
+        $\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_0\text{ or }(PK_0,SK_0)\}$ and sends all public 
+        information along with secret information of all corrupted parties to $\mathcal{A}$.
+      \item The challenger chooses two secrets, $s_0=f_0$ and 
+        $s_1=f_0^{'}$ at random in the space of secrets. Furthermore, it chooses $b\in\{0,1\}$ 
+        uniformly at random and runs 
+        \textit{\textbf{Share}} $(n,t,s_0,\{PK_i\}_{i=1}^n\bigsqcup\{h_0\text{ or }PK_0\})$ 
+        algorithm of the PPVSS scheme and obtains $(\{y_i\}_{i=0}^n,\pi_{PPVSS})$. Finally, it 
+        sends all public information generated in \textit{Share} phase together with $s_b$.
+      \item $\mathcal{A}$ guesses a bit $b'\in\{0,1\}$.
+    \end{itemize}
+    The advantage of $\mathcal{A}$ is defined to be $|Pr[b'=b]-\frac{1}{2}|$.
+\end{itemize}
+
 We now will recall 
 $\Lambda_{RO}$, the PPVSS scheme introduced in \cite{cryptoeprint:2025/576} which is actually based on 
-$\Pi_S$\cite{cryptoeprint:2023/1669} in figure \ref{fig:ppvss}.\par 
-
-The security guarantees of $\Lambda_{RO}$ are explained in \cite{cryptoeprint:2025/576} which follows from 
-the security guarantees of $\Pi_S$, also the authors replaced Schoenmakers' (P)PVSS with $\Lambda_{RO}$ in 
-the original e-voting protocol\cite{5581ccd9530540479539d21d1d39ae96} and showed that they achieved 
-improvement in the verification phase (7 to 30 times faster in implementation for some parameters). 
-
+$\Pi_S$ \cite{cryptoeprint:2023/1669} in figure \ref{fig:ppvss}.\par 
 \input{figures/ppvss.tex}
+The security guarantees of $\Lambda_{RO}$ are explained in \cite{cryptoeprint:2025/576} which follows from 
+the security guarantees of $\Pi_S$, also the authors used $\Lambda_{RO}$ to build a new e-voting 
+protocol alternative to the replaced Schoenmakers' e-voting protocol \cite{5581ccd9530540479539d21d1d39ae96} 
+and showed that they achieved improvement in the verification phase 
+(7 to 30 times faster in implementation for some parameters). 
 
 \section{Conclusion}
 In summary, we recalled some basic concepts of linear codes and Reed Solomon codes as an example. We then 
 recalled the Packed Shamir secret sharing scheme which is a generalization of the Shamir Secret Sharing scheme \cite{10.1145/359168.359176} 
 that was originally designed to defend against passive adversaries and showed its correspondence with 
-Reed Solomon codes. As one of the goals of this thesis is to explore threshold secret sharing schemes that 
-can defend against malicious adversaries, we then briefly recalled PPVSS \cite{cryptoeprint:2025/576}. Moving forward, in the next chapter we will introduce a new scheme called Packed Pre-Constructed Publicly 
-Verifiable Secret Sharing (PPPVSS) scheme and give two examples whose inspiration is drawn from $\Lambda_{RO}$.
+Reed Solomon codes. As one of the goals of this thesis is to explore threshold secret sharing schemes that commits to 
+secret and also 
+can defend against malicious adversaries, we briefly recalled PPVSS \cite{cryptoeprint:2025/576}. 
+Moving forward, in the next chapter we will introduce 
+Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS) which is a generalization of 
+PPVSS and give two examples whose inspiration is drawn from $\Lambda_{RO}$.
 
 %%% Local Variables: 
 %%% mode: latex

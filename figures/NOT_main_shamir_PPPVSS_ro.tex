@@ -14,16 +14,17 @@
         \begin{itemize}
             \item Dealer $D$ samples a $t+\ell$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
               sets $\{g^{f_j}:f_j=f(j)\}_{j=-(\ell-1)}^0$ as the set of all secrets.
-            \item For each $1\leq i\leq n$, $D$ encrypts $f(i)=f_i$ with $PK_i$ to obtain 
-              $y_i=PK_i^{f_i}$. $D$ also commits(/encrypts) to the secrets $\{f_j\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
-              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ to obtain $\{y_j=h_j^{f_j}\}_{j=-(\ell-1)}^0$ (or $\{y_j=PK_j^{f_j}\}_{j=-(\ell-1)}^0$). 
-            \item $D$ uses the PDL proof scheme \ref{subsec:polynomial-dl} to generate $\pi_{PDL}$ as follows:
+            \item For each $1\leq i\leq n$, $D$ computes the encryptions of $g^{f_i}$  
+              with $PK_i$ using $f(i)=f_i$ to obtain 
+              $y_i=PK_i^{f_i}$. $D$ also commits(/encrypts) to the secrets $\{g^{f_j}\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
+              keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ to obtain $\{y_j=(h_j\text{ or }PK_j)^{f_j}\}_{j=-(\ell-1)}^0$. 
+            \item $D$ uses a modified PDL proof scheme \ref{subsec:polynomial-dl} to generate $\pi_{share}$ as follows:
             \begin{itemize}
                \item Samples a $t+\ell-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
-               computes $\{c_j=h_j^{r(j)}\}_{j=-(\ell-1)}^0$(or $\{c_j=PK_j^{r(j)}\}_{j=-(\ell-1)}^0$) and 
+               computes $\{c_j=(h_j\text{ or }PK_j)^{r(j)}\}_{j=-(\ell-1)}^0$ and 
                $c_i=PK_i^{r(i)}$ for $1\leq i\leq n$.
-               \item Using $\mathcal{H}$, $d=\mathcal{H}(y_{-(\ell-1)}\dots,y_0,\dots,y_n,c_{-(\ell-1)},\dots,c_0,\dots,c_n)$ is computed.
-               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{PDL}=(d,z(X))$ is obtained. 
+               \item Using $\mathcal{H}$, $d=\mathcal{H}(y_{-(\ell-1)}\dots,y_n,c_{-(\ell-1)},\dots,c_n)$ is computed.
+               \item Sets $z(X)=r(X)+df(X)$, hence $\pi_{share}=(d,z(X))$ is obtained. 
             \end{itemize}
             \item $D$ broadcasts the encryptions of the shares along with the commitment (or product of the encryptions) of the secrets 
               with $\pi_{PDL}$ which proves the validity of the encrypted shares and committed (/encrypted)
@@ -38,8 +39,7 @@
             procedure is outlined as follows:
         \begin{itemize}
             \item The entity checks if $z(X)$ is a $t+\ell-$degree polynomial or not.
-            \item Checks if $d=\mathcal{H}(y_{-(\ell-1)},\dots,y_0,\dots,y_n,\frac{h_{-(\ell-1)}^{z(-(\ell-1))}}{y_{-(\ell-1)}^d},\dots,\frac{h_{0}^{z(0)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})$ or 
-            $d=\mathcal{H}(y_{-(\ell-1)},\dots,y_0,\dots,y_n,\frac{PK_{-(\ell-1)}^{z(-(\ell-1))}}{y_{-(\ell-1)}^d},\dots,\frac{PK_{0}^{z(0)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})$ .
+            \item Checks if $d=\mathcal{H}(y_{-(\ell-1)},\dots,y_n,\frac{(h_{-(\ell-1)}\text{ or }PK_{-(\ell-1)})^{z(-(\ell-1))}}{y_{-(\ell-1)}^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})$.
             \item Outputs \textbf{true} if both of the above checks are satisfied, otherwise \textbf{false}.
         \end{itemize}
 
@@ -50,7 +50,7 @@
             \begin{itemize}
                 \item \textbf{Optimistic Reconstruction:} $D$ publishes $\{f_j\}_{j=-(\ell-1)}^0$, then any verifier (not necessarily a shareholder) 
                 when given $g,\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0,y_{-(\ell-1)},\dots,y_0$ can check if $\{y_j=h_j^{f_j}\text{ or }PK_j^{f_j}\}_{j=-(\ell-1)}^0$ 
-                and returns $\{g^{f_j}\}_{j=-(\ell-1)}^0$ if the check passes, if not they return \textbf{false}.
+                and returns $\{g^{f_j}\}_{j=-(\ell-1)}^0$ if all checks pass, if not they return \textbf{false}.
                 \item \textbf{Pessimistic Reconstruction:} If $D$ refuses to reveal $\{f_j\}_{j=-(\ell-1)}^0$, then any set 
                 $\mathcal{Q}$ consisting at least $t+\ell$ shareholders will do the following:
                 \begin{itemize}

@@ -14,8 +14,8 @@
         \begin{itemize}
             \item Dealer $D$ samples a $t$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
               sets $g^{f_0}$ as the secret to be shared, where $f_0=f(0)$.
-            \item For each $1\leq i\leq n$, $D$ computes $f(i)=f_i$ and uses $PK_i$ to encrypt the secret share 
-              $PK_i^{f_i}=y_i$. $D$ also encrypts(/commits) to the secret $g^{f_0}$ using the encryption(/commitment) 
+            \item For each $1\leq i\leq n$, $D$ computes $f(i)=f_i$ and uses $PK_i$ to encrypt the secret share  
+               to obtain $PK_i^{f_i}=y_i$. $D$ also encrypts(/commits) to the secret $g^{f_0}$ using the encryption(/commitment) 
               key $PK_0$ to obtain $y_0=PK_0^{f_0}$. 
             \item $D$ uses the PDL proof scheme \ref{subsec:polynomial-dl} to generate $\pi_{PDL}$ as follows:
                  \begin{itemize}

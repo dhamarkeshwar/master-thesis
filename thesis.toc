@@ -19,32 +19,24 @@
 \contentsline {subsection}{\numberline {2.4.1}Chaum-Pedersen Protocol for DL Equality}{9}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}NIZK PoK for Polynomial DL}{10}{subsection.2.4.2}%
 \contentsline {section}{\numberline {2.5}Pre-Constructed Publicly Verifiable Secret Sharing}{10}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Conclusion}{11}{section.2.6}%
-\contentsline {chapter}{\chapternumberline {3}More efficient publicly verifiable protocols}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Proof Systems based on polynomial DL}{15}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Version 1}{15}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Version 2}{18}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}A Publicly Verifiable Secret Sharing scheme}{21}{section.3.2}%
-\contentsline {section}{\numberline {3.3}A Pre-Constructed Publicly Verifiable Secret Sharing scheme}{22}{section.3.3}%
-\contentsline {chapter}{\chapternumberline {4}Packed Pre-Constructed Publicly Verifiable Secret Sharing}{25}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Definitions}{25}{section.4.1}%
-\contentsline {section}{\numberline {4.2}NIZK AoK protocols for PDL problem}{30}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Version 1}{30}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Version 2}{32}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Practical PPPVSS schemes}{34}{section.4.3}%
-\contentsline {section}{\numberline {4.4}A compact PVSS scheme}{37}{section.4.4}%
-\contentsline {chapter}{\chapternumberline {5}Revisiting a Randomness Beacon Protocol}{47}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Computational Complexity}{47}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Computational Cost analysis}{50}{subsection.5.1.1}%
-\contentsline {section}{\numberline {5.2}Communication Complexity}{50}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Communication Cost analysis}{51}{subsection.5.2.1}%
-\contentsline {chapter}{\chapternumberline {6}Conclusion}{53}{chapter.6}%
-\contentsline {appendix}{\chapternumberline {A}The First Appendix}{57}{appendix.A}%
-\contentsline {section}{\numberline {A.1}More Lorem}{57}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{57}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{58}{subsection.A.1.2}%
-\contentsline {section}{\numberline {A.2}Lorem 51}{58}{section.A.2}%
-\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{59}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Lorem 20-24}{59}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Lorem 25-27}{60}{section.B.2}%
-\contentsline {chapter}{Bibliography}{61}{appendix*.32}%
+\contentsline {subsection}{\numberline {2.5.1}Definitions}{11}{subsection.2.5.1}%
+\contentsline {section}{\numberline {2.6}Conclusion}{14}{section.2.6}%
+\contentsline {chapter}{\chapternumberline {3}Packed Pre-Constructed Publicly Verifiable Secret Sharing}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}A NIZK AoK protocol}{18}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Practical PPPVSS schemes}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Conclusion}{26}{section.3.3}%
+\contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Computational Complexity}{33}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{36}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Communication Complexity}{36}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{37}{subsection.4.2.1}%
+\contentsline {chapter}{\chapternumberline {5}Conclusion}{39}{chapter.5}%
+\contentsline {appendix}{\chapternumberline {A}The First Appendix}{43}{appendix.A}%
+\contentsline {section}{\numberline {A.1}More Lorem}{43}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Lorem 15--17}{43}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Lorem 18--19}{44}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}Lorem 51}{44}{section.A.2}%
+\contentsline {appendix}{\chapternumberline {B}The Last Appendix}{45}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Lorem 20-24}{45}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Lorem 25-27}{46}{section.B.2}%
+\contentsline {chapter}{Bibliography}{47}{appendix*.25}%
