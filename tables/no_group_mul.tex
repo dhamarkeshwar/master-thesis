@@ -1,41 +1,43 @@
 \begin{table}[htbp]
 \centering
-\begin{tabular}{|p{3cm}|p{1.2cm}|p{2.5cm}|p{5.5cm}|p{2.5cm}|}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|p{3cm}|p{1.2cm}|p{3cm}|p{5cm}|p{2.5cm}|}
 \hline
 \textbf{Protocol}    & \textbf{Output size}    & 
 \textbf{Commit}\textit{(by Dealer)} & \textbf{Reveal}\textit{(by 
 shareholder)} & \textbf{Recovery} \textit{(by shareholder)}                                                           
 \\ \hline
-\textbf{ALBATROSS}, \textit{Honest case}    & $l^2$ & 
-$(2n+l)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - }  &  
+\textbf{ALBATROSS}, \textit{Honest case}    & $\ell^2$ & 
+$(2n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - }  &  
 \\
 & & & $(n-1)n[2\mathbb{E}_x+\mathbb{P}_e]$ & \\
 & & & \textbf{Secret Verification - } & \\ 
-& & & $(n-1)(n+l)[\mathbb{E}_x+\mathbb{P}_e]$&- \\ \hline
-\textbf{with PPPVSS}, \textit{Honest case}    & $l^2$  & 
-$2(n+l)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - } &  \\ 
-& & & $(n-1)(n+l)[2\mathbb{E}_x+\mathbb{P}_e]$ &  \\ 
+& & & $(n-1)(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$&- \\ \hline
+\textbf{with PPPVSS}, \textit{Honest case}    & $\ell^2$  & 
+$2(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - } &  \\ 
+& & & $(n-1)(n+\ell)[2\mathbb{E}_x+\mathbb{P}_e]$ &  \\ 
 & & & &  \\
 & & & \textbf{Secret Verification - } & \\ 
-& & & $(n-1)l\mathbb{E}_x$ & -  \\ \hline
-\textbf{ALBATROSS}, \textit{Robust case}    & $l^2$ & 
-$(2n+l)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - }  &  
+& & & $(n-1)\ell\mathbb{E}_x$ & -  \\ \hline
+\textbf{ALBATROSS}, \textit{Robust case}    & $\ell^2$ & 
+$(2n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - }  &  
 \\
 & & & $(n-1)n[2\mathbb{E}_x+\mathbb{P}_e]$ & \\
 & & & \textbf{Secret Verification - } & \\ 
-& & & $(n-t-1)(n+l)[\mathbb{E}_x+\mathbb{P}_e]$& 
+& & & $(n-t-1)(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$& 
 $[3+4(n-t)]t\mathbb{E}_{x}$\\ \hline
-\textbf{with PPPVSS}, \textit{Robust case}    & $l^2$  & 
-$2(n+l)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - } &  \\ 
-& & & $(n-1)(n+l)[2\mathbb{E}_x+\mathbb{P}_e]$ &  \\
+\textbf{with PPPVSS}, \textit{Robust case}    & $\ell^2$  & 
+$2(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ & \textbf{Share Verification - } &  \\ 
+& & & $(n-1)(n+\ell)[2\mathbb{E}_x+\mathbb{P}_e]$ &  \\
 & & & \textbf{Secret Verification - } & \\ 
-& & & $(n-t-1)l\mathbb{E}_x$ &   \\
+& & & $(n-t-1)\ell\mathbb{E}_x$ &   \\
 & & & & $[3+4(n-t)]t\mathbb{E}_{x}$  \\ \hline
 
 \end{tabular}
+}
 \caption{Computational cost of dealer and shareholders, 
 $\mathbb{E}_x=$group exponentiation and $\mathbb{P}_e=$polynomial 
-evaluation in group $G$ with order $q$, where $q$ is a large prime}
+evaluation in group $\mathbb{G}$ with order $q$, where $q$ is a large prime}
 \label{tab:comp_alba_pppvss_no group mul}
 \end{table}
 

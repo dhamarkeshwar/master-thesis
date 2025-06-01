@@ -2,12 +2,12 @@
 \label{cha:n}
 
 Randomness Beacon \cite{RABIN1983256} is required in applications like e-voting \cite{10.5555/1496711.1496734} 
-and anonymous messaging (\cite{180263},\cite{10.1145/2815400.2815417}) to provide fresh random values to all the 
+and anonymous messaging (\cite{180263},\cite{10.1145/2815400.2815417}) to provide fresh unbiased random values to all the 
 parties. In 2020, Cascudo and David published ALBATROSS \cite{cryptoeprint:2020/644}, the state-of-the art randomness 
 beacon protocol based on a PVSS as a building block where each party in the randomness beacon protocol acts as a dealer once, so that all 
 parties can influence the output randomness. Interestingly, we observed that each party is expected to reveal 
 their secrets (they secret shared as a dealer) as part of the randomness beacon protocol, but to prove that the 
-secrets are valid and not just some random evaluations of the secret polynomial they have to reveal the whole 
+secrets are valid and not just some random evaluations of the secret polynomial, they have to reveal the whole 
 secret polynomial itself. As a consequence, if some entity wants to verify the secrets' validity then they have to 
 simulate the whole sharing phase of the underlying PVSS protocol, which is very expensive because all the rest of the 
 parties are expected to do the simulation of that party as a dealer. For reference, if there are $n$ parties, then 
@@ -24,14 +24,16 @@ More interestingly, we will show that in terms of communication, we outperform A
 \input{figures/recovery_output.tex}
 \section{Computational Complexity}
 \input{tables/no_group_mul.tex}
-See table \ref{tab:comp_alba_pppvss_no group mul} for an overview.
+See table \ref{tab:comp_alba_pppvss_no group mul} for an overview. Also, we ignore the number of 
+multiplications in the group $\mathbb{G}$, i.e., $M_{\mathbb{G}}$ in the table as it is negligible compared to 
+the number of group exponentiations $\mathbb{E}_x$ in practice. 
 \begin{itemize}
-    \item In ALBATROSS, a dealer(as a part of \textbf{commit}) should compute $n(\mathbb{E}_x+\mathbb{P}_e)$ commitments and to give a proof he should do an additional $n(\mathbb{P}_{e}+\mathbb{E}_{x})$. Also, on dealer should do $l(\mathbb{P}_e+\mathbb{E}_x)$ for computing secrets and keeping it to himself. In total dealer needs to do $(2n+l)[\mathbb{E}_x+\mathbb{P}_{e}]$.
+    \item In ALBATROSS, a dealer(as a part of \textbf{commit}) should compute $n(\mathbb{E}_x+\mathbb{P}_e)$ commitments and to give a proof he should do an additional $n(\mathbb{E}_{x}+\mathbb{P}_e)$. Also, the dealer should do $\ell(\mathbb{E}_x+\mathbb{P}_e)$ for computing secrets and keeping it to himself. In total dealer needs to do $(2n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$.
         \begin{itemize}
-            \item In \textbf{Reveal}, a verifier should compute $2n\mathbb{E}_{x}$ which internally requires additional $n\mathbb{P}_{e}$, i.e., in total it requires $(n-1)n(2\mathbb{E}_{x}+\mathbb{P}_{e})$ computations for each verifier.
+            \item In \textbf{Reveal}, a verifier should compute $2n\mathbb{E}_{x}$ which internally requires additional $n\mathbb{P}_e$, i.e., in total it requires $(n-1)n(2\mathbb{E}_{x}+\mathbb{P}_{e})$ computations for each verifier.
             \begin{itemize}
-                \item In \textbf{Robust case} where $t$ dealers do not open their polynomials, a verifier should verify $n-t$ polynomials of honest dealers, i.e., for each honest dealer, a verifier has to do $n\mathbb{P}_e$ to evaluate secret share exponents and does $n\mathbb{E}_x$ to get secret shares and cross checks them in the public ledger. Also, finally the verifier computes $l\mathbb{P}_e$ to get secret exponents and get $l$ secrets by doing $l\mathbb{E}_x$. As there are $n-t$ honest dealers, the verifier has to compute $(n-t)(n+l)(\mathbb{E}_x+\mathbb{P}_e)$.
-                \item  In \textbf{Honest case}, everyone would have been honest and so each verifier has to do $(n-1)(n+l)(\mathbb{E}_x+\mathbb{P}_e)$.
+                \item In \textbf{Robust case} where $t$ dealers do not open their polynomials, a verifier should verify $n-t$ polynomials of honest dealers, i.e., for each honest dealer, a verifier has to do $n\mathbb{P}_e$ to evaluate secret share exponents and does $n\mathbb{E}_x$ to get secret shares and cross checks them in the public ledger. Also, finally the verifier computes $\ell\mathbb{P}_e$ to get secret exponents and get $\ell$ secrets by doing $\ell\mathbb{E}_x$. As there are $n-t$ honest dealers, the verifier has to compute $(n-t)(n+\ell)(\mathbb{E}_x+\mathbb{P}_e)$.
+                \item  In \textbf{Honest case}, everyone would have been honest and so each verifier has to do $(n-1)(n+\ell)(\mathbb{E}_x+\mathbb{P}_e)$.
             \end{itemize}
             \item \textbf{Recovery} phase only exists if some party does not 
             open the polynomial leading to PVSS reconstruction phase, in the 
@@ -45,12 +47,12 @@ See table \ref{tab:comp_alba_pppvss_no group mul} for an overview.
             honest shareholders requiring them to do $4(n-t)\mathbb{E}_{x}$. 
             In total, each re-constructor requires $[3+4(n-t)]t\mathbb{E}_{x}$.
         \end{itemize}
-    \item Using PPPVSS in randomness beacon protocol, a dealer(as a part of \textbf{commit}) requires to do $(n+l)[\mathbb{E}_x+\mathbb{P}_e]$ and $(l-1)\mathbb{M}_G$ to compute $\{y_i\}_{i=0}^{n}$. For generating the proof that $y_i$'s are valid encryptions of the secret shares and also $y_0$ is a commitment of the $l$ secrets, the dealer should do $(n+l)[\mathbb{E}_x+\mathbb{P}_e]$ which internally requires additional $(l-1)\mathbb{M}_G$. In total, a dealer has to do $2\left[(n+l)[\mathbb{E}_x+\mathbb{P}_e]+(l-1)\mathbb{M}_{G}\right]$.
+    \item Using PPPVSS in randomness beacon protocol, a dealer(as a part of \textbf{commit}) requires to do $(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ and $(\ell-1)M_\mathbb{G}$ to compute $\{y_i\}_{i=0}^{n}$. For generating the proof that $y_i$'s are valid encryptions of the secret shares and also $y_0$ is a commitment of the $\ell$ secrets, the dealer should do $(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ which internally requires additional $(\ell-1)M_\mathbb{G}$. In total, a dealer has to do $2\left[(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]+(\ell-1)M_\mathbb{G}\right]$.
     \begin{itemize}
-        \item In \textbf{Reveal}, a verifier should do $(n+l)(2\mathbb{E}_x+\mathbb{P}_e)$ and $(l-1)\mathbb{M}_G$ for each proof. In total, a verifier has to do $(n-1)(n+l)[2\mathbb{E}_x+\mathbb{P}_e]+(n-1)(l-1)\mathbb{M_G}$.
+        \item In \textbf{Reveal}, a verifier should do $(n+\ell)(2\mathbb{E}_x+\mathbb{P}_e)$ and $(\ell-1)M_\mathbb{G}$ for each proof. In total, a verifier has to do $(n-1)(n+\ell)[2\mathbb{E}_x+\mathbb{P}_e]+(n-1)(\ell-1)M_\mathbb{G}$.
         \begin{itemize}
-            \item In \textbf{Robust case} with $t$ malicious parties not opening the secret polynomials, a verifier should do $l\mathbb{E}_x+(l-1)\mathbb{M}_G$ to verify each proof, so in total each verifier should do $(n-t-1)[l\mathbb{E}_x+(l-1)\mathbb{M}_G]$.
-            \item In \textbf{Honest case} where everyone is honest, a verifier will do $(n-1)l(\mathbb{E}_x+\mathbb{M}_G)$.
+            \item In \textbf{Robust case} with $t$ malicious parties not opening the secret polynomials, a verifier should do $\ell\mathbb{E}_x+(\ell-1)M_\mathbb{G}$ to verify each proof, so in total each verifier should do $(n-t-1)[l\mathbb{E}_x+(\ell-1)M_\mathbb{G}]$.
+            \item In \textbf{Honest case} where everyone is honest, a verifier will do $(n-1)\ell(\mathbb{E}_x+M_\mathbb{G})$.
         \end{itemize}
         \item The computational complexity of each re-constructor in \textbf{Recovery} phase is exactly same as in the case of ALBATROSS.
     \end{itemize}
@@ -59,23 +61,26 @@ See table \ref{tab:comp_alba_pppvss_no group mul} for an overview.
 \subsection{Computational Cost analysis}
 The dealer has to do a bit more work in the case of our protocol in contrast to ALBATROSS, more explicitly, 
 they have to compute $\ell$ more group exponentiations and polynomial evaluations. But as a consequence, 
-we decrease computational cost in the \textit{Reveal} phase whenever $l < \frac{n(n-t-1)}{2(n-1)}$, roughly 
+we decrease computational cost in the \textit{Reveal} phase whenever $\ell < \frac{n(n-t-1)}{2(n-1)}$, roughly 
 speaking, if the number of secrets are less than half of the honest parties then we always perform better in 
-terms of computation when compared to the ALBATROSS.
+terms of computation when compared to the ALBATROSS.\par
+
+\input{figures/exponent.tex}
+\input{figures/polynomial.tex}
 
 
 \section{Communication Complexity}
 \input{tables/communication.tex}
 See table \ref{tab:dealer_comm} for an overview.
 \begin{itemize}
-    \item In ALBATROSS, a dealer (as a part of \textbf{commit}) should send $n$ group elements as commitments, $t+l$ elements in $\mathbb{Z}/q\mathbb{Z}$ that defines the polynomial used in the ZKP and $1$ extra element in $\mathbb{Z}/q\mathbb{Z}$ from RO. 
+    \item In ALBATROSS, a dealer (as a part of \textbf{commit}) should send $n$ group elements as commitments, $t+\ell$ elements in $\mathbb{Z}/q\mathbb{Z}$ that defines the polynomial used in the ZKP and $1$ extra element in $\mathbb{Z}/q\mathbb{Z}$ from RO. 
     \begin{itemize}
-        \item In \textbf{Reveal}, an honest dealer would broadcast $t+l$ coefficients in $\mathbb{Z}/q\mathbb{Z}$ concerning the secret polynomial.
-        \item If some party has not revealed their polynomial, then in \textbf{Recovery} phase a re-constructor using PVSS reconstruction protocol should broadcast $1$ element in group which is being the decrypted secret, for the proof of correct decryption, they have to broadcast $3$ more group elements along with a polynomial which requires $t+l$ coefficients in $\mathbb{Z}/q\mathbb{Z}$ and $1$ group element from RO.
+        \item In \textbf{Reveal}, an honest dealer would broadcast $t+\ell$ coefficients in $\mathbb{Z}/q\mathbb{Z}$ concerning the secret polynomial.
+        \item If some party has not revealed their polynomial, then in \textbf{Recovery} phase a re-constructor using PVSS reconstruction protocol should broadcast $1$ element in group which is being the decrypted secret, for the proof of correct decryption, they have to broadcast $3$ more group elements along with a polynomial which requires $t+\ell$ coefficients in $\mathbb{Z}/q\mathbb{Z}$ and $1$ group element from RO.
     \end{itemize}
-    \item Using PPPVSS in randomness beacon protocol, a dealer (as a part of \textbf{commit}) should send $n+1$ group elements as commitments, $t+l$ elements in $\mathbb{Z}/q\mathbb{Z}$ that defines the polynomial used in the ZKP and $1$ extra element in $\mathbb{Z}/q\mathbb{Z}$ from RO.
+    \item Using PPPVSS in randomness beacon protocol, a dealer (as a part of \textbf{commit}) should send $n+1$ group elements as commitments, $t+\ell$ elements in $\mathbb{Z}/q\mathbb{Z}$ that defines the polynomial used in the ZKP and $1$ extra element in $\mathbb{Z}/q\mathbb{Z}$ from RO.
     \begin{itemize}
-        \item In \textbf{Reveal}, an honest dealer would broadcast $l$ elements in $\mathbb{Z}_q$ concerning the exponents to construct the secret.
+        \item In \textbf{Reveal}, an honest dealer would broadcast $\ell$ elements in $\mathbb{Z}_q$ concerning the exponents to construct the secret.
         \item If some part has not revealed their secrets, then the communication cost of each re-constructor is exactly same as in the case of ALBATROSS.
     \end{itemize}
 \end{itemize}

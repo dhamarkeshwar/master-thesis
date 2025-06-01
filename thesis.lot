@@ -12,9 +12,8 @@
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Cost comparisions between $\Lambda _{RO}'$ and $\Lambda _{RO}^{packed}$. BC: Dealer's Broadcase size, Dow: Download size by the verifier, Opt. Recon: Optimistic Reconstruction, Pes. Recon: Pessimistic Reconstruction. $\mathbb {E}_x$: Group exponentiation, $\mathbb {P}_e$: Polynomial evaluation, $M_{\mathbb {G}}$: multiplication in the cyclic group $\mathbb {G}$ of prime order $q$, $\mathbb {Z}_q$: modular prime group under addition.}}{35}{table.caption.22}%
 \addvspace {10pt}
-\contentsline {table}{\numberline {4.1}{\ignorespaces Computational cost of dealer and shareholders, $\mathbb {E}_x=$group exponentiation and $\mathbb {P}_e=$polynomial evaluation in group $G$ with order $q$, where $q$ is a large prime}}{35}{table.caption.23}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Communication cost of dealer and (each) shareholder, $R_o$ being the random oracle, $G = $group of order $q$ and $\mathbb {Z}_q =$ modular group of order $q$, where $q$ is a large prime}}{36}{table.caption.24}%
-\addvspace {10pt}
-\addvspace {10pt}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Computational cost of dealer and shareholders, $\mathbb {E}_x=$group exponentiation and $\mathbb {P}_e=$polynomial evaluation in group $\mathbb {G}$ with order $q$, where $q$ is a large prime}}{41}{table.caption.27}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Communication cost of dealer and (each) shareholder, $\mathbb {G} = $group of order $q$ and $\mathbb {Z}_q =$ modular group of order $q$, where $q$ is a large prime}}{42}{table.caption.30}%
 \addvspace {10pt}

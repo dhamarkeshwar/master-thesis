@@ -6,51 +6,49 @@ A level-1 auxiliary file: chap-1.aux
 A level-1 auxiliary file: chap-3.aux
 A level-1 auxiliary file: chap-n.aux
 A level-1 auxiliary file: conclusion.aux
-A level-1 auxiliary file: app-A.aux
-A level-1 auxiliary file: app-n.aux
 The style file: abbrv.bst
 Database file #1: references.bib
 Warning--entry type for "welch1986error" isn't style-file defined
 --line 222 of file references.bib
-You've used 24 entries,
+You've used 23 entries,
             2118 wiz_defined-function locations,
-            666 strings with 8938 characters,
-and the built_in function-call counts, 9037 in all, are:
-= -- 940
-> -- 334
+            658 strings with 8822 characters,
+and the built_in function-call counts, 8811 in all, are:
+= -- 919
+> -- 327
 < -- 15
-+ -- 134
-- -- 107
-* -- 514
-:= -- 1363
-add.period$ -- 86
-call.type$ -- 24
-change.case$ -- 122
++ -- 130
+- -- 105
+* -- 506
+:= -- 1323
+add.period$ -- 82
+call.type$ -- 23
+change.case$ -- 119
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 413
-empty$ -- 755
-format.name$ -- 107
-if$ -- 2065
+cite$ -- 23
+duplicate$ -- 401
+empty$ -- 733
+format.name$ -- 105
+if$ -- 2017
 int.to.chr$ -- 0
-int.to.str$ -- 24
-missing$ -- 19
-newline$ -- 125
-num.names$ -- 54
-pop$ -- 169
+int.to.str$ -- 23
+missing$ -- 17
+newline$ -- 119
+num.names$ -- 52
+pop$ -- 162
 preamble$ -- 1
-purify$ -- 100
+purify$ -- 97
 quote$ -- 0
-skip$ -- 353
+skip$ -- 347
 stack$ -- 0
-substring$ -- 517
-swap$ -- 171
+substring$ -- 511
+swap$ -- 170
 text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
+type$ -- 90
 warning$ -- 0
-while$ -- 81
-width$ -- 26
-write$ -- 287
+while$ -- 79
+width$ -- 25
+write$ -- 275
 (There was 1 warning)

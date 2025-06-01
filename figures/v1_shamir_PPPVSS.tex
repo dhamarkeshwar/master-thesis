@@ -1,5 +1,6 @@
-\begin{figure}[ht]
+\begin{figure}[t!]
     \centering
+    % \scriptsize
     \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
     \begin{tcolorbox}[title=\textbf{PPPVSS based on Packed Shamir secret sharing \ref{sec:packed-shamir}}, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
         
@@ -50,9 +51,9 @@
                       decryption of $y_i$.
                     \item If $\mathcal{Q}$ consists at least $t+\ell$ honest parties, they can use the 
                     lagrange interpolation to compute the secrets $\{f_j\}_{j=-(\ell-1)}^0$ as follows:
-                    \begin{align*}
-                        f_j &= \sum_{i\in \mathcal{Q}} f_i \left[\prod_{k\in \mathcal{Q}, k\neq i}\frac{-k-j}{i-j}\right] &&, j\in\{-(\ell-1),\dots,0\} \\
-                    \end{align*}
+                    %\begin{align*}
+                    $$    \textstyle f_j = \sum_{i\in \mathcal{Q}} f_i (\prod_{k\in \mathcal{Q}, k\neq i}\frac{-k-j}{i-j}), j\in\{-(\ell-1),\dots,0\} $$
+                   % \end{align*}
                     where $\lambda_i=\prod_{k\neq i}\frac{k}{k-i}$ are lagrange coefficients.
                 \end{itemize}
             \end{itemize}

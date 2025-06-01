@@ -9,22 +9,24 @@ behind the work of \textit{Pre-Constructed Publicly Verifiable Secret Sharing} (
 where the authors have given the complete description of PPVSS and an example $\Lambda_{RO}$ to improve 
 the original e-voting protocol proposed by Schoenmakers \cite{5581ccd9530540479539d21d1d39ae96}.\par
 
-In this chapter we will introduce Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS) which merely 
-is an extension to the notion of PPVSS. As Packed Shamir Secret Sharing \ref{sec:packed-shamir} allows a 
-dealer to share multiple secrets encoded in a single polynomial, we want to add this feature to PPVSS. We remark that 
-the definition of PPVSS naturally extends to PPPVSS where a commitment to the secret is replaced 
+In this chapter we will introduce Packed Pre-Constructed Publicly Verifiable Secret Sharing (3PVSS) which merely 
+is an extension to the notion of PPVSS. As Packed Shamir secret sharing \ref{sec:packed-shamir} allows a 
+dealer to share multiple secrets encoded in a single polynomial, we want to extend PPVSS to Packed 
+Pre-Constructed Publicly Verifiable Secret Sharing where 
+multiple secrets are encoded in a single polynomial. We remark that 
+the definition of PPVSS naturally extends to 3PVSS where a commitment to the secret is replaced 
 by a vector of commitments of the secrets or a single commitment that represents all secrets. In the latter case 
 where a single commitment is used, we will detail the assumptions due to which our protocols 
 can remain secure. In the 
-subsequent sections we will provide our two constructions for PPPVSS based on packed secret sharing 
+subsequent sections we will provide our two constructions for 3PVSS based on packed secret sharing 
 scheme \ref{sec:packed-shamir} along with the security guarantees these schemes can achieve.\par
 
 % \section{Definitions}
-% \label{sec:pppvss-definitions}
+% \label{sec:3PVSS-definitions}
 
 % The following definition directly follows the definition of PPVSS in \cite{cryptoeprint:2025/576}.
 
-% \begin{definition}[Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS)]
+% \begin{definition}[Packed Pre-Constructed Publicly Verifiable Secret Sharing (3PVSS)]
 %     A Packed PPVSS scheme should have four algorithms, namely, Initial, Share, Verify and Reconstruction whose 
 %     descriptions are as follows:
 %     \begin{itemize}
@@ -34,26 +36,26 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %           agree on $\ell$ commitment keys or public keys whose secret keys are known to some target people. 
 %           Note that the message space of the public-key scheme is a subgroup of $(\mathbb{G},\times)$.
 %         \item \textbf{Share} $(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0)$\par
-%           $\rightarrow(\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})$:\par 
+%           $\rightarrow(\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})$:\par 
 %           It secret shares $\{f_j\}_{j=(\ell-1)}^0$ to obtain the shares $\{f_i\}_{i=1}^n$. For $1\leq i\leq n$, uses 
 %           the public key $PK_i$ to encrypt $f_i$ and obtain the encrypted share $y_i$. Now, it uses the commitment 
 %           key $h_j$ ( or public key $PK_j$) to commit(/encrypt) $f_j$ to obtain $y_j$ for $-(\ell-1)\leq j\leq0$. 
-%           In the next step, it uses a NIZK proof $\pi_{PPPVSS}$ protocol to prove that $\{y_j\}_{j=-(\ell-1)}^0$ is a set of valid 
-%           commitments(/encryptions) of $\ell$ secrets and $\{y_i\}_{i=1}^n$ has valid encryptions of the corresponding shares. Finally, it returns $(\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})$.\par
+%           In the next step, it uses a NIZK proof $\pi_{3PVSS}$ protocol to prove that $\{y_j\}_{j=-(\ell-1)}^0$ is a set of valid 
+%           commitments(/encryptions) of $\ell$ secrets and $\{y_i\}_{i=1}^n$ has valid encryptions of the corresponding shares. Finally, it returns $(\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})$.\par
 %           \textit{\textbf{OR}}\par
-%           $\rightarrow(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$:\par 
+%           $\rightarrow(\{y_i\}_{i=0}^n,\pi_{3PVSS})$:\par 
 %           It secret shares $\{f_j\}_{j=(\ell-1)}^0$ to obtain the shares $\{f_i\}_{i=1}^n$. For $1\leq i\leq n$, uses 
 %           the public key $PK_i$ to encrypt $f_i$ and obtain the encrypted share $y_i$. Now, it uses the commitment 
 %           key $h_j$ ( or public key $PK_j$) to commit(/encrypt) $f_j$ for $-(\ell-1)\leq j\leq0$ and performs the 
 %           group operation $\times$ to multiply all the commitments(/encryptions) to obtain $y_0$. 
-%           In the next step, it uses a NIZK proof $\pi_{PPPVSS}$ protocol to prove that $y_0$ is a valid well-formed commitment of $\ell$ 
-%           secrets and $\{y_i\}_{i=1}^n$ has valid encryptions of the corresponding shares. Finally, it returns $(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$.
-%         \item \textbf{Verify} $(n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})\rightarrow$ \textbf{true/false}: 
-%           This algorithm(which can be performed by anyone) checks if the NIZK proof $\pi_{PPPVSS}$ is valid for 
+%           In the next step, it uses a NIZK proof $\pi_{3PVSS}$ protocol to prove that $y_0$ is a valid well-formed commitment of $\ell$ 
+%           secrets and $\{y_i\}_{i=1}^n$ has valid encryptions of the corresponding shares. Finally, it returns $(\{y_i\}_{i=0}^n,\pi_{3PVSS})$.
+%         \item \textbf{Verify} $(n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})\rightarrow$ \textbf{true/false}: 
+%           This algorithm(which can be performed by anyone) checks if the NIZK proof $\pi_{3PVSS}$ is valid for 
 %           $\{y_{-(\ell-1)},\dots,y_0,\dots,y_n\}$ and then returns true, otherwise false.\par
 %           \textit{\textbf{OR}}\par
-%           \textbf{Verify} $(n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})\rightarrow$ \textbf{true/false}: 
-%           This algorithm(which can be performed by anyone) checks if the NIZK proof $\pi_{PPPVSS}$ is valid for 
+%           \textbf{Verify} $(n,t,\ell,\{y_i\}_{i=0}^n,\pi_{3PVSS})\rightarrow$ \textbf{true/false}: 
+%           This algorithm(which can be performed by anyone) checks if the NIZK proof $\pi_{3PVSS}$ is valid for 
 %           $\{y_0,y_1,\dots,y_n\}$ and then returns true, otherwise false.
 %         \item \textbf{Reconstruct}: There are two approaches based on cooperation of the dealer $D$ and are as follows:
 %           \begin{itemize}
@@ -91,13 +93,13 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %     \end{itemize}
 % \end{definition}
 
-% We need following security guarantees (inspired from PPVSS \cite{cryptoeprint:2025/576}) for a PPPVSS to be 
+% We need following security guarantees (inspired from PPVSS \cite{cryptoeprint:2025/576}) for a 3PVSS to be 
 % called secure:
 
 % \begin{itemize}
 %   \item \textbf{Correctness}: If the dealer and parties follow the protocol, then the \textit{\textbf{Verify}} 
 %     algorithm returns \textit{\textbf{true}} and the \textit{\textbf{Reconstruct}} algorithm returns $\{f_j\}_{j=-(\ell-1)}^0$ 
-%     irrespective of which approach. For any integer $n\geq t+\ell$ with $t>0$, a PPPVSS is said 
+%     irrespective of which approach. For any integer $n\geq t+\ell$ with $t>0$, a 3PVSS is said 
 %     to be correct for\par 
 %     $\left(\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\right)\leftarrow$\textbf{Initial} $(1^\lambda)$ when 
 %     it satisfies either of the two formal definitions based on the output of the \textit{Share} algorithm 
@@ -106,15 +108,15 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %       \item When \textit{Share} algorithm outputs $\ell$ commitments(/encryptions) of the secrets, then
 %         \begin{align*}
 %           Pr\begin{bmatrix}
-%             (\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+%             (\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
 %             &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big):\\
-%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})
+%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})
 %           \end{bmatrix} = 1,
 %         \end{align*}
     
 %         \begin{align*}
 %           Pr\begin{bmatrix}
-%             (\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+%             (\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
 %             &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
 %             \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[\{h_j,f_j,r_j,y_j\}_{j=-(\ell-1)}^0\\
 %             &\textit{ or }\{PK_j,SK_j,y_j\}_{j=-(\ell-1)}^0]\bigvee\\
@@ -125,15 +127,15 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %       \item When \textit{Share} algorithm outputs a single commitment corresponding to the $\ell$ secrets, then
 %         \begin{align*}
 %           Pr\begin{bmatrix}
-%             (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+%             (\{y_i\}_{i=0}^n,\pi_{3PVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
 %             &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big):\\
-%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})
+%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{3PVSS})
 %           \end{bmatrix} = 1,
 %         \end{align*}
     
 %         \begin{align*}
 %           Pr\begin{bmatrix}
-%             (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+%             (\{y_i\}_{i=0}^n,\pi_{3PVSS})&\leftarrow \textit{\textbf{Share}} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
 %             &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
 %             \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\\
 %             &\textit{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]\bigvee\\
@@ -150,17 +152,17 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %     \begin{itemize}
 %       \item $\{y_j\}_{j=-(\ell-1)}^0$ are valid commitments(/encryptions) of those $\ell$ secrets with high 
 %         probability. More formally, given $\lambda$, for any integers 
-%         $n\geq 2t+\ell$, $\ell\geq 1$ and $t>0$, a PPPVSS is said to be verifiable if for any 
+%         $n\geq 2t+\ell$, $\ell\geq 1$ and $t>0$, a 3PVSS is said to be verifiable if for any 
 %         $\mathcal{PPT}$ adversary $\mathcal{A}$, we have:
 %         \begin{align*}
 %           Pr\begin{bmatrix}
 %             \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
-%             (\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+%             (\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
 %             &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
 %             \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[\{h_j,f_j,r_j,y_j\}_{j=-(\ell-1)}^0\\
 %             &\textit{ or }\{PK_j,SK_j,y_j\}_{j=-(\ell-1)}^0]\bigvee\\
 %             \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
-%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})\\
+%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})\\
 %             \bigwedge f_j^{'}\neq f_j&\text{ for some }-(\ell-1)\leq j\leq 0
 %           \end{bmatrix} \leq negl(\lambda),
 %         \end{align*}
@@ -168,17 +170,17 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %       \item $y_0$ is a valid well-formed commitment of the same $\ell$ secrets constructed by taking a 
 %         product of valid commitments (/ciphers) of $\ell$ secrets under 
 %         $\{h_j\textit{ or }PK_j\}_{j=-(\ell-1)}^0$. More formally, given $\lambda$, for any integers 
-%         $n\geq 2t+\ell$, $\ell\geq 1$ and $t>0$, a PPPVSS is said to be verifiable if for any 
+%         $n\geq 2t+\ell$, $\ell\geq 1$ and $t>0$, a 3PVSS is said to be verifiable if for any 
 %         $\mathcal{PPT}$ adversary $\mathcal{A}$, we have:
 %         \begin{align*}
 %           Pr\begin{bmatrix}
 %             \big(\{PK_i,SK_i\}_{i=1}^n\sqcup&\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0\big)\leftarrow\textbf{ Initial } (1^\lambda),\\
-%             (\{y_i\}_{i=0}^n,\pi_{PPPVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
+%             (\{y_i\}_{i=0}^n,\pi_{3PVSS})&\leftarrow \mathcal{A} \big(n,t,\{f_j\}_{j=-(\ell-1)}^0,\{PK_i\}_{i=1}^n\bigsqcup\\
 %             &\{h_j\text{ or }PK_j\}_{j=-(l-1)}^0\big),\\
 %             \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{opt}[(\{h_j,f_j,r_j\}_{j=-(\ell-1)}^0,y_0)\\
 %             &\textit{ or }(\{PK_j,SK_j\}_{j=-(\ell-1)}^0,y_0)]\bigvee\\
 %             \{f_j^{'}\}_{j=-(\ell-1)}^0&\leftarrow Reconstruction^{pes}[\{y_i,SK_i\}_{i\in\mathcal{Q},|\mathcal{Q}|=t+\ell}]:\\
-%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{PPPVSS})\\
+%             \textit{\textbf{true}}&\leftarrow \textit{\textbf{Verify}} (n,t,\ell,\{y_i\}_{i=0}^n,\pi_{3PVSS})\\
 %             \bigwedge f_j^{'}\neq f_j&\text{ for some }-(\ell-1)\leq j\leq 0
 %           \end{bmatrix} \leq negl(\lambda),
 %         \end{align*}
@@ -187,26 +189,26 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 %   \item \textbf{IND1-Secrecy (Indistinguishability of Secrets)}: Before reconstruction phase, any amount of public 
 %     information along with secret keys of at most $t$ parties excluding $\{SK_j\}_{j=-(\ell-1)}^0$ will give 
 %     absolutely no information about the secrets $\{f_j\}_{j=-(\ell-1)}^0$. More formally, for integers $n>1$ and 
-%     $t+\ell\leq n$, the PPPVSS is said to satisfy \textit{IND1-Secrecy} if for any $\mathcal{PPT}$ adversary $\mathcal{A}$ 
+%     $t+\ell\leq n$, the 3PVSS is said to satisfy \textit{IND1-Secrecy} if for any $\mathcal{PPT}$ adversary $\mathcal{A}$ 
 %     corrupting at most $t$ parties, excluding the owners of $\{SK_j\}_{j=-(\ell-1)}^0$, has negligible 
 %     advantage in the following game \cite{cryptoeprint:2025/576} played against a challenger.
 %     \begin{itemize}
-%       \item The challenger runs \textit{\textbf{Initial}} $(1^\lambda)$ of PPPVSS to obtain 
+%       \item The challenger runs \textit{\textbf{Initial}} $(1^\lambda)$ of 3PVSS to obtain 
 %         $\{PK_i,SK_i\}_{i=1}^n\sqcup\{h_j\text{ or }(PK_j,SK_j)\}_{j=-(\ell-1)}^0$ and sends all public 
 %         information along with secret information of all corrupted parties to $\mathcal{A}$.
 %       \item The challenger chooses two set of secrets, $s_0=\{f_j\}_{j=-(\ell-1)}^0$ and 
 %         $s_1=\{f_j^{'}\}_{j=-(\ell-1)}^0$ at random in the space of secrets. Furthermore, it chooses $b\in\{0,1\}$ 
 %         uniformly at random and runs \par 
 %         \textit{\textbf{Share}} $(n,t,s_0,\{PK_i\}_{i=1}^n\bigsqcup\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0)$ 
-%         algorithm of the PPPVSS scheme and obtains $(\{y_i\}_{i=0}^n,\pi_{PPPVSS})$ or 
-%         $(\{y_i\}_{i=-(\ell-1)}^n,\pi_{PPPVSS})$. Finally, it sends all public information generated in 
+%         algorithm of the 3PVSS scheme and obtains $(\{y_i\}_{i=0}^n,\pi_{3PVSS})$ or 
+%         $(\{y_i\}_{i=-(\ell-1)}^n,\pi_{3PVSS})$. Finally, it sends all public information generated in 
 %         \textit{Share} phase together with $s_b$.
 %       \item $\mathcal{A}$ guesses a bit $b'\in\{0,1\}$.
 %     \end{itemize}
 %     The advantage of $\mathcal{A}$ is defined to be $|Pr[b'=b]-\frac{1}{2}|$.
 % \end{itemize}
 
-% It can be seen that PPPVSS is a natural extension of PPVSS, where we secret share possibly \textit{more than one} 
+% It can be seen that 3PVSS is a natural extension of PPVSS, where we secret share possibly \textit{more than one} 
 % secret in contrast to \textit{only one} secret in PPVSS. But one has to be very careful in the case where they 
 % obtain the commitment of the secrets which is obtained via multiplication of encryptions (/commitments) of 
 % actual secrets. More precisely, $y_0$ should be well formed, i.e., a dealer should not be able to cheat to 
@@ -214,139 +216,15 @@ scheme \ref{sec:packed-shamir} along with the security guarantees these schemes 
 % encryptions (/commitments) of the actual secrets.\par 
 
 A general construction of Shamir based PPVSS is given in \cite{cryptoeprint:2025/576}, and we extend this idea 
-to give two Packed Shamir based PPPVSS outlined in figures \ref{fig:version-packed-shamir-PPPVSS} and \ref{fig:packed-shamir-PPPVSS}. 
-In next section, we will give a practical PPPVSS scheme. Before giving out the details of our 
-schemes, we will first introduce a new relation, its correspondence with a problem and finally 
-a NIZK AoK protocol for a statement in the language of that relation. The reason we had to 
-introduce this new relation is because we needed it to construct our second PPPVSS scheme. 
+to give two Packed Shamir based 3PVSS outlined in figures \ref{fig:version-packed-shamir-PPPVSS} and \ref{fig:packed-shamir-PPPVSS}. 
+Subsequently, we will give two practical 3PVSS schemes. 
+% Before giving out the details of the 
+% second 3PVSS scheme, we will first introduce a new relation, its correspondence with a problem and finally 
+% a NIZK AoK protocol for a statement in the language of that relation. The reason we had to 
+% introduce this new relation is because we needed it to construct our second 3PVSS scheme. 
 
 \input{figures/v1_shamir_PPPVSS.tex}
-\input{figures/shamir_PPPVSS}
-
-\section{A NIZK AoK protocol}
-\label{sec:aok_polynomial_dl}
-Consider the set $\{g_i\}_{i=-(\ell-1)}^n$ containing $n+\ell$ distinct generators (obtained as CRS) of 
-the prime order $q$ cyclic group $\mathcal{G}$ different from $g$ with $g$ also being a generator of 
-$\mathbb{G}$, where $n+\ell<\varphi(q)$ and $\varphi(q)$ is
-the total number of distinct generators of the cyclic group $\mathbb{G}$. Consider the following relation for 
-some polynomial $f\in\mathbb{Z}_q[X]_{t+\ell-1}$ with $t+\ell\leq n$:
-\begin{align}\label{eq:relation_mod_PDL}
-  R_{mod-PDL} = \{(g_{-(\ell-1)},\dots,g_n,g,&x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n),f(X) :\nonumber\\
-   &F_0=\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)}, F_i=g_i^{f(x_i)}, 1\leq i\leq n\},
-\end{align}
-where all $x_i$'s are distinct in $\mathbb{Z}_q$. The $R_{mod-PDL}$ is based on \textit{modified}-PDL 
-(inspired from the PDL in \cite{cryptoeprint:2023/1669}) which is defined in the following.
-
-\begin{definition}[\textit{modified}- Polynomial Discrete Logarithm problem]
-  Let\par 
-  $\{g_i : g_i\neq g\}_{i=-(\ell-1)}^n$ be a set of random distinct generators for the prime order $q$ cyclic 
-  group $\mathbb{G}$ generated by $g$. Given $F_0,\dots,F_n$ and distinct elements $x_{-(\ell-1)},\dots,x_n$ in 
-  $\mathbb{Z}_q$, find a polynomial $f\in\mathbb{Z}_q[X]$ with degree at most $t+\ell-1$, where $F_0=\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)}$ and
-  $F_i=g_i^{f(x_i)}$ for $1\leq i\leq n$ with $t+\ell\leq n$.\par
-
-  In other words, an algorithm $\mathcal{A}$ is said to have an advantage $\epsilon$ in solving \textit{modified}-PDL if 
-  \begin{align*}
-    Pr[\mathcal{A}(x_{-(\ell-1)},\dots,x_n,g,g_{-(\ell-1)},\dots,g_n,\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)},g_1^{f(x_1)},\dots,g_n^{f(x_n)})]\geq\epsilon,
-  \end{align*}
-  where $f\in\mathbb{Z}_q[X]$ is at most a $t+\ell-1$ degree polynomial with $t\leq n$ and the probability is over 
-  distinct generators $g,g_{-(\ell-1)},\dots,g_n$ of $\mathbb{G}$ chosen at random and distinct $x_{-(\ell-1)},\dots,x_n$ 
-  elements in $\mathbb{Z}_q$.
-\end{definition}
-
-It is intuitive to observe that the \textit{modified}-PDL problem can be reduced to the 
-Discrete Logarithm (DL) problem. We will prove this via contradiction. More explicitly, 
-let there exist an adversary $\mathcal{A}$ 
-who can solve the \textit{modified}-PDL problem. We will now construct an adversary $\mathcal{B}$ 
-who can solve DL problem using $\mathcal{A}$ as a subroutine. Let $(g,h := g^f)$ be the challenge 
-for the DL problem, now $\mathcal{B}$ will set $F_1=h$, $x_i=i$ for $-(\ell-1)\leq i\leq n$ and sets 
-$F_0,F_2,\dots,F_n$ to be $n$ random elements in the group $\mathbb{G}$. $\mathcal{B}$ will 
-send $(g_{-(\ell-1)},\dots,g_n,g,-(\ell-1),\dots,n,F_0,\dots,F_n)$ to $\mathcal{A}$. If $\mathcal{A}$ 
-outputs a polynomial $f\in\mathbb{Z}_q[X]_{t+\ell-1}$ such that $F_0=\prod_{j=-(\ell-1)}^{0}g_j^{f(j)}$ and 
-$F_i=g_i^{f(i)}$ for $1\leq i\leq n$, then $\mathcal{B}$ can send $f(1)$ to the DL challenger.\par
-
-Now consider the CRS dependent language of $R_{mod-PDL}$ as follows:
-\begin{align*}
-  L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL} = \{(g,x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n) : &\exists f\in\mathbb{Z}_q[X]_{t+\ell-1},\\ 
-  [(g_{-(\ell-1)},\dots,g_n,g,x_{-(\ell-1)},&\dots,x_n,F_0,\dots,F_n),f(X)]\in R_{mod-PDL}\}.
-\end{align*}
-
-We will now present a new NIZK AoK $\pi_{mod-PDL}^{AoK}$ for the aforementioned relation 
-$R_{mod-PDL}$ in the figure \ref{fig:mod-polynomial-dl-init}.
-
-\input{figures/mod-polynomial-dl-init.tex}
-
-\begin{theorem}[A NIZK Argurement of Knowledge for $R_{mod-PDL}$]\label{th:modified_PDL security}
-  Consider\par $(g,x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n)\in L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL}$, where 
-  $L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL}$ is the CRS dependent language defined by the relation 
-  $R_{mod-PDL}$,
-  with its corresponding witness being $f\in\mathbb{Z}_q[X]_{\leq t+\ell-1}$.
-  Assuming \textit{modified}-PDL is computationally hard, for 
-  $t+\ell\leq n$, the protocol $\pi_{mod-PDL}^{AoK}$ (described in figure \ref{fig:mod-polynomial-dl-init}) is a 
-  NIZK AoK for $R_{mod-PDL}$ in the $RO$ model.
-\end{theorem}
-\begin{proof}
-  The corresponding proof is similar to the proof of theorem \ref{th:PDL security} given in \cite{cryptoeprint:2023/1669}. 
-  Formally, we will prove the security of the interactive setting (i.e., without $RO$ being used) and then 
-  using Fiat-Shamir transform it can be extended for the non-interactive setting in the $RO$ model. 
-
-  \begin{itemize}
-    \item \textit{\textbf{Correctness}}: If both prover and verifier are honest, then for $1\leq i\leq n$ 
-      we have 
-      \begin{align}\label{eq:i_verify}
-        g_i^{z(i)}&=g_i^{r(i)+df(i)}\nonumber\\
-        &=g_i^{r(i)}(g^{f(i)})^d\nonumber\\
-        &=\Gamma_i F_i^d,
-      \end{align}
-      and 
-      \begin{align}\label{eq:0_verify}
-        \prod_{j=-(\ell-1)}^{0}g_j^{z(j)}&=\prod_{j=-(\ell-1)}^{0}g_j^{r(j)+df(j)}\nonumber\\
-        &=(\prod_{j=-(\ell-1)}^{0}g_j^{r(j)})(\prod_{j=-(\ell-1)}^{0}g_j^{f(j)})^d\nonumber\\
-        &=\Gamma_0 F_0^d.
-      \end{align}
-      The aforementioned equations imply that verification returns \textit{true} and honest verifier accepts the 
-      honest prover.
-    \item \textit{\textbf{Special Soundness}}: Let $(\Gamma_0,\dots,\Gamma_n,d,z(X))$, $(\Gamma_0,\dots,\Gamma_n,d',z'(X))$ 
-      be two acceptable transcripts where response polynomials will differ as a consequence of different challenge 
-      values. For $1\leq i\leq n$ we have the following from equation \ref{eq:i_verify}:
-      \begin{align*}
-        g_i^{z(x_i)}=\Gamma_i F_i^d,g_i^{z'(x_i)}=\Gamma_i F_i^{d'};
-      \end{align*}
-      which implies
-      \begin{align}\label{eq:i_Equality}
-        g_i^{z(x_i)-z'(x_i)}=F_i^{d-d'} \iff g_i^{\frac{z(x_i)-z'(x_i)}{d-d'}}=F_i,
-      \end{align}
-      [\textit{if and only if because $d-d'$ is always invertible in modulo prime $q$ whenever $d\neq d'\pmod{q}$}]. Similarly, 
-      we have the following from equation \ref{eq:0_verify}:
-      \begin{align*}
-        \prod_{j=-(\ell-1)}^{0}g_j^{z(x_j)}=\Gamma_0 F_0^d,\prod_{j=-(\ell-1)}^{0}g_j^{z'(x_j)}=\Gamma_0 F_0^{d'};
-      \end{align*}
-      implying
-      \begin{align}\label{eq:0_Equality}
-        \prod_{j=-(\ell-1)}^{0}g_j^{z(x_j)-z'(x_j)}=F_0^{d-d'} \iff \prod_{j=-(\ell-1)}^{0}g_j^{\frac{z(x_j)-z'(x_j)}{d-d'}}=F_0.
-      \end{align}
-      As we have $n\geq t+\ell$, information from equation \ref{eq:i_Equality} is enough for 
-      an extractor to extract a unique witness polynomial $f$ for the given statement in $R_{mod-PDL}$ 
-      as it implies that $f_i=\frac{z(x_i)-z'(x_i)}{d-d'}$ for 
-      $1\leq i\leq n$. More explicitly, as $z(X)$ is a $t+\ell-1$ degree 
-      polynomial with high probability in $\mathbb{Z}_q[X]$, an extractor $\mathcal{E}$ can construct the unique $t+\ell-1$-degree 
-      polynomial $f\in\mathbb{Z}_q[X]$, being the desired witness (resp. solution) for a given statement in $R_{mod-PDL}$ relation (resp. \textit{modified}-PDL problem), 
-      from any $t+\ell$ evaluation points in $\{f_i\}_{i=1}^n$ whenever $n\geq t+\ell$.
-    \item \textit{\textbf{Honest Verifier Zero Knowledge (HVZK)}}: Given the statement\par $(g,x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n)\in L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL}$  
-      and a challenge value $d$, a simulator $\mathcal{S}$ can choose a polynomial $z'\in\mathbb{Z}_q[X]_{t+\ell-1}$ uniformly 
-      at random and sets $\Gamma_0'=\frac{\prod_{i=-(\ell-1)}^{0}g_i^{z'(x_i)}}{F_0^d}$ and 
-      $\Gamma_i'=\frac{g_i^{z'(x_i)}}{F_i^d}$ for $1\leq i\leq n$. 
-      Now, $\mathcal{S}$ returns $(\Gamma_0',\dots,\Gamma_n',z'(X))$ as the simulated proof. As $z(X)$ is a random 
-      degree $t+\ell-1$-polynomial in $\mathbb{Z}_q[X]$ and $z'(X)$ is chosen uniformly at random, 
-      the simulated proof of $\mathcal{S}$ is indistinguishable from the real one.
-  \end{itemize}
-  As the interactive scheme is public coin, satisfies \textit{completeness}, (computational) \textit{Special Soundness} 
-  and (computational) \textit{HVZK}, then in the random oracle ($RO$) model, using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}, 
-  it can be turned into a NIZK Argument of Knowledge for $R_{mod-PDL}$ (defined in equation \ref{eq:relation_mod_PDL}).
-\end{proof}
-
-The importance of this section is that we will use a modified version of the aforementioned 
-NIZK AoK protocol to construct one of the two Packed Pre-Constructed Polynomial Verifiable Secret Sharing (PPPVSS) schemes 
-we introduce in the next section. 
+\input{figures/shamir_PPPVSS.tex}
 
 % \input{figures/mod-polynomial-dl.tex}
 
@@ -429,19 +307,18 @@ we introduce in the next section.
 % \end{proof}
 % \input{figures/mod-v1-polynomial-dl.tex}
 
-\section{Practical PPPVSS schemes}
-\label{sec:practical-pppvss}
-We finally present our two practical PPPVSS schemes presented in figures \ref{fig:initial-packed-shamir-PPPVSS-ro} and 
-\ref{fig:packed-shamir-PPPVSS-ro}. $\Lambda_{RO}'$ is a direct extension of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576} 
-(which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}) whereas $\Lambda_{RO}^{packed}$ is 
-based on the NIZK AoK $\pi_{mod-RO}^{AoK}$ outlined in previous section \ref{sec:aok_polynomial_dl}. We give their 
-security proofs subsequently in this section. 
+\section{First Practical 3PVSS scheme}
+\label{sec:practical-3PVSS}
+We present our first practical 3PVSS scheme in figures \ref{fig:initial-packed-shamir-PPPVSS-ro}. $\Lambda_{RO}'$ is a 
+direct extension of $\Lambda_{RO}$ \cite{cryptoeprint:2025/576} 
+(which originally is based on $\Pi_S$ \cite{cryptoeprint:2023/1669}) where we publish 
+individual commitments to the secrets. Similar to the binary e-voting protocol in 
+\cite{cryptoeprint:2025/576}, we believe that this scheme is useful in some 
+e-voting protocols where there are more than two candidates to be voted for.
 
-\input{figures/NOT_main_shamir_PPPVSS_ro.tex}
+% \input{figures/main_shamir_PPPVSS_ro.tex}
 
-\input{figures/main_shamir_PPPVSS_ro.tex}
-
-% \input{figures/2main_shamir_PPPVSS_ro.tex}
+% \input{figures/2main_shamir_3PVSS_ro.tex}
 
 \begin{theorem}\label{th:init-lambda_ro}
   Assuming Polynomial Discrete Logarithm (PDL) and Decisional Diffie-Hellman (DDH) are 
@@ -465,14 +342,14 @@ security proofs subsequently in this section.
     $c_i=PK_i^{r(i)}$ for $1\leq i\leq n$.\par 
 
     Now with $(y_{-(\ell-1)}\dots,y_n,(d,z(X)))$, a verifier checks that the following part of the verification phase evaluates to $d$ 
-    when additionally given with $\ell$ commitment keys for the secrets and $n$ public keys for the shares:
+    when additionally given with $\ell$ public keys of target entities for the secrets and $n$ public keys for the shares:
     \begin{align*}
-      &\mathcal{H}(y_{-(\ell-1)}\dots,y_n,\frac{h_{-(\ell-1)}^{z(-(\ell-1))}}{y_{-(\ell-1)}^d},\dots,\frac{h_0^{z(0)}}{y_0^d},\frac{PK_1^{z(1)}}{y_1^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})\\
-      =&\mathcal{H}(y_{-(\ell-1)},\dots,y_n,\frac{h_{-(\ell-1)}^{r(-(\ell-1))+df(-(\ell-1))}}{h_{-(\ell-1)}^{df(-(\ell-1))}},\dots,\frac{h_0^{r(0)+df(0)}}{h_0^{df(0)}},\frac{PK_1^{r(1)+df(1)}}{PK_1^{df(1)}},\dots,\frac{PK_n^{r(n)+df(n)}}{h_n^{df(n)}})\\
-      =&\mathcal{H}(y_{-(\ell-1)},\dots,y_n,h_{-(\ell-1)}^{r(-(\ell-1))},\dots,h_0^{r(0)},PK_1^{r(1)},\dots,PK_n^{r(n)}).
+      &\mathcal{H}(y_{-(\ell-1)}\dots,y_n,\frac{PK_{-(\ell-1)}^{z(-(\ell-1))}}{y_{-(\ell-1)}^d},\dots,\frac{PK_n^{z(n)}}{y_n^d})\\
+      =&\mathcal{H}(y_{-(\ell-1)},\dots,y_n,\frac{PK_{-(\ell-1)}^{r(-(\ell-1))+df(-(\ell-1))}}{PK_{-(\ell-1)}^{df(-(\ell-1))}},\dots,\frac{PK_n^{r(n)+df(n)}}{PK_n^{df(n)}})\\
+      =&\mathcal{H}(y_{-(\ell-1)},\dots,y_n,PK_{-(\ell-1)}^{r(-(\ell-1))},\dots,PK_n^{r(n)}).
     \end{align*}
-    Verifier computes $d$ even when up to $\ell$ public keys of some target entities are used instead of the commitment 
-    keys for the secrets.\par 
+    Verifier computes $d$ even when up to $\ell$ commitment keys for secrets are used instead of the public keys 
+    of the target entities for the secrets.\par 
     
     Moreover, the reconstruction phase always yields $\{g^{f_j}\}_{j=-(\ell-1)}^0$ in both the approaches. Explicitly, it is 
     clear in the optimistic phase that yields $\{g^{f_j}\}_{j=-(\ell-1)}^0$ after one checks $\{y_j=(h_i\text{ or }PK_j)^{f_j}\}$ for $-(\ell-1)\leq j\leq n$,  
@@ -513,7 +390,7 @@ security proofs subsequently in this section.
 
     Similarly, the optimistic approach also yields the actual secrets $\{g^{f_j}\}_{j=-(\ell-1)}^0$ with 
     high probability as a consequence of special soundness of the NIZK argument for PDL problem 
-    deployed in our PPPVSS.
+    deployed in our 3PVSS.
 
     \item \textbf{IND1-Secrecy}: We will prove that our scheme will not leak any information about the secrets to any 
       static computationally bounded adversary $\mathcal{A}$ who corrupts at most $t$ parties and 
@@ -522,13 +399,13 @@ security proofs subsequently in this section.
 
       In a nutshell, let $s_0=(g^{f_{-(\ell-1)}},\dots,g^{f_0})$ and $s_1=(g^{f_{-(\ell-1)}'},\dots,g^{f_0'})$ 
       be the tuples of secrets in $\mathbb{Z}_q$ chosen at random by the IND1-Secrecy challenger. The 
-      challenger runs the setup phase of our PPPVSS scheme $\Lambda_{RO}^{'}$ to obtain the 
+      challenger runs the setup phase of our 3PVSS scheme $\Lambda_{RO}^{'}$ to obtain the 
       public keys $\{PK_j\}_{j=-(\ell-1)}^0$ for encrypting the secrets and the public keys 
       $\{PK_i\}_{i=1}^n$ to encrypt the shares meant for shareholders $P_i$ for 
       $1\leq i\leq n$. The challenger runs \textit{share}$(n,t+\ell-1,s_0,\{PK_i\}_{i=-(\ell-1)}^n)$ 
-      and obtains $(y_{-(\ell-1)},\dots,y_n,\pi_{PPPVSS}^{share})$ as the encrypted secrets and shares and 
+      and obtains $(y_{-(\ell-1)},\dots,y_n,\pi_{3PVSS}^{share})$ as the encrypted secrets and shares and 
       the proof of correctness of the sharing phase. The challenger chooses $b\in\{0,1\}$ uniformly at 
-      random and sends $s_b,(y_{-(\ell-1)},\dots,y_n,\pi_{PPPVSS}^{share})$ along with the public information generated in 
+      random and sends $s_b,(y_{-(\ell-1)},\dots,y_n,\pi_{3PVSS}^{share})$ along with the public information generated in 
       the sharing phase to $\mathcal{A}$. \textit{Without loss of generality, let $f_i=f_i'$ for 
       $-(\ell-1)\leq i\leq -1$, i.e., $\mathcal{A}$ is trying to distinguish between two tuples of 
       secrets where they may differ only in last position}.\par
@@ -573,6 +450,159 @@ security proofs subsequently in this section.
 
   \end{itemize}
 \end{proof}
+
+Note that our aforementioned 3PVSS scheme $\Lambda_{RO}^{'}$ is exactly $\Lambda_{RO}$ if 
+the number of secrets is only one. Though our scheme can be applicable in some 
+e-voting protocols, it may not be suitable for other applications, such as randomness 
+beacons whose goal is to distributively and securely generate fresh unbiased randomness. 
+In the next section, we present an alternative 3PVSS scheme which is more 
+suitable for randomness beacons.
+
+
+\vspace{-1em}
+\input{figures/NOT_main_shamir_PPPVSS_ro.tex}
+\vspace{-1em}
+\section{More efficient 3PVSS scheme}
+\label{sec:efficient-3PVSS}
+
+One might have already noticed that the number of commitments increases linearly with 
+the increase in the number of secrets in our first 3PVSS scheme presented in the previous 
+section \ref{sec:practical-3PVSS}. As a consequence, the computation cost in the 
+verification phase also increases. In this section, we present a more efficient 
+3PVSS scheme which is efficient both in terms of communication and overall computation 
+cost. We denote this scheme as $\Lambda_{RO}^{packed}$ which is presented in figure 
+\ref{fig:packed-shamir-PPPVSS-ro}. The main idea is to have a single representation of 
+the secrets and still remain secure against static computationally bounded adversaries. 
+In order to show that our new optimized construction is secure we will require a new 
+NIZK AoK protocol which is discussed in the upcoming subsection \ref{subsec:aok_polynomial_dl}.
+
+\subsection{A NIZK AoK protocol}
+\label{subsec:aok_polynomial_dl}
+Consider the set $\{g_i\}_{i=-(\ell-1)}^n$ containing $n+\ell$ distinct generators (obtained as CRS) of 
+the prime order $q$ cyclic group $\mathcal{G}$ different from $g$ with $g$ also being a generator of 
+$\mathbb{G}$, where $n+\ell<\varphi(q)$ and $\varphi(q)$ is
+the total number of distinct generators of the cyclic group $\mathbb{G}$. Consider the following relation for 
+some polynomial $f\in\mathbb{Z}_q[X]_{t+\ell-1}$ with $t+\ell\leq n$:
+\begin{align}\label{eq:relation_mod_PDL}
+  R_{mod-PDL} = \{(g_{-(\ell-1)},\dots,g_n,g,&x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n),f(X) :\nonumber\\
+   &F_0=\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)}, F_i=g_i^{f(x_i)}, 1\leq i\leq n\},
+\end{align}
+where all $x_i$'s are distinct in $\mathbb{Z}_q$. The $R_{mod-PDL}$ is based on \textit{modified}-PDL 
+(inspired from the PDL in \cite{cryptoeprint:2023/1669}) which is defined in the following.
+
+\begin{definition}[\textit{modified}- Polynomial Discrete Logarithm problem]
+  Let\par 
+  $\{g_i : g_i\neq g\}_{i=-(\ell-1)}^n$ be a set of random distinct generators for the prime order $q$ cyclic 
+  group $\mathbb{G}$ generated by $g$. Given $F_0,\dots,F_n$ and distinct elements $x_{-(\ell-1)},\dots,x_n$ in 
+  $\mathbb{Z}_q$, find a polynomial $f\in\mathbb{Z}_q[X]$ with degree at most $t+\ell-1$, where $F_0=\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)}$ and
+  $F_i=g_i^{f(x_i)}$ for $1\leq i\leq n$ with $t+\ell\leq n$.\par
+
+  In other words, an algorithm $\mathcal{A}$ is said to have an advantage $\epsilon$ in solving \textit{modified}-PDL if 
+  \begin{align*}
+    Pr[\mathcal{A}(x_{-(\ell-1)},\dots,x_n,g,g_{-(\ell-1)},\dots,g_n,\prod_{i=-(\ell-1)}^{0}g_i^{f(x_i)},g_1^{f(x_1)},\dots,g_n^{f(x_n)})]\geq\epsilon,
+  \end{align*}
+  where $f\in\mathbb{Z}_q[X]$ is at most a $t+\ell-1$ degree polynomial with $t\leq n$ and the probability is over 
+  distinct generators $g,g_{-(\ell-1)},\dots,g_n$ of $\mathbb{G}$ chosen at random and distinct $x_{-(\ell-1)},\dots,x_n$ 
+  elements in $\mathbb{Z}_q$.
+\end{definition}
+
+It is intuitive to observe that the \textit{modified}-PDL problem can be reduced to the 
+Discrete Logarithm (DL) problem. We will prove this via contradiction. More explicitly, 
+let there exist an adversary $\mathcal{A}$ 
+who can solve the \textit{modified}-PDL problem. We will now construct an adversary $\mathcal{B}$ 
+who can solve DL problem using $\mathcal{A}$ as a subroutine. Let $(g,h := g^f)$ be the challenge 
+for the DL problem, now $\mathcal{B}$ will set $F_1=h$, $x_i=i$ for $-(\ell-1)\leq i\leq n$ and sets 
+$F_0,F_2,\dots,F_n$ to be $n$ random elements in the group $\mathbb{G}$. $\mathcal{B}$ will 
+send $(g_{-(\ell-1)},\dots,g_n,g,-(\ell-1),\dots,n,F_0,\dots,F_n)$ to $\mathcal{A}$. If $\mathcal{A}$ 
+outputs a polynomial $f\in\mathbb{Z}_q[X]_{t+\ell-1}$ such that $F_0=\prod_{j=-(\ell-1)}^{0}g_j^{f(j)}$ and 
+$F_i=g_i^{f(i)}$ for $1\leq i\leq n$, then $\mathcal{B}$ can send $f(1)$ to the DL challenger.\par
+
+Now consider the CRS dependent language of $R_{mod-PDL}$ as follows:
+\begin{align*}
+  L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL} = \{(g,x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n) : &\exists f\in\mathbb{Z}_q[X]_{t+\ell-1},\\ 
+  [(g_{-(\ell-1)},\dots,g_n,g,x_{-(\ell-1)},&\dots,x_n,F_0,\dots,F_n),f(X)]\in R_{mod-PDL}\}.
+\end{align*}
+
+We will now present a new NIZK AoK $\pi_{mod-PDL}^{AoK}$ for the aforementioned relation 
+$R_{mod-PDL}$ in the figure \ref{fig:mod-polynomial-dl-init}.
+
+\input{figures/mod-polynomial-dl-init.tex}
+
+The following theorem states that in fact $\pi_{mod-PDL}^{AoK}$ is a NIZK AoK for the relation $R_{mod-PDL}$ 
+under certain conditions.
+
+\begin{theorem}[A NIZK Argurement of Knowledge for $R_{mod-PDL}$]\label{th:modified_PDL security}
+  Consider\par $(g,x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n)\in L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL}$, where 
+  $L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL}$ is the CRS dependent language defined by the relation 
+  $R_{mod-PDL}$,
+  with its corresponding witness being $f\in\mathbb{Z}_q[X]_{\leq t+\ell-1}$.
+  Assuming \textit{modified}-PDL is computationally hard, for 
+  $t+\ell\leq n$, the protocol $\pi_{mod-PDL}^{AoK}$ (described in figure \ref{fig:mod-polynomial-dl-init}) is a 
+  NIZK AoK for $R_{mod-PDL}$ in the $RO$ model.
+\end{theorem}
+\begin{proof}
+  The corresponding proof is similar to the proof of theorem \ref{th:PDL security} given in \cite{cryptoeprint:2023/1669}. 
+  Formally, we will prove the security of the interactive setting (i.e., without $RO$ being used) and then 
+  using Fiat-Shamir transform it can be extended for the non-interactive setting in the $RO$ model. 
+
+  \begin{itemize}
+    \item \textit{\textbf{Correctness}}: If both prover and verifier are honest, then for $1\leq i\leq n$ 
+      we have 
+      \begin{align}\label{eq:i_verify}
+        g_i^{z(i)}&=g_i^{r(i)+df(i)}\nonumber\\
+        &=g_i^{r(i)}(g^{f(i)})^d\nonumber\\
+        &=\Gamma_i F_i^d,
+      \end{align}
+      and 
+      \begin{align}\label{eq:0_verify}
+        \prod_{j=-(\ell-1)}^{0}g_j^{z(j)}&=\prod_{j=-(\ell-1)}^{0}g_j^{r(j)+df(j)}\nonumber\\
+        &=(\prod_{j=-(\ell-1)}^{0}g_j^{r(j)})(\prod_{j=-(\ell-1)}^{0}g_j^{f(j)})^d\nonumber\\
+        &=\Gamma_0 F_0^d.
+      \end{align}
+      The aforementioned equations imply that verification returns \textit{true} and honest verifier accepts the 
+      honest prover.
+    \item \textit{\textbf{Special Soundness}}: Let $(\Gamma_0,\dots,\Gamma_n,d,z(X))$, $(\Gamma_0,\dots,\Gamma_n,d',z'(X))$ 
+      be two acceptable transcripts where response polynomials will differ as a consequence of different challenge 
+      values. For $1\leq i\leq n$ we have the following from equation \ref{eq:i_verify}:
+      \begin{align*}
+        g_i^{z(x_i)}=\Gamma_i F_i^d,g_i^{z'(x_i)}=\Gamma_i F_i^{d'};
+      \end{align*}
+      which implies
+      \begin{align}\label{eq:i_Equality}
+        g_i^{z(x_i)-z'(x_i)}=F_i^{d-d'} \iff g_i^{\frac{z(x_i)-z'(x_i)}{d-d'}}=F_i,
+      \end{align}
+      [\textit{if and only if because $d-d'$ is always invertible in modulo prime $q$ whenever $d\neq d'\pmod{q}$}]. Similarly, 
+      we have the following from equation \ref{eq:0_verify}:
+      \begin{align*}
+        \prod_{j=-(\ell-1)}^{0}g_j^{z(x_j)}=\Gamma_0 F_0^d,\prod_{j=-(\ell-1)}^{0}g_j^{z'(x_j)}=\Gamma_0 F_0^{d'};
+      \end{align*}
+      implying
+      \begin{align}\label{eq:0_Equality}
+        \prod_{j=-(\ell-1)}^{0}g_j^{z(x_j)-z'(x_j)}=F_0^{d-d'} \iff \prod_{j=-(\ell-1)}^{0}g_j^{\frac{z(x_j)-z'(x_j)}{d-d'}}=F_0.
+      \end{align}
+      As we have $n\geq t+\ell$, information from equation \ref{eq:i_Equality} is enough for 
+      an extractor to extract a unique witness polynomial $f$ for the given statement in $R_{mod-PDL}$ 
+      as it implies that $f_i=\frac{z(x_i)-z'(x_i)}{d-d'}$ for 
+      $1\leq i\leq n$. More explicitly, as $z(X)$ is a $t+\ell-1$ degree 
+      polynomial with high probability in $\mathbb{Z}_q[X]$, an extractor $\mathcal{E}$ can construct the unique $t+\ell-1$-degree 
+      polynomial $f\in\mathbb{Z}_q[X]$, being the desired witness (resp. solution) for a given statement in $R_{mod-PDL}$ relation (resp. \textit{modified}-PDL problem), 
+      from any $t+\ell$ evaluation points in $\{f_i\}_{i=1}^n$ whenever $n\geq t+\ell$.
+    \item \textit{\textbf{Honest Verifier Zero Knowledge (HVZK)}}: Given the statement\par $(g,x_{-(\ell-1)},\dots,x_n,F_0,\dots,F_n)\in L_{g_{-(\ell-1)},\dots,g_n}^{mod-PDL}$  
+      and a challenge value $d$, a simulator $\mathcal{S}$ can choose a polynomial $z'\in\mathbb{Z}_q[X]_{t+\ell-1}$ uniformly 
+      at random and sets $\Gamma_0'=\frac{\prod_{i=-(\ell-1)}^{0}g_i^{z'(x_i)}}{F_0^d}$ and 
+      $\Gamma_i'=\frac{g_i^{z'(x_i)}}{F_i^d}$ for $1\leq i\leq n$. 
+      Now, $\mathcal{S}$ returns $(\Gamma_0',\dots,\Gamma_n',z'(X))$ as the simulated proof. As $z(X)$ is a random 
+      degree $t+\ell-1$-polynomial in $\mathbb{Z}_q[X]$ and $z'(X)$ is chosen uniformly at random, 
+      the simulated proof of $\mathcal{S}$ is indistinguishable from the real one.
+  \end{itemize}
+  As the interactive scheme is public coin, satisfies \textit{completeness}, (computational) \textit{Special Soundness} 
+  and (computational) \textit{HVZK}, then in the random oracle ($RO$) model, using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}, 
+  it can be turned into a NIZK Argument of Knowledge for $R_{mod-PDL}$ (defined in equation \ref{eq:relation_mod_PDL}).
+\end{proof}
+
+The importance of our NIZK AoK protocol $\pi_{mod-PDL}^{AoK}$ is that it can be used to 
+prove the security of our new efficient 3PVSS scheme $\Lambda_{RO}^{packed}$. As a consequence, we 
+give the security proof of $\Lambda_{RO}^{packed}$ in the following.
 
 \begin{theorem}\label{th:thesis-final-lambda_ro}
   Assuming Polynomial Discrete Logarithm (PDL) and Decisional Diffie-Hellman (DDH) are 
@@ -637,13 +667,13 @@ security proofs subsequently in this section.
 
       In a nutshell, let $s_0=(g^{f_{-(\ell-1)}},\dots,g^{f_0})$ and $s_1=(g^{f_{-(\ell-1)}'},\dots,g^{f_0'})$ 
       be the tuples of secrets in $\mathbb{Z}_q$ chosen at random by the IND1-Secrecy challenger. The 
-      challenger runs the setup phase of our PPPVSS scheme $\Lambda_{RO}^{packed}$ to obtain the 
+      challenger runs the setup phase of our 3PVSS scheme $\Lambda_{RO}^{packed}$ to obtain the 
       public keys $\{PK_j\}_{j=-(\ell-1)}^0$ for encrypting the secrets and the public keys 
       $\{PK_i\}_{i=1}^n$ to encrypt the shares meant for shareholders $P_i$ for 
       $1\leq i\leq n$. The challenger runs \textit{share}$(n,t+\ell-1,s_0,\{PK_i\}_{i=-(\ell-1)}^n)$ 
-      and obtains $(y_0,\dots,y_n,\pi_{PPPVSS}^{share})$ as the encrypted secrets and shares and 
+      and obtains $(y_0,\dots,y_n,\pi_{3PVSS}^{share})$ as the encrypted secrets and shares and 
       the proof of correctness of the sharing phase. The challenger chooses $b\in\{0,1\}$ uniformly at 
-      random and sends $s_b,(y_0,\dots,y_n,\pi_{PPPVSS}^{share})$ along with the public information generated in 
+      random and sends $s_b,(y_0,\dots,y_n,\pi_{3PVSS}^{share})$ along with the public information generated in 
       the sharing phase to $\mathcal{A}$. \textit{Without loss of generality, let $f_i=f_i'$ for 
       $-(\ell-1)\leq i\leq -1$, i.e., $\mathcal{A}$ is trying to distinguish between two tuples of 
       secrets where they may differ only in last position}.\par
@@ -692,6 +722,62 @@ security proofs subsequently in this section.
   \end{itemize}
 \end{proof}
 
+\begin{remark}
+  A crucial observation is that the number of commitments to be downloaded by any verifier 
+  is same regardless of the number of secrets our 3PVSS scheme $\Lambda_{RO}^{packed}$ is secret sharing. 
+This is because only one single commitment represents all the secrets, moreover, it 
+improves the verification cost as well in contrast to our first 3PVSS scheme $\Lambda_{RO}'$ \ref{fig:initial-packed-shamir-PPPVSS-ro}. 
+We give explicit cost analysis of both of our schemes in the next section \ref{sec:cost-analysis-3PVSS}.
+\end{remark}
+
+\input{figures/main_shamir_PPPVSS_ro.tex}
+
+\section{Cost analysis of 3PVSS schemes}
+\label{sec:cost-analysis-3PVSS}
+
+In this section, we analyze the computational and communication cost of both our 
+3PVSS schemes $\Lambda_{RO}'$ and $\Lambda_{RO}^{packed}$. One can explicitly 
+find the table \ref{tab:PPPVSS-comparison} which summarizes these costs.\par
+
+\input{tables/PPPVSS-comparision.tex}
+
+\subsection{On the communication cost}
+Apart from downloading the public values from the initialization phase, the 
+communication cost of $\Lambda_{RO}^{packed}$ is independent of the number of secrets in 
+contrast to $\Lambda_{RO}'$, where the communication cost grows linearly with the number of secrets. 
+This is the main advantage of using $\Lambda_{RO}^{packed}$ over $\Lambda_{RO}'$. We 
+plotted the speculated communication costs of both the schemes in figure \ref{fig:3pvss_communication_cost}.
+
+\input{figures/3pvss_communication_cost.tex}
+
+In the graph, we fixed the number of parties, $n=10000$, for which we varied $\ell$ with 
+$1\leq t\leq \frac{n-\ell}{2}$.
+
+\subsection{On the computational cost}
+
+As $\Lambda_{RO}'$ is a direct extension of $\Lambda_{RO}$ 
+\cite{cryptoeprint:2025/576}, the computational 
+cost grows linearly with the number of secrets. And as $\Lambda_{RO}^{packed}$ is a slightly 
+different approach, we save number of exponentiations in verification by a constant factor of 
+$\ell$ but it costs additional group multiplications in share, verification and optiminstic 
+reconstruction phases. As group exponentiations with random exponents are usually more 
+expensive than group multiplications (to put that in the perspective, computing $g^x$ for 
+a random $x\in\mathbb{Z}_q$ can take $\mathcal{O}(\log{q})$ group multiplications). 
+Hence, the realistic increase in cost of $\Lambda_{RO}^{packed}$ due to additional 
+group multiplications can be negligible. 
+
+
+\input{figures/3pvss_verify_cost.tex}
+
+Similar to the graph in previous subsection, we plotted the speculated computational costs of both the 
+schemes in figure \ref{fig:3pvss_verify_cost} where we fixed the number of parties, $n=10000$, 
+for which we varied $\ell$ with $1\leq t\leq \frac{n-\ell}{2}$. For this plot, we 
+considered the group to be an elliptic curve over a 256-bit prime field which is 
+cyclic of order a 256-bit prime $q$, i.e., each element $(x,y)$ on the elliptic curve 
+is typically of 512-bit size.\par
+
+
+
 % \section{A compact PVSS scheme}
 % The relation $\pi_{PDL}^{mod-v1}$ has more potential that a new PVSS can be constructed on top of it. We 
 % present it in the figure \ref{fig:compact-PVSS-ro}. 
@@ -704,13 +790,13 @@ security proofs subsequently in this section.
 
 \section{Conclusion}
 In this chapter, we generalized PPVSS to Packed PPVSS and presented two practical schemes based on 
-Packed Shamir secret sharing. The reason to introduce the PPPVSS $\Lambda_{RO}'$ is because of its 
+Packed Shamir secret sharing. The reason to introduce the 3PVSS $\Lambda_{RO}'$ is because of its 
 potential applications in some e-voting protocols. In this thesis, we wanted to mainly focused on randomness beacon 
-application based on PVSS, due to this reason we introduced our second PPPVSS $\Lambda_{RO}^{packed}$ which is based on the
+protocols based on PVSS, due to this reason we introduced our second 3PVSS $\Lambda_{RO}^{packed}$ which is based on the
 NIZK AoK $\pi_{mod-PDL}^{AoK}$ for the modified-PDL problem.\par
 
 In the next chapter, we will revisit the randomness beacon ALBATROSS \cite{cryptoeprint:2020/644} based on PVSS, 
-and replace the Packed Shamir secret sharing based PVSS with our PPPVSS $\Lambda_{RO}^{packed}$. 
+and replace the Packed Shamir secret sharing based PVSS with our 3PVSS $\Lambda_{RO}^{packed}$. 
 
 %%% Local Variables: 
 %%% mode: latex

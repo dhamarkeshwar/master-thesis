@@ -1,4 +1,4 @@
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
     \begin{tcolorbox}[title=\textbf{$\Lambda_{RO}^{packed}$}, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
@@ -59,9 +59,9 @@
                       $g^{f_i}$ is the correct decryption of $y_i$.
                     \item If $\mathcal{Q}$ consists at least $t+\ell$ honest parties, they can use the 
                     lagrange interpolation to compute the secrets $\{g^{f_j}\}_{j=-(\ell-1)}^0$ as follows:
-                    \begin{align*}
-                        g^{f_j} &= \prod_{i\in\mathcal{Q}}(g^{f_i})^{\prod_{k\in\mathcal{Q},k\neq i}\frac{-k-j}{i-j}}= g^{\sum_{i\in\mathcal{Q}}f_i\prod_{k\in\mathcal{Q},k\neq i}\frac{-k-j}{i-j}}.\\
-                    \end{align*}
+                    % \begin{align*}
+                      $$ \textstyle  g^{f_j} = \prod_{i\in\mathcal{Q}}(g^{f_i})^{\prod_{k\in\mathcal{Q},k\neq i}\frac{-k-j}{i-j}}= g^{\sum_{i\in\mathcal{Q}}f_i\prod_{k\in\mathcal{Q},k\neq i}\frac{-k-j}{i-j}}. $$
+                    % \end{align*}
                 \end{itemize}
             \end{itemize}
     \end{tcolorbox}

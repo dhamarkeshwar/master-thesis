@@ -1,12 +1,20 @@
 \chapter{Preliminaries}
 \label{chap:preliminaries}
 
+As one of the goals of this chapter is to give enough background to understand the mathematical 
+security guarantees from packed Shamir secret sharing, some basic concepts of coding theory 
+and Reed-Solomon codes will be discussed in subsequent sections. Basics of sigma protocols 
+will be recalled as many Verifiable secret sharing (VSS) schemes security guarantees 
+are fundamentally based on them. Lastly, Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) 
+is recalled in this chapter as the final goal of this thesis is to make use of their 
+functionalities to build and improve existing applications.
+
 \section{Notation}
 Let $(\mathbb{G},\times)$ be a cyclic group of prime order $q$ with hard Discrete Log (DL) and its generator 
 being $g$. 
 % isomorphic to a subgroup of the multiplicative modular group $\mathbb{Z}_p^*$, where $p$ is prime. 
 Also, we write $\mathbb{Z}_{q}[X]_d$ to denote the set of all $d$ degree 
-polynomials univariate in $X$ with coefficients in the finite field $\mathbb{Z}_q$. For remainder of the 
+polynomials univariate in $X$ with coefficients in the finite field $\mathbb{Z}_q$. For the remainder of this 
 chapter we let $n>t$ for some positive integers $n$ and $t$.
 
 \section{Coding Theory}
@@ -205,6 +213,10 @@ In this report, we will use $[n, t+1, n-t]-$Reed Solomon code of the following f
   RS &= \{(f(1),\dots,f(n)) : f\in \mathbb{Z}_q[X]_{\leq t}\}.
 \end{align}
 
+The importance of the Reed-Solomon codes is its direct correspondence with Shamir's 
+secret sharing scheme. This allows to trivially analyze their security guarantees. Therefore, the 
+packed Shamir secret sharing scheme will now be recalled in the next section \ref{sec:packed-shamir}. 
+
 \section{Packed Shamir Secret Sharing}
 \label{sec:packed-shamir}
 $(n,t,\ell)$-Packed Shamir secret sharing (\cite{10.1145/129712.129780},\cite{crypto-1984-905})
@@ -233,7 +245,8 @@ from Feldman \cite{DBLP:conf/focs/Feldman87}, Pedersen \cite{crypto-1991-1671} a
 ABCP \cite{cryptoeprint:2023/992}. VSS schemes based on Shamir secret sharing allow shareholders to 
 verify the correctness of the shares obtained during both the sharing and reconstruction phases. This enables 
 these VSS schemes to defend against malicious adversaries who can actively corrupt $t$ parties as long as 
-$t\leq\frac{n-1}{2}$ (In contrast to $t<\frac{n}{3}$ in Shamir secret sharing). Publicly Verifiable Secret Sharing (PVSS) is an extension of VSS where anyone can 
+$t\leq\frac{n-1}{2}$ (In contrast to $t<\frac{n}{3}$ in Shamir secret sharing), and as a 
+result it can detect the exact entity who is deviating from the protocol. Publicly Verifiable Secret Sharing (PVSS) is an extension of VSS where anyone can 
 verify the validity of the secret shares during the sharing phase. More recently, Pre-Constructed Publicly 
 Verifiable Secret Sharing (PPVSS)\cite{cryptoeprint:2025/576} was proposed which is an extension of PVSS. 
 The main tools used in VSS, PVSS and PPVSS schemes are the \textbf{Zero Knowledge Proofs} which we overview in the 
@@ -242,12 +255,13 @@ next section \ref{sec:sigma-protocols}.
 \section{Zero Knowledge Proofs}
 \label{sec:sigma-protocols}
 The agenda of this subsection is to give a brief formal background about some important primitives 
-used in the PVSS ,$\Pi_S$ \cite{cryptoeprint:2023/1669}, and the PPVSS ,$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, schemes. 
-A \textit{Zero Knowledge Argument of Knowledge} (ZK AoK)\cite{cryptoeprint:2017/1066} is a protocol between a prover and a verifier
+used in VSS $\Pi_{F},\Pi_{P},\Pi_{LA}$, the PVSS $\Pi_S$ \cite{cryptoeprint:2023/1669}, and the PPVSS $\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, schemes. 
+A \textit{Zero Knowledge Argument of Knowledge} (ZK AoK) is a protocol between a prover and a verifier
 where the prover tries to convince the verifier that a statement is true without revealing any information 
 about why it is true. Unlike the Zero Knowledge Proof of Knowledge (ZK PoK) where the prover cannot cheat 
 the verifier even with unbounded computational power, a ZK AoK requires the prover to be computationally bounded 
-to not be able to cheat any verifier.\par
+to not be able to cheat any verifier. More about ZK AoK and ZK PoK can be found in \cite{cryptoeprint:2017/1066}.\par
+
 Let $Y,X$ and $W$ be three sets with $R$ being a ternary relation on $Y\times X\times W$. Consider the 
 three PPT interactive algorithms (\textit{Setup}, $P$, $V$), where \textit{Setup} returns a 
 common reference string (CRS) $\sigma$ when input $1^{\lambda}$. Given $\sigma$, the following 
@@ -255,7 +269,7 @@ is the CRS-dependent language of the relation $R$.
 \begin{align*}
   L_{\sigma}=\{x\in X :\exists w\in W, (\sigma, x, w)\in R\},
 \end{align*}
-where we call $w$ a witness for a statement $x$ if $(\sigma, x, w)\in R$. Also, let $\mathcal{R}$ be 
+where $w$ is called a witness for a statement $x$ if $(\sigma, x, w)\in R$. Also, let $\mathcal{R}$ be 
 a PPT algorithm that returns an element in the relation $R$ when input $1^{\lambda}$.\par
 
 Given a relation $R$ and its corresponding language, a \textbf{$\sum$-protocol} 
@@ -300,9 +314,10 @@ and \textit{Special Soundness} which are defined as follows.
 It is shown that a public-coin, complete, HVZK, special soundness $\sum-$protocol can be made into a
 Non Interactive Zero Knowledge (NIZK) Proof of Knowledge (PoK) or Argument of Knowledge (AoK) in the 
 Random Oracle ($RO$) model using Fiat-Shamir transform \cite{10.1007/3-540-47721-7_12}. 
-In the following subsections, we recall two important NIZK PoK schemes which are used in $\Pi_S$ and 
-$\Lambda_{RO}$ schemes. Also, we will introduce a NIZK AoK scheme which will be used in one of 
-our new protocols.
+In the following subsections, two important NIZK PoK schemes are recalled which were used in $\Pi_S$ and 
+$\Lambda_{RO}$ schemes and we are going to use them to build our protocols introduced in the next 
+chapter. 
+% Also, we will introduce a NIZK AoK scheme which will be used in one of our new protocols.
 
 \subsection{Chaum-Pedersen Protocol for DL Equality}
 \label{subsec:chaum-pedersen}
@@ -326,8 +341,8 @@ degree $t<n$:
 \begin{align*}
   R_{PDL} &= \{(g,x_1,\dots,x_n,F_1,\dots,F_n),f(X) : (F_i=g^{f(x_i)}, 1\leq i\leq n)\wedge(x_i\neq x_j, i\neq j)\}.
 \end{align*}
-The $R_{PDL}$ is based on the Polynomial Discrete Logarithm formally introduced in \cite{cryptoeprint:2023/1669}, 
-and we recall its definition in the following.
+The $R_{PDL}$ is based on the Polynomial Discrete Logarithm (PDL) formally introduced in \cite{cryptoeprint:2023/1669}, 
+and its definition is recalled in the following.
 
 \begin{definition}[Polynomial Discrete Logarithm]
   Let $g$ be a generator for the prime order $q$ cyclic group $\mathbb{G}$. Given $F_1,\dots,F_n$ and distinct elements $x_1,\dots,x_n$ in 
@@ -343,6 +358,11 @@ and we recall its definition in the following.
   elements in $\mathbb{Z}_q$.
 \end{definition}
 
+Based on the hardness of PDL, a NIZK PoK scheme $\pi_{PDL}$ was proposed in \cite{cryptoeprint:2023/1669} which is 
+summarized in figure \ref{fig:polynomial-dl}.
+
+\input{figures/polynomial-dl.tex}
+
 \begin{theorem}\cite{cryptoeprint:2023/1669}\label{th:PDL security}
   Let $[(g,x_1,\dots,x_n,F_1,\dots,F_n),f(X)]\in R_{PDL}$ where $f\in\mathbb{Z}_q[X]_{\leq t}$. 
   Assuming PDL is hard, for $0\leq t\leq n-1$, the protocol $\pi_{PDL}$ \ref{fig:polynomial-dl} (described in figure \ref{fig:polynomial-dl}) 
@@ -351,31 +371,28 @@ and we recall its definition in the following.
 
 In \cite{cryptoeprint:2023/1669}, Baghery formally introduced a NIZK PoK scheme for the Polynomial DL 
 relation, $R_{PDL}$, which is a generalization of Schnorr's ID protocol \cite{crypto-1989-1727}. Informally, 
-a prover $P$ can convince a verifier $V$ that they know a $t$ degree polynomial $f$ such that 
-it can be used with $g$ to obtain $F_i$ for $1\leq i\leq n$. This protocol is used to construct the PPVSS 
-$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}, which was essential in building an efficient e-voting protocol. 
-We summarize the protocol in Figure \ref{fig:polynomial-dl}.
-\input{figures/polynomial-dl.tex}
-
-In the next section we will give a brief overview of the Pre-Constructed Publicly Verifiable Secret Sharing 
-(PPVSS).
+a prover $P$ can convince a verifier $V$ that they know a $t-$degree polynomial $f$ such that 
+it can be used with $g$ to obtain $F_i$ for $1\leq i\leq n$. A fairly recent application based on 
+this protocol is used to construct an efficient e-voting protocol \cite{cryptoeprint:2025/576} where 
+the authors have introduced the Pre-Constructed Publicly Verifiable Secret Sharing scheme and used it as a 
+building block.
 
 \section{Pre-Constructed Publicly Verifiable Secret Sharing}
 \label{sec:ppvss}
 Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) was first introduced in 
 \cite{cryptoeprint:2025/576}, which was used as a building block to 
 construct an efficient e-voting protocol alternative to Schoenmakers' e-voting protocol. 
-Interestingly, the authors in \cite{cryptoeprint:2025/576} observed that the Schoenmakers' e-voting protocol, though 
+Interestingly, the authors of \cite{cryptoeprint:2025/576} observed that the Schoenmakers' e-voting protocol, though 
 not efficient in practice, published in 1999 is an unusual application as it is based on a 
 PVSS, which led them to discover that the underlying PVSS used is actually a PPVSS. 
 What sets PPVSS apart from standard PVSS schemes is that it can be used to build versatile 
 applications, such as e-voting, randomness beacons etc., and can 
 also improve efficiency of some existing protocols. The subtle difference between PPVSS and 
 PVSS is that the secret itself is committed by the prover along with all its corresponding 
-secret shares. The relevance of this section is that we will generalize the PPVSS to the case 
+secret shares. The relevance of this section is to generalize the PPVSS to the case 
 where there is more than one secret and use them to revisit a real time application 
-to improve its efficiency. Because of its importance in this thesis, we will recall the 
-definitions of a PPVSS and an example subsequently.\par
+to improve its efficiency in the subsequent chapters. Because of its importance in this thesis, the 
+definitions of a PPVSS and an example is recalled in the upcoming sections.\par
 
 \subsection{Definitions}
 \label{sec:ppvss-definitions}
@@ -494,23 +511,22 @@ A PPVSS is said to be secure:
     The advantage of $\mathcal{A}$ is defined to be $|Pr[b'=b]-\frac{1}{2}|$.
 \end{itemize}
 
-We now will recall 
-$\Lambda_{RO}$, the PPVSS scheme introduced in \cite{cryptoeprint:2025/576} which is actually based on 
-$\Pi_S$ \cite{cryptoeprint:2023/1669} in figure \ref{fig:ppvss}.\par 
+$\Lambda_{RO}$ is the PPVSS scheme introduced in \cite{cryptoeprint:2025/576}, recalled in 
+figure \ref{fig:ppvss}, which is actually based on $\Pi_S$ \cite{cryptoeprint:2023/1669}.\par 
 \input{figures/ppvss.tex}
 The security guarantees of $\Lambda_{RO}$ are explained in \cite{cryptoeprint:2025/576} which follows from 
-the security guarantees of $\Pi_S$, also the authors used $\Lambda_{RO}$ to build a new e-voting 
-protocol alternative to the replaced Schoenmakers' e-voting protocol \cite{5581ccd9530540479539d21d1d39ae96} 
+the security guarantees of $\Pi_S$, also the authors used $\Lambda_{RO}$ to build the new e-voting 
+protocol alternative to the Schoenmakers' e-voting protocol \cite{5581ccd9530540479539d21d1d39ae96} 
 and showed that they achieved improvement in the verification phase 
 (7 to 30 times faster in implementation for some parameters). 
 
 \section{Conclusion}
-In summary, we recalled some basic concepts of linear codes and Reed Solomon codes as an example. We then 
-recalled the Packed Shamir secret sharing scheme which is a generalization of the Shamir Secret Sharing scheme \cite{10.1145/359168.359176} 
-that was originally designed to defend against passive adversaries and showed its correspondence with 
-Reed Solomon codes. As one of the goals of this thesis is to explore threshold secret sharing schemes that commits to 
+In summary, some basic concepts of linear codes and Reed-Solomon codes are recalled. Next, Packed Shamir secret sharing scheme which is a generalization of the Shamir Secret Sharing scheme \cite{10.1145/359168.359176} 
+is recalled and its correspondence with Reed-Solomon codes is discussed to explain how 
+its mathematical security guarantees are achieved against passive adversaries. As one 
+of the goals of this thesis is to explore threshold secret sharing schemes that commits to 
 secret and also 
-can defend against malicious adversaries, we briefly recalled PPVSS \cite{cryptoeprint:2025/576}. 
+can defend against malicious adversaries, PPVSS \cite{cryptoeprint:2025/576} is recalled. 
 Moving forward, in the next chapter we will introduce 
 Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS) which is a generalization of 
 PPVSS and give two examples whose inspiration is drawn from $\Lambda_{RO}$.

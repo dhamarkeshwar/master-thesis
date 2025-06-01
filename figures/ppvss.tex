@@ -1,4 +1,4 @@
-\begin{figure}[ht]
+\begin{figure}[t!]
     \centering
     \resizebox{\textwidth}{!}{ % Further reduced the scaling factor to fit the content
     \begin{tcolorbox}[title=\textbf{$\Lambda_{RO}$ \cite{cryptoeprint:2025/576}}, width=1.2\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
@@ -59,9 +59,9 @@
                        $g^{f_i}$ is the correct decryption of $y_i$.
                     \item If $\mathcal{Q}$ consists at least $t+1$ honest parties, they can use the 
                     lagrange interpolation to compute the secret $g^{f_0}$ as follows:
-                    \begin{align*}
-                        g^{f_0} &= \prod_{i=1}^{t+1} g^{f_i^{\lambda_i}} = g^{\sum_{i=1}^{t+1}f_i\cdot\lambda_i},\\
-                    \end{align*}
+                    % \begin{align*}
+                      $$ \textstyle g^{f_0} = \prod_{i=1}^{t+1} g^{f_i^{\lambda_i}} = g^{\sum_{i=1}^{t+1}f_i\cdot\lambda_i},$$
+                    % \end{align*}
                     where $\lambda_i=\prod_{j\neq i}\frac{j}{j-i}$ are lagrange coefficients.
                 \end{itemize}
             \end{itemize}

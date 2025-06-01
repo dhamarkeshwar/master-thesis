@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|p{1.5cm}|p{2.5cm}|p{3.5cm}|p{3.5cm}|p{2cm}|p{3cm}|}
+\hline
+\textbf{Scheme}    & \textbf{Share}    & \textbf{Broadcaset}, \textbf{Dow.} & \textbf{Verification} & \textbf{Opt. Recon} & \textbf{Pes. Recon} \\ \hline                                                           
+$\Lambda_{RO}'$ & $2(n+\ell)[\mathbb{E}_x+\mathbb{P}_e$] & \textbf{BC:} $(n+\ell)|\mathbb{G}|+(t+\ell+1)|\mathbb{Z}_p|$  &  $(n+\ell)[2\mathbb{E}_x+\mathbb{P}_e+M_{\mathbb{G}}]$ & $\ell\mathbb{E}_x$ & $5(t+\ell)\mathbb{E}_x+t\ell M_{\mathbb{G}}$ \\
+& & \textbf{Dow:} $2(n+\ell)|\mathbb{G}|+(t+\ell+1)|\mathbb{Z}_p|$& & & \\ \hline
+$\Lambda_{RO}^{packed}$ & $2(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]+2\ell M_{\mathbb{G}}$ & \textbf{BC:} $(n+1)|\mathbb{G}|+(t+\ell+1)|\mathbb{Z}_p|$  &  $(2n+\ell+1)\mathbb{E}_x+(n+\ell)\mathbb{P}_e+(n+\ell+1)M_{\mathbb{G}}$ & $\ell(\mathbb{E}_x+M_{\mathbb{G}})$ & $5(t+\ell)\mathbb{E}_x+t\ell M_{\mathbb{G}}$ \\
+& & \textbf{Dow:} $(2n+\ell+1)|\mathbb{G}|+(t+\ell+1)|\mathbb{Z}_p|$& & & \\ \hline
+\end{tabular}
+}
+\caption{Cost comparisions between $\Lambda_{RO}'$ and $\Lambda_{RO}^{packed}$. BC: Dealer's Broadcase size, Dow: Download size by the verifier, Opt. Recon: Optimistic Reconstruction, Pes. Recon: Pessimistic Reconstruction. $\mathbb{E}_x$: Group exponentiation, $\mathbb{P}_e$: Polynomial evaluation, $M_{\mathbb{G}}$: multiplication in the cyclic group $\mathbb{G}$ of prime order $q$, $\mathbb{Z}_q$: modular prime group under addition.}
+\label{tab:PPPVSS-comparison}
+\end{table}
+

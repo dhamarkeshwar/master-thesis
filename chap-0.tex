@@ -1,27 +1,52 @@
-\chapter{Literature Review}
+\chapter{Introduction}
 \label{cha:0}
+
+In this rapidly evolving digital world, cryptography was and is playing a crucial role, which 
+allows a user to securely communicate and process sensitive information without any 
+fear of eavesdropping or tampering the data. Their whole trust on cryptography boils 
+down to their secret keys, which are used to encrypt and/or decrypt their data. In 
+reality, however, these secret keys are stored as a whole in their device, making it 
+a single point of failure such that an adversary can just steal their secret keys. 
+This seriously affects the robustness and availability of the services offered by 
+such digital infrastructures. A trivial solution for availability aspect is to make 
+multiple copies of the secret keys and store them in multiple devices. However, 
+this is not a good idea because now an adversary has multiple points to attack leading 
+to decrease in the robustness of the system security. Now one can possibly think to 
+divide a given secret key into multiple pieces such that any single piece or up to a 
+threshold number of pieces can reveal nothing about the secret key.\par 
+
 In 1979, Shamir introduced a threshold secret sharing scheme called 
 Shamir Secret Sharing scheme \cite{10.1145/359168.359176}, which is now a well-known 
 and widely used secret sharing scheme to this day because of its numerous applications in
-cryptography. It was first of its kind to have Information Theoretic (IT) security 
-under certain assumptions against passive adversaries who can only see the secret 
-shares of the parties they have corrupted. In reality, however, the adversaries 
-are usually stronger than just being passive, moreover, they possess the power 
-to manipulate the share values of the corrupted parties itself. 
-Shamir's scheme is not tailored to defend against active adversaries as one cannot 
-verify the correctness of the shares. This led to numerous inventions of Verifiable 
+cryptography. Basically, it allows a person to divide their secret into many pieces and distribute 
+those pieces amongst other entities, such that a single entity or up to a group of 
+entities cannot determine anything about the secret. To reconstruct the secret back, 
+one would require more than a threshold number of entity shares. Importantly and interestingly, it is proven to be 
+secure against passive adversaries who can see secret shares of some parties and also have 
+unlimited computational power.\par 
+
+Shamir secret sharing scheme was first of its kind to have such Information Theoretic (IT) security, 
+under certain assumptions, against such passive adversaries. In reality, however, the adversaries 
+are usually stronger than just being passive, moreover, they can be active where they 
+possess the power to manipulate the share values of the corrupted parties itself. For example, 
+an active adversary can manipulate some secret key shares then reconstruction protocol 
+for the secret key may yield a wrong secret key, which will badly affect the robustness 
+of the system. As Shamir's scheme is not tailored to defend against active adversaries as one cannot 
+verify the correctness of the shares, it led to inventing Verifiable 
 Secret Sharing (VSS) schemes, which not only does allow the parties to verify the 
 correctness of the shares shared by the dealer but also allows the parties to verify 
-the correctness of the shares when opened by the parties during the reconstruction 
-phase. Because of the feature of verifiability, VSS schemes can defend the applications 
-against active adversaries.\par
+the correctness of the shares when revealed by the parties during the reconstruction 
+phase. This allows VSS schemes to pin point who cheated during the protocol unlike 
+in Shamir's scheme which cannot feasibly achieve such functionality. 
+Because of the feature of verifiability, VSS schemes found their way into 
+many applications which require security against active adversaries.\par
 
 There are many VSS schemes (\cite{d053b0be49644b2f932d703db8c1f8a0}, \cite{DBLP:conf/focs/Feldman87}) 
-in the literature which are based on Shamir Secret Sharing scheme. Throughout the years, many advancements 
+in the literature which are based on Shamir secret sharing scheme. Throughout the years, many advancements 
 have been made in the field of VSS schemes, and as of writing this report the efficient VSS schemes are 
 $\Pi_F$, $\Pi_P$ and $\Pi_{LA}$ \cite{cryptoeprint:2023/1669}, each of which have distinct security features. 
 In VSS, only shareholders can actually verify the correctness of the shares. Certain applications demand 
-to have verifiability feature available to anyone, which is solved by Publicly Verifiable Secret Sharing (PVSS) 
+to have verifiability feature available to anyone, such is offered by Publicly Verifiable Secret Sharing (PVSS) 
 schemes. PVSS is an extension of VSS, where the correctness of the shares can be verified by anyone. Many 
 cool applications exist today which use PVSS schemes, such as, e-voting \cite{5581ccd9530540479539d21d1d39ae96}, 
 randomness beacons \cite{cryptoeprint:2017/216}, etc. In \cite{cryptoeprint:2025/576}, authors have noticed 
@@ -29,15 +54,37 @@ that the Schoenmakers' PVSS scheme used for the e-voting application in \cite{55
 is actually more than a PVSS scheme, and they coined the term Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) scheme. 
 PPVSS is a special type of PVSS where the dealer additionally publishes a commitment to the secret itself. 
 The authors have also shown that any PVSS scheme can be transformed into a PPVSS scheme with minimal 
-changes, and constructed a PPVSS $\Lambda_{RO}$ from the PVSS $\Pi_S$ \cite{cryptoeprint:2023/1669} as an 
-example, where they used $\Lambda_{RO}$ to build an efficient e-voting application.\par 
+changes, and constructed a PPVSS $\Lambda_{RO}$ from the PVSS $\Pi_S$ \cite{cryptoeprint:2023/1669} and 
+used it to build an efficient e-voting application.\par 
 
 With PPVSS, one can build versatile applications and also can improve the efficiency of existing 
-applications. In ALBATROSS \cite{cryptoeprint:2020/644}, authors built a randomness beacon application 
+applications. For instance, in ALBATROSS \cite{cryptoeprint:2020/644} authors built a randomness beacon application 
 using a PVSS. We have an intuition that an efficient randomness beacon application can be built 
 using a scheme based on PPVSS on certain conditions. In this report, we will introduce Packed PPVSS (PPPVSS) 
 along with its security proofs and give an example based on $\Lambda_{RO}$, which will be used to improve 
 ALBATROSS in many cases.\par
+
+The research work presented in this report is based on the following questions:
+\begin{itemize}
+    \item \textit{What more functionalities can be achieved through PPVSS schemes?}
+    \item \textit{How to generalize the PPVSS schemes to the packed version which allows to 
+      secret share multiple secrets efficiently?}
+    \item \textit{Can we improve the efficiency of some existing applications using PPVSS schemes
+      without compromising their security aspects?}
+\end{itemize}
+
+
+\section*{Outline of the thesis}
+The next chapter [\ref{chap:preliminaries}] gives the necessary preliminaries required 
+to understand the mathematical security guarantees of packed Shamir secret sharing, sigma 
+protocols and some examples that were used to build some PVSS and PPVSS schemes. The chapter 
+ends with the description of PPVSS scheme and a realtime example of the same. Moving forward, 
+chapter \ref{cha:3} introduces packed PPVSS (PPPVSS) scheme and two examples along with 
+their security proofs where the proof for latter example is a bit non-trivial. The 
+chapter \ref{cha:n} presents a new randomness beacon protocol based on a PPPVSS and 
+compares it with the state-of-the-art randomness beacon protocol.
+Finally, the chapter \ref{cha:conclusion} concludes the thesis with a summary of the 
+results and discusses the possible future work and applications of the PPPVSS scheme.
 
 % In this chapter we sequently recall Packed Shamir secret sharing, 
 % Sigma ($\sum$) Protocols and Publicly Verifiable Secret Sharing (PVSS) followed by
