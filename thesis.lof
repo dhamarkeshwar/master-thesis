@@ -22,10 +22,12 @@
 \contentsline {figure}{\numberline {3.4}{\ignorespaces A NIZK AoK for the \textit {modified} Polynomial DL}}{28}{figure.caption.20}%
 \contentsline {figure}{\numberline {3.5}{\ignorespaces PPPVSS}}{34}{figure.caption.21}%
 \contentsline {figure}{\numberline {3.6}{\ignorespaces This plot compares $\Lambda _{RO}'$ and $\Lambda _{RO}^{packed}$ in terms of communication costs. The x-axis represents the possible number of secrets $\ell $ when the total number of parties is fixed, while the y-axis shows the communication cost for varying $\ell $ and threshold $t$. The blue line corresponds to $\Lambda _{RO}'$, and the orange line corresponds to $\Lambda _{RO}^{packed}$.}}{36}{figure.caption.23}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces This plot compares $\Lambda _{RO}'$ and $\Lambda _{RO}^{packed}$ in terms of computation cost a verifier has to bear in the verification phase. The x-axis represents the possible number of secrets $\ell $ when the total number of parties is fixed, while the y-axis shows the verification cost for varying $\ell $ and threshold $t$. The blue line corresponds to $\Lambda _{RO}'$, and the orange line corresponds to $\Lambda _{RO}^{packed}$.}}{37}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces This plot compares $\Lambda _{RO}'$ and $\Lambda _{RO}^{packed}$ in terms of computation cost a verifier has to bear in the verification phase. The x-axis represents the possible number of secrets $\ell $ when the total number of parties is fixed, while the y-axis shows the verification cost for varying $\ell $ and threshold $t$. The blue line corresponds to $\Lambda _{RO}'$, and the orange line corresponds to $\Lambda _{RO}^{packed}$.}}{36}{figure.caption.24}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using PPPVSS}}{40}{figure.caption.25}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using PPPVSS}}{44}{figure.caption.26}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Your caption here}}{45}{figure.caption.28}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Your caption here}}{45}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using 3PVSS}}{40}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using 3PVSS}}{41}{figure.caption.26}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Computation costs due to polynomial evaluations bore by each verifier in reveal phase for the most robust case where $\ell =1$}}{44}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Computation costs due to group exponentiations bore by each verifier in reveal phase for the most robust case where $\ell =1$}}{44}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Communication cost of a dealer in reveal phase of ALBATROSS and our protocol}}{46}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Communication cost of a dealer in commit phase phase of ALBATROSS and our protocol}}{46}{figure.caption.32}%
 \addvspace {10pt}

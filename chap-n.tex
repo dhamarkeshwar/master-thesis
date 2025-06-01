@@ -15,18 +15,20 @@ $n-1$ parties should simulate the sharing phase of the protocol, which in total 
 
 In this chapter, we present our randomness beacon protocol in figures \ref{fig:randomness_beacon} and \ref{fig:randomness_beacon_cont} 
 which in many cases is efficient than ALBATROSS. To put simply, we replaced the building block being PVSS with 
-our PPPVSS $\Lambda_{RO}^{packed}$ \ref{fig:packed-shamir-PPPVSS-ro}. In the subsequent sections, we will discuss the 
+our 3PVSS $\Lambda_{RO}^{packed}$ \ref{fig:packed-shamir-PPPVSS-ro}. In the subsequent sections, we will discuss the 
 computational and communication costs of our protocol and compare it with the ALBATROSS. We will show that out protocol 
-performs more efficient compared to ALBATROSS in many cases and also address the cases where we are not computationally efficient.
+performs more efficiently when compared to ALBATROSS in many cases and also address the cases where we are not computationally efficient.
 More interestingly, we will show that in terms of communication, we outperform ALBATROSS.
 
 \input{figures/commit_reveal.tex}
 \input{figures/recovery_output.tex}
 \section{Computational Complexity}
 \input{tables/no_group_mul.tex}
-See table \ref{tab:comp_alba_pppvss_no group mul} for an overview. Also, we ignore the number of 
+One would notice that the major changes are in the commit and reveal phase of the protocol. 
+Hence, in this section we only will talk about the performance analysis in those 
+phases. See table \ref{tab:comp_alba_pppvss_no group mul} for an overview. Also, we ignore the number of 
 multiplications in the group $\mathbb{G}$, i.e., $M_{\mathbb{G}}$ in the table as it is negligible compared to 
-the number of group exponentiations $\mathbb{E}_x$ in practice. 
+the number of group exponentiations $\mathbb{E}_x$ with random exponents in practice. 
 \begin{itemize}
     \item In ALBATROSS, a dealer(as a part of \textbf{commit}) should compute $n(\mathbb{E}_x+\mathbb{P}_e)$ commitments and to give a proof he should do an additional $n(\mathbb{E}_{x}+\mathbb{P}_e)$. Also, the dealer should do $\ell(\mathbb{E}_x+\mathbb{P}_e)$ for computing secrets and keeping it to himself. In total dealer needs to do $(2n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$.
         \begin{itemize}
@@ -47,7 +49,7 @@ the number of group exponentiations $\mathbb{E}_x$ in practice.
             honest shareholders requiring them to do $4(n-t)\mathbb{E}_{x}$. 
             In total, each re-constructor requires $[3+4(n-t)]t\mathbb{E}_{x}$.
         \end{itemize}
-    \item Using PPPVSS in randomness beacon protocol, a dealer(as a part of \textbf{commit}) requires to do $(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ and $(\ell-1)M_\mathbb{G}$ to compute $\{y_i\}_{i=0}^{n}$. For generating the proof that $y_i$'s are valid encryptions of the secret shares and also $y_0$ is a commitment of the $\ell$ secrets, the dealer should do $(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ which internally requires additional $(\ell-1)M_\mathbb{G}$. In total, a dealer has to do $2\left[(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]+(\ell-1)M_\mathbb{G}\right]$.
+    \item Using 3PVSS in randomness beacon protocol, a dealer(as a part of \textbf{commit}) requires to do $(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ and $(\ell-1)M_\mathbb{G}$ to compute $\{y_i\}_{i=0}^{n}$. For generating the proof that $y_i$'s are valid encryptions of the secret shares and also $y_0$ is a commitment of the $\ell$ secrets, the dealer should do $(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]$ which internally requires additional $(\ell-1)M_\mathbb{G}$. In total, a dealer has to do $2\left[(n+\ell)[\mathbb{E}_x+\mathbb{P}_e]+(\ell-1)M_\mathbb{G}\right]$.
     \begin{itemize}
         \item In \textbf{Reveal}, a verifier should do $(n+\ell)(2\mathbb{E}_x+\mathbb{P}_e)$ and $(\ell-1)M_\mathbb{G}$ for each proof. In total, a verifier has to do $(n-1)(n+\ell)[2\mathbb{E}_x+\mathbb{P}_e]+(n-1)(\ell-1)M_\mathbb{G}$.
         \begin{itemize}
@@ -65,9 +67,15 @@ we decrease computational cost in the \textit{Reveal} phase whenever $\ell < \fr
 speaking, if the number of secrets are less than half of the honest parties then we always perform better in 
 terms of computation when compared to the ALBATROSS.\par
 
-\input{figures/exponent.tex}
-\input{figures/polynomial.tex}
+More precisely, in the reveal phase, we observed that our protocol gains at least $30\%$ more
+efficiency for performing polynomial evaluations, and at least $23\%$ more efficiency for 
+performing group exponentiations when compared to ALBATROSS in the robust case where the number of 
+secrets $\ell$ is equal to one. See plots \ref{fig:commit_polynomial} 
+and \ref{fig:commit_exponent} for the performance analysis of polynomial evaluations and group exponentiations
+in the reveal phase of our protocol and ALBATROSS.
 
+\input{figures/polynomial.tex}
+\input{figures/exponent.tex}
 
 \section{Communication Complexity}
 \input{tables/communication.tex}
@@ -78,7 +86,7 @@ See table \ref{tab:dealer_comm} for an overview.
         \item In \textbf{Reveal}, an honest dealer would broadcast $t+\ell$ coefficients in $\mathbb{Z}/q\mathbb{Z}$ concerning the secret polynomial.
         \item If some party has not revealed their polynomial, then in \textbf{Recovery} phase a re-constructor using PVSS reconstruction protocol should broadcast $1$ element in group which is being the decrypted secret, for the proof of correct decryption, they have to broadcast $3$ more group elements along with a polynomial which requires $t+\ell$ coefficients in $\mathbb{Z}/q\mathbb{Z}$ and $1$ group element from RO.
     \end{itemize}
-    \item Using PPPVSS in randomness beacon protocol, a dealer (as a part of \textbf{commit}) should send $n+1$ group elements as commitments, $t+\ell$ elements in $\mathbb{Z}/q\mathbb{Z}$ that defines the polynomial used in the ZKP and $1$ extra element in $\mathbb{Z}/q\mathbb{Z}$ from RO.
+    \item Using 3PVSS in randomness beacon protocol, a dealer (as a part of \textbf{commit}) should send $n+1$ group elements as commitments, $t+\ell$ elements in $\mathbb{Z}/q\mathbb{Z}$ that defines the polynomial used in the ZKP and $1$ extra element in $\mathbb{Z}/q\mathbb{Z}$ from RO.
     \begin{itemize}
         \item In \textbf{Reveal}, an honest dealer would broadcast $\ell$ elements in $\mathbb{Z}_q$ concerning the exponents to construct the secret.
         \item If some part has not revealed their secrets, then the communication cost of each re-constructor is exactly same as in the case of ALBATROSS.
@@ -88,7 +96,14 @@ See table \ref{tab:dealer_comm} for an overview.
 \subsection{Communication Cost analysis}
 The best to offer from our randomness beacon protocol is the communication cost. Though the dealer has to communicate only 
 one extra group element compared to ALBATROSS in the commit phase, as a consequence for a fixed number of secrets the 
-dealers' communication cost is constant as opposed to linear in number of corrupted parties in ALBATROSS. 
+dealers' communication cost is constant as opposed to linear in number of corrupted parties in ALBATROSS. \par
+
+In the plots \ref{fig:dealer_commit_comm} and \ref{fig:comm_reveal}, we show the communication cost of a dealer to bare 
+in ALBATROSS and our protocol in both the commit and reveal phases.
+
+\input{figures/reveal_comm.tex}
+
+\input{figures/commit_comm.tex}
 
 %%% Local Variables: 
 %%% mode: latex

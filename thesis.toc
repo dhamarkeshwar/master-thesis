@@ -28,11 +28,11 @@
 \contentsline {section}{\numberline {3.3}Cost analysis of 3PVSS schemes}{35}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}On the communication cost}{35}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}On the computational cost}{35}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Conclusion}{36}{section.3.4}%
+\contentsline {section}{\numberline {3.4}Conclusion}{37}{section.3.4}%
 \contentsline {chapter}{\chapternumberline {4}Revisiting a Randomness Beacon Protocol}{39}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Computational Complexity}{39}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{42}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Communication Complexity}{42}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{43}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.1.1}Computational Cost analysis}{43}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Communication Complexity}{45}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Communication Cost analysis}{45}{subsection.4.2.1}%
 \contentsline {chapter}{\chapternumberline {5}Conclusion}{47}{chapter.5}%
-\contentsline {chapter}{Bibliography}{49}{chapter*.31}%
+\contentsline {chapter}{Bibliography}{49}{chapter*.33}%

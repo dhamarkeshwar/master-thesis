@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  1 JUN 2025 04:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.14)  1 JUN 2025 17:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -957,9 +957,6 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 [3
 
 ] (./thesis.lof) (./thesis.lot
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [4
 
@@ -1179,24 +1176,30 @@ Underfull \hbox (badness 2486) in paragraph at lines 12--12
  []
 
 ) (./figures/3pvss_communication_cost.tex
-<figures/3pvss_communication_cost.png, id=605, 409.7709pt x 328.8285pt>
+<figures/3pvss_communication_cost.png, id=613, 409.7709pt x 328.8285pt>
 File: figures/3pvss_communication_cost.png Graphic file (type png)
 <use figures/3pvss_communication_cost.png>
-Package pdftex.def Info: figures/3pvss_communication_cost.png  used on input line 5.
+Package pdftex.def Info: figures/3pvss_communication_cost.png  used on input line 4.
 (pdftex.def)             Requested size: 278.59879pt x 223.57533pt.
 ) (./figures/3pvss_verify_cost.tex
-<figures/3pvss_verify_cost.png, id=608, 425.6703pt x 328.8285pt>
+<figures/3pvss_verify_cost.png, id=616, 425.6703pt x 328.8285pt>
 File: figures/3pvss_verify_cost.png Graphic file (type png)
 <use figures/3pvss_verify_cost.png>
-Package pdftex.def Info: figures/3pvss_verify_cost.png  used on input line 5.
+Package pdftex.def Info: figures/3pvss_verify_cost.png  used on input line 4.
 (pdftex.def)             Requested size: 278.59879pt x 215.22118pt.
 )
+Underfull \vbox (badness 4072) has occurred while \output is active []
 
-[35])
 
-[36 <./figures/3pvss_communication_cost.png>]
 
-[37 <./figures/3pvss_verify_cost.png>]
+[35]
+Overfull \vbox (0.77731pt too high) has occurred while \output is active []
+
+
+
+[36 <./figures/3pvss_communication_cost.png> <./figures/3pvss_verify_cost.png>])
+
+[37]
 \openout2 = `chap-n.aux'.
 
  (./chap-n.tex
@@ -1231,50 +1234,68 @@ Underfull \hbox (badness 10000) in paragraph at lines 37--37
 [39]
 
 [40]
-Overfull \hbox (8.18344pt too wide) in paragraph at lines 38--49
+
+[41]
+Overfull \hbox (8.18344pt too wide) in paragraph at lines 40--51
 \T1/lmr/m/n/10.95 share-holder who has not opened the se-cret poly-no-mial, each shareholder/re-
  []
 
 
 
-[41] (./figures/exponent.tex
-<figures/exponent.png, id=659, 409.7709pt x 328.8285pt>
-File: figures/exponent.png Graphic file (type png)
-<use figures/exponent.png>
-Package pdftex.def Info: figures/exponent.png  used on input line 3.
-(pdftex.def)             Requested size: 278.59879pt x 223.57533pt.
-) (./figures/polynomial.tex
-<figures/polynomial.png, id=660, 409.7709pt x 328.8285pt>
+[42] (./figures/polynomial.tex
+<figures/polynomial.png, id=674, 409.7709pt x 328.8285pt>
 File: figures/polynomial.png Graphic file (type png)
 <use figures/polynomial.png>
-Package pdftex.def Info: figures/polynomial.png  used on input line 3.
+Package pdftex.def Info: figures/polynomial.png  used on input line 4.
 (pdftex.def)             Requested size: 278.59879pt x 223.57533pt.
-) (./tables/communication.tex
+) (./figures/exponent.tex
+<figures/exponent.png, id=675, 409.7709pt x 328.8285pt>
+File: figures/exponent.png Graphic file (type png)
+<use figures/exponent.png>
+Package pdftex.def Info: figures/exponent.png  used on input line 4.
+(pdftex.def)             Requested size: 278.59879pt x 223.57533pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[43]) (./tables/communication.tex
 Underfull \hbox (badness 4072) in paragraph at lines 10--10
 []|\T1/lmr/bx/n/10.95 Recovery \T1/lmr/m/it/10.95 (by share-
  []
 
 )
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[42])
 
-[43]
 
-[44]
+[44 <./figures/polynomial.png> <./figures/exponent.png>] (./figures/reveal_comm.tex
+<figures/reveal_comm.png, id=689, 425.6703pt x 328.8285pt>
+File: figures/reveal_comm.png Graphic file (type png)
+<use figures/reveal_comm.png>
+Package pdftex.def Info: figures/reveal_comm.png  used on input line 3.
+(pdftex.def)             Requested size: 278.59879pt x 215.22118pt.
+)
 
-[45 <./figures/exponent.png> <./figures/polynomial.png>]
+[45] (./figures/commit_comm.tex
+<figures/commit_comm.png, id=694, 425.6703pt x 328.8285pt>
+File: figures/commit_comm.png Graphic file (type png)
+<use figures/commit_comm.png>
+Package pdftex.def Info: figures/commit_comm.png  used on input line 3.
+(pdftex.def)             Requested size: 278.59879pt x 215.22118pt.
+))
+
+[46 <./figures/reveal_comm.png> <./figures/commit_comm.png>]
 \openout2 = `conclusion.aux'.
 
- (./conclusion.tex
+ (./conclusion.tex)
 
-[46
-
-
+[47
 
 
-])
 
-[47]
+
+]
 
 [48
 
@@ -1310,21 +1331,21 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: BD2BB5F2540B71AD93BE1E55A5F9CB64;5376.
+(rerunfilecheck)             Checksum: 2A94F8815CAAFA7F842AD6142DC86B69;5376.
  ) 
 Here is how much of TeX's memory you used:
- 30098 strings out of 473190
- 570756 string characters out of 5715800
- 1100274 words of memory out of 5000000
- 52625 multiletter control sequences out of 15000+600000
+ 30128 strings out of 473190
+ 571562 string characters out of 5715800
+ 1101708 words of memory out of 5000000
+ 52647 multiletter control sequences out of 15000+600000
  657172 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,18n,107p,713b,777s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qhvri.pfb>
-Output written on thesis.pdf (59 pages, 709309 bytes).
+Output written on thesis.pdf (59 pages, 764756 bytes).
 PDF statistics:
- 849 PDF objects out of 1000 (max. 8388607)
- 720 compressed objects within 8 object streams
- 178 named destinations out of 1000 (max. 500000)
- 286 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 865 PDF objects out of 1000 (max. 8388607)
+ 732 compressed objects within 8 object streams
+ 180 named destinations out of 1000 (max. 500000)
+ 296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

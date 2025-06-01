@@ -1,7 +1,7 @@
-\begin{figure}[ht]
+\begin{figure}[t!]
     \centering
-    \begin{tcolorbox}[title=\textbf{Randomness Beacon using PPPVSS}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
-        Our protocol with PPPVSS is run between a set $\mathcal{P}$ of $n$ 
+    \begin{tcolorbox}[title=\textbf{Randomness Beacon using 3PVSS, $\Lambda_{RO}^{packed}$}, width=0.9\textwidth, colframe=blue!75!black, colback=blue!10, sharp corners]
+        Our protocol with 3PVSS is run between a set $\mathcal{P}$ of $n$ 
         parties $P_1, \dots, P_n$ who have access to a public ledger where they 
         can post information for later verification. It is assumed that the 
         Setup phase of $\Lambda_{RO}^{packed}$ is already done and the public keys 
@@ -18,7 +18,7 @@
             PPPVSS as Dealer for $\ell = n - 2t$ secrets, publishing commitments 
             (/encryptions) of secrets, $y_{-(\ell-1)}^j, \dots, y_{-1}^j, y_0^j$, 
             and encryptions of shares $\{y_i^j\}_{i=1}^n$ along with 
-            $\pi_{proof}^{j}$, which is a NIZK PoK for proving the correctness of 
+            $\pi_{proof}^{j}$, which is a NIZK AoK for proving the correctness of 
             committed(/encrypted) secrets and encrypted secret shares on the 
             public ledger, also learning the secrets $h^{s_0^j},...,h^{s_{-(\ell-1)}^j}$ 
             and their corresponding exponents\\ $s_0^j, \dots, s_{-(\ell-1)}^j$.
@@ -27,7 +27,7 @@
         \item [2.]\textbf{Reveal:}
         \begin{itemize}
             \item Each shareholder checks the validity of the proof 
-            $\pi_{proof}^j$, i.e., the \textbf{verification phase of PPPVSS protocol}.
+            $\pi_{proof}^j$, i.e., the \textbf{verification phase of 3PVSS protocol $\lambda_{RO}^{packed}$}.
             \item After a set $\mathcal{C}$ containing at least $n-t$ 
             shareholders publish their shares in the public ledger, 
             $P_j\in\mathcal{C}$ reveals $\ell$ secrets.
@@ -40,6 +40,6 @@
         \end{itemize}
     \end{enumerate}
     \end{tcolorbox}
-    \caption{Commit and Reveal phase of the Randomness Beacon using PPPVSS}
+    \caption{Commit and Reveal phase of the Randomness Beacon using 3PVSS}
     \label{fig:randomness_beacon}
 \end{figure}
