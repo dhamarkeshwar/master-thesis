@@ -36,5 +36,5 @@
 \contentsline {subsection}{\numberline {4.3.1}Computational Cost analysis}{44}{subsection.4.3.1}%
 \contentsline {section}{\numberline {4.4}Communication Complexity}{45}{section.4.4}%
 \contentsline {subsection}{\numberline {4.4.1}Communication Cost analysis}{46}{subsection.4.4.1}%
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{49}{chapter.5}%
-\contentsline {chapter}{Bibliography}{51}{chapter*.33}%
+\contentsline {chapter}{\chapternumberline {5}Conclusion and Future scope}{49}{chapter.5}%
+\contentsline {chapter}{Bibliography}{51}{chapter*.34}%
