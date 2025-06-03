@@ -16,7 +16,7 @@
         \begin{itemize}
             \item Dealer $D$ samples a $t+\ell$-degree polynomial $f\in\mathbb{Z}_q[X]$ uniformly at random and 
               sets $\{f(j)=f_j\}_{j=-(\ell-1)}^0$ as the set of all secrets.
-            \item For each $1\leq i\leq n$, $D$ computes $f(i)=f_i$ and and encrypts it with $PK_i$ to obtain 
+            \item For each $1\leq i\leq n$, $D$ computes $f(i)=f_i$ and encrypts it with $PK_i$ to obtain 
               $y_i=Enc(PK_i,f_i)$. $D$ also encrypts(/commits) to the secrets $\{f_j\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
               keys $\{h_j\text{ or }PK_j\}$ and multiplies them together to obtain $y_0$. 
             \item $D$ uses the agreed upon proof system $\pi_{PPPVSS}^{share}$ to prove that they have encrypted the shares and 

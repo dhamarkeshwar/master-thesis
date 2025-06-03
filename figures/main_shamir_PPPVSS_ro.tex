@@ -17,7 +17,7 @@
             \item For each $1\leq i\leq n$, $D$ encrypts $g^{f_i}$ ($f(i)=f_i$) using $PK_i$ to obtain 
               $y_i=PK_i^{f_i}$. $D$ also encrypts(/commits) to the secrets $\{g^{f_j}\}_{j=-(\ell-1)}^0$ using the encryption(/commitment) 
               keys $\{h_j\text{ or }PK_j\}_{j=-(\ell-1)}^0$ and multiplies them together to obtain $y_0=\prod_{j=-(\ell-1)}^0(h_j\text{ or }PK_j)^{f_j}$. 
-            \item $D$ uses a variant of the modified-PDL proof scheme \ref{sec:aok_polynomial_dl} to generate $\pi_{share}$ as follows:
+            \item $D$ uses a variant of the modified-PDL proof scheme \ref{subsec:aok_polynomial_dl} to generate $\pi_{share}$ as follows:
             \begin{itemize}
                \item Samples a $t+\ell-$degree polynomial $r\in\mathbb{Z}_q[X]$ uniformly at random and 
                computes $c_0=\prod_{j=-(\ell-1)}^0(h_j\text{ or }PK_j)^{r(j)}$ and 

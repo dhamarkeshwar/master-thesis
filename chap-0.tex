@@ -21,7 +21,8 @@ and widely used secret sharing scheme to this day because of its numerous applic
 cryptography. Basically, it allows a person to divide their secret into many pieces and distribute 
 those pieces amongst other entities, such that a single entity or up to a group of 
 entities cannot determine anything about the secret. To reconstruct the secret back, 
-one would require more than a threshold number of entity shares. Importantly and interestingly, it is proven to be 
+one would require more than a threshold number of entity shares. Importantly and interestingly, 
+under certain conditions it is proven to be 
 secure against passive adversaries who can see secret shares of some parties and also have 
 unlimited computational power.\par 
 
@@ -52,7 +53,7 @@ cool applications exist today which use PVSS schemes, such as, e-voting \cite{55
 randomness beacons \cite{cryptoeprint:2017/216}, etc. In \cite{cryptoeprint:2025/576}, authors have noticed 
 that the Schoenmakers' PVSS scheme used for the e-voting application in \cite{5581ccd9530540479539d21d1d39ae96} 
 is actually more than a PVSS scheme, and they coined the term Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS) scheme. 
-PPVSS is a special type of PVSS where the dealer additionally publishes a commitment to the secret itself. 
+PPVSS is a special type of PVSS where the dealer additionally publishes a commitment (/encryption) to the secret itself. 
 The authors have also shown that any PVSS scheme can be transformed into a PPVSS scheme with minimal 
 changes, and constructed a PPVSS $\Lambda_{RO}$ from the PVSS $\Pi_S$ \cite{cryptoeprint:2023/1669} and 
 used it to build an efficient e-voting application.\par 
@@ -60,12 +61,12 @@ used it to build an efficient e-voting application.\par
 With PPVSS, one can build versatile applications and also can improve the efficiency of existing 
 applications. For instance, in ALBATROSS \cite{cryptoeprint:2020/644} authors built a randomness beacon application 
 using a PVSS. We have an intuition that an efficient randomness beacon application can be built 
-using a scheme based on PPVSS on certain conditions. In this report, we will introduce Packed PPVSS (PPPVSS or 3PVSS), 
+using a scheme based on PPVSS on certain conditions. In this thesis, we will introduce Packed PPVSS (PPPVSS or 3PVSS), 
 an extension of PPVSS where shares representing multiple secrets are secret shared,  
 along with its security proofs and give an example based on $\Lambda_{RO}$, which will be used to improve 
 ALBATROSS in many cases.\par
 
-The research work presented in this report is based on the following questions:
+The research work presented in this thesis is based on the following questions:
 \begin{itemize}
     \item \textit{What more functionalities can be achieved through PPVSS schemes?}
     \item \textit{How to generalize the PPVSS schemes to the packed version which allows to 

@@ -244,7 +244,7 @@ $\Pi_P$ and $\Pi_{LA}$ \cite{cryptoeprint:2023/1669} which are alternatives to t
 from Feldman \cite{DBLP:conf/focs/Feldman87}, Pedersen \cite{crypto-1991-1671} and the more recent 
 ABCP \cite{cryptoeprint:2023/992}. VSS schemes based on Shamir secret sharing allow shareholders to 
 verify the correctness of the shares obtained during both the sharing and reconstruction phases. This enables 
-these VSS schemes to defend against malicious adversaries who can actively corrupt $t$ parties as long as 
+these VSS schemes to defend against malicious adversaries who can corrupt $t$ parties as long as 
 $t\leq\frac{n-1}{2}$ (In contrast to $t<\frac{n}{3}$ in Shamir secret sharing), and as a 
 result it can detect the exact entity who is deviating from the protocol. Publicly Verifiable Secret Sharing (PVSS) is an extension of VSS where anyone can 
 verify the validity of the secret shares during the sharing phase. More recently, Pre-Constructed Publicly 
@@ -521,12 +521,12 @@ and showed that they achieved improvement in the verification phase
 (7 to 30 times faster in implementation for some parameters). 
 
 \section{Conclusion}
-In summary, some basic concepts of linear codes and Reed-Solomon codes are recalled. Next, Packed Shamir secret sharing scheme which is a generalization of the Shamir Secret Sharing scheme \cite{10.1145/359168.359176} 
-is recalled and its correspondence with Reed-Solomon codes is discussed to explain how 
+In summary, some basic concepts of linear codes and Reed-Solomon codes were recalled. Next, Packed Shamir secret sharing scheme which is a generalization of the Shamir Secret Sharing scheme \cite{10.1145/359168.359176} 
+was recalled and its correspondence with Reed-Solomon codes is discussed to explain how 
 its mathematical security guarantees are achieved against passive adversaries. As one 
 of the goals of this thesis is to explore threshold secret sharing schemes that commits to 
 secret and also 
-can defend against malicious adversaries, PPVSS \cite{cryptoeprint:2025/576} is recalled. 
+can defend against malicious adversaries, PPVSS \cite{cryptoeprint:2025/576} was recalled. 
 Moving forward, in the next chapter we will introduce 
 Packed Pre-Constructed Publicly Verifiable Secret Sharing (PPPVSS) which is a generalization of 
 PPVSS and give two examples whose inspiration is drawn from $\Lambda_{RO}$.

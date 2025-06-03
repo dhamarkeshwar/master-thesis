@@ -8,31 +8,31 @@ to 3PVSS (/PPPVSS) in this thesis where one has to share multiple
 secrets packed in a single polynomial, and subsequently, two candidate 3PVSS schemes 
 are proposed in this report. Also, the security guarantees of both candidates are shown.\par
 
-The goal of this thesis is to revisit the state-of-the-art randomness beacon protocol 
+The goal of this thesis was to revisit the state-of-the-art randomness beacon protocol 
 based on PVSS, ALBATROSS \cite{cryptoeprint:2020/644}. A significant bottleneck of 
 ALBATROSS is in its \textit{Reveal} phase, as name suggests it reveals the dealers' secrets 
-and verifies the validity of the revealed secrets. With 3PVSS, it is shown in this 
-report that ALBATROSS can be further improved in efficiency in many cases. The report 
-also highlights the cases where our protocol can underperform ALBATROSS. The security 
-properties of our protocol is briefly discussed which strongly depends on the 3PVSS, 
+and verifies the validity of the revealed secrets. With 3PVSS, it was shown in this 
+report that ALBATROSS could be further improved in efficiency in many cases. The report 
+also highlighted the cases where our protocol can underperform ALBATROSS. The security 
+properties of our protocol was briefly discussed which strongly depends on the 3PVSS, 
 $\Lambda_{RO}$, mathematical security guarantees.\par
 
 When trying to prove the mathematical security guarantees of $\Lambda_{RO}^{packed}$,  
-the underlying mathematical proof system is acknowledged. So, before delving into the 
+the underlying mathematical proof system was acknowledged. So, before delving into the 
 security proof of $\Lambda_{RO}^{packed}$, its underlying proof system with its properties 
-is written down formally, which were essential and desirable to explain its 
+was written down formally, which were essential and desirable to explain its 
 achievable security. Though $\Lambda_{RO}^{packed}$ is more efficient than the first 
-proposed 3PVSS, $\Lambda_{RO}'$, it is essential to note that $\Lambda_{RO}'$ is tailored 
+proposed 3PVSS, $\Lambda_{RO}'$, it is essential to note that $\Lambda_{RO}'$ was tailored 
 for specific applications where using $\Lambda_{RO}^{packed}$ may not be suitable. Also, 
 the discussed security guarantees of $\Lambda_{RO}'$ in this report is trivially 
 realized from the security guarantees of $\Lambda_{RO}$. For completeness, both proposed candidates 
-for 3PVSS computation and communication costs are discussed.\par
+for 3PVSS computation and communication costs were discussed.\par
 
-To conclude, this thesis gives enough background and literature review required to 
+To conclude, this thesis gave enough background and literature review required to 
 progress till the end. An extension of newly proposed variant of PVSS is proposed and 
-two candidate examples with their security proofs are given. An application based on PVSS 
-is revisited, where its bottleneck is taken into account, and improved its performance 
-in many cases. Especially, the communication cost of the new protocol is always less in 
+two candidate examples with their security proofs were given. An application based on PVSS 
+was revisited, where its bottleneck is taken into account, and improved its performance 
+in many cases. Especially, the communication cost of the new protocol was always less in 
 contrast to ALBATROSS.
 
 \section*{Future scope}

@@ -18,7 +18,7 @@ which in many cases is efficient than ALBATROSS. To put simply, we replaced the 
 our 3PVSS $\Lambda_{RO}^{packed}$ \ref{fig:packed-shamir-PPPVSS-ro}. In the subsequent sections, we will discuss a 
 bottleneck in ALBATROSS protocol, security 
 analysis of our protocol briefly, followed by the 
-computational and communication costs of our protocol and compare it with the ALBATROSS. We will show that out protocol 
+computational and communication costs of our protocol and compare it with the ALBATROSS. We will show that our protocol 
 performs more efficiently when compared to ALBATROSS in many cases and also address the cases where we are not computationally efficient.
 More interestingly, we will show that in terms of communication, we outperform ALBATROSS.
 
@@ -26,7 +26,8 @@ More interestingly, we will show that in terms of communication, we outperform A
 \input{figures/recovery_output.tex}
 
 \section{On the bottleneck of ALBATROSS}
-The main bottleneck of ALBATROSS is in its \textit{Reveal} phase. More precisely, the 
+The main bottleneck of ALBATROSS is in its \textit{Reveal} phase (description in 
+figure 8 in section 4.3 of \cite{cryptoeprint:2020/644}). More precisely, the 
 goal of the \textit{Reveal} phase is to reveal the secrets of whom the dealer has done the 
 secret sharing. But in order to verify that those values are actual secrets, in ALBATROSS, a 
 verifier has to simulate the whole sharing phase of the dealer with the values that were 
