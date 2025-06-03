@@ -14,6 +14,7 @@
 % If you want to include other LaTeX packages, do it here. 
 \usepackage{amssymb} % Add this line for \mathbb{}
 \usepackage{amsmath} % Add this line for \begin{equation}
+
 \usepackage{amsthm} % Add this line for \begin{theorem}
 % \usepackage{amsfonts} % Add this line for \mathbb{}
 % \usepackage{graphicx} % Add this line for \includegraphics
@@ -57,11 +58,11 @@
   during my mid term presentation. I am grateful to my assessors, Prof.\ Frederik Vercauteren and 
   Dr. Steven Keuchel, for reading and evaluating this thesis report.\par
 
-  Shout out to my daily supervisors, Dr. Karim Baghery and Mr. Mahdi Rahimi, for their 
+  Shout out to my daily supervisors, Dr.\ Karim Baghery and Mr.\ Mahdi Rahimi, for their 
   guidance and immense support throughout my thesis work. I had a great time doing the research 
-  for my thesis with them, where I learned a lot more about proof systems and we still have 
-  good ideas to explore, hopefully in the future. I sincerely thank Dr.Karim Baghery for explaining 
-  some important concepts that were crucial for this thesis.\par
+  for my thesis with them, where I learned a lot more about proof systems. I sincerely 
+  thank Dr.\ Karim Baghery for explaining some important concepts that were crucial 
+  for this thesis and we still have good ideas to explore, hopefully in the future.\par
 
   Last but not the least, I would like to thank my family and friends for their
   unwavering support and encouragement throughout this journey. I would'nt be here without them.
@@ -70,10 +71,24 @@
 \tableofcontents*
 
 \begin{abstract}
-  The \texttt{abstract} environment contains a more extensive overview of
-  the work. But it should be limited to one page.
+  Publicly Verifiable Secret Sharing (PVSS) is amongst the popular choices in some applications 
+  which require public Verifiability when the secret is shared amongst entities. The goal 
+  of this thesis is to revisit some applications which can be made more efficient in a 
+  secure way using PVSS.\par
+  
+  Firstly, some preliminaries are recalled, followed by a literature review. The 
+  sections on preliminaries will give a clear insight into the security properties of 
+  the popular Shamir secret sharing which this thesis is based on, and in the section 
+  on literature the more recent 
+  advancement in PVSS is discussed. The discussion on recent advancement is mainly on 
+  the new variant of PVSS proposed in \cite{cryptoeprint:2025/576}, which the authors 
+  call it Pre-Constructed Publicly Verifiable Secret Sharing (PPVSS). Following this 
+  discussion, this thesis proposes an extension to PPVSS and gives two practical schemes 
+  along with their security proofs.\par
 
-  \lipsum[1]
+  Approaching to the goal of this thesis, an application is revisited and some changes are proposed 
+  using the proposed extension of PPVSS to make it more efficient without 
+  compromising much in security.\par
 \end{abstract}
 
 % A list of figures and tables is optional

@@ -15,13 +15,50 @@ $n-1$ parties should simulate the sharing phase of the protocol, which in total 
 
 In this chapter, we present our randomness beacon protocol in figures \ref{fig:randomness_beacon} and \ref{fig:randomness_beacon_cont} 
 which in many cases is efficient than ALBATROSS. To put simply, we replaced the building block being PVSS with 
-our 3PVSS $\Lambda_{RO}^{packed}$ \ref{fig:packed-shamir-PPPVSS-ro}. In the subsequent sections, we will discuss the 
+our 3PVSS $\Lambda_{RO}^{packed}$ \ref{fig:packed-shamir-PPPVSS-ro}. In the subsequent sections, we will discuss a 
+bottleneck in ALBATROSS protocol, security 
+analysis of our protocol briefly, followed by the 
 computational and communication costs of our protocol and compare it with the ALBATROSS. We will show that out protocol 
 performs more efficiently when compared to ALBATROSS in many cases and also address the cases where we are not computationally efficient.
 More interestingly, we will show that in terms of communication, we outperform ALBATROSS.
 
 \input{figures/commit_reveal.tex}
 \input{figures/recovery_output.tex}
+
+\section{On the bottleneck of ALBATROSS}
+The main bottleneck of ALBATROSS is in its \textit{Reveal} phase. More precisely, the 
+goal of the \textit{Reveal} phase is to reveal the secrets of whom the dealer has done the 
+secret sharing. But in order to verify that those values are actual secrets, in ALBATROSS, a 
+verifier has to simulate the whole sharing phase of the dealer with the values that were 
+revealed. This is because, the underlying proof system of a general PVSS says that \textit{if the 
+PVSS verification algorithm outputs true, then the encryptions of the secret shares correspond 
+to some unique secret with high probability}.\par
+
+Whereas, in the case of (P)PPVSS, \textit{if the verification algorithm outputs true then it means 
+that the encryptions of the secret shares correspond to the unique secret(s) which was 
+already committed by the dealer (which is the reason why commitment value of secret(s) 
+is a part of the proof statement) with high probability}. So, the intuition is that if one 
+uses a PPVSS, that packs multiple secrets in a single polynomial, over the PVSS used in 
+ALBATROSS (a Random Beacon protocol) then the efficiency of the new Randomness beacon 
+protocol can be improved.
+
+\section{Security analysis}
+This section will briefly discuss why our protocol can remain secure. Note that, the major changes 
+in our protocol in contrast to ALBATROSS are the \textit{Commit} and \textit{Reveal} 
+phases. As long as the randomizers used to commit (/secret keys to decrypt) secrets are 
+not leaked then \textit{Commit} phase is as secure such that it does not reveal anything 
+about the secrets. This is because of the mathematical security guarantees achieved 
+through the sharing phase of our 3PVSS, $\Lambda_{RO}^{packed}$.\par
+
+In ALBATROSS, the whole point of the \textit{Reveal} phase is to open the secrets itself, 
+but to verify that the secrets are valid for a given secret shares, one has to simulate 
+the whole sharing phase of the respective dealer. As our 3PVSS, $\Lambda_{RO}$, already 
+proves that the commitment is a valid commitment of dealers' secrets and their respective 
+secret sharing is done correctly, it does not require to perform the whole simulation of 
+the sharing phase of any dealer. Because the dealer has already committed to the 
+secrets, he cannot cheat by revealing wrong secrets. Therefore, the \textit{Reveal} 
+phase of our protocol also is secure due to the security guarentees of $\Lambda_{RO}^{packed}$.
+
 \section{Computational Complexity}
 \input{tables/no_group_mul.tex}
 One would notice that the major changes are in the commit and reveal phase of the protocol. 

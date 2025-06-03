@@ -27,7 +27,7 @@
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Commit and Reveal phase of the Randomness Beacon using 3PVSS}}{40}{figure.caption.25}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Recovery and Output phase of the Randomness Beacon using 3PVSS}}{41}{figure.caption.26}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Computation costs due to polynomial evaluations bore by each verifier in reveal phase for the most robust case where $\ell =1$}}{44}{figure.caption.28}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Computation costs due to group exponentiations bore by each verifier in reveal phase for the most robust case where $\ell =1$}}{44}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Computation costs due to group exponentiations bore by each verifier in reveal phase for the most robust case where $\ell =1$}}{45}{figure.caption.29}%
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Communication cost of a dealer in reveal phase of ALBATROSS and our protocol}}{46}{figure.caption.31}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Communication cost of a dealer in commit phase phase of ALBATROSS and our protocol}}{46}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Communication cost of a dealer in commit phase phase of ALBATROSS and our protocol}}{47}{figure.caption.32}%
 \addvspace {10pt}
