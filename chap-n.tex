@@ -58,7 +58,7 @@ proves that the commitment is a valid commitment of dealers' secrets and their r
 secret sharing is done correctly, it does not require to perform the whole simulation of 
 the sharing phase of any dealer. Because the dealer has already committed to the 
 secrets, he cannot cheat by revealing wrong secrets. Therefore, the \textit{Reveal} 
-phase of our protocol also is secure due to the security guarentees of $\Lambda_{RO}^{packed}$.
+phase of our protocol also is secure due to the security guarantees of $\Lambda_{RO}^{packed}$.
 
 \section{Computational Complexity}
 \input{tables/no_group_mul.tex}
@@ -142,6 +142,14 @@ in ALBATROSS and our protocol in both the commit and reveal phases.
 \input{figures/reveal_comm.tex}
 
 \input{figures/commit_comm.tex}
+
+\section{Conclusion}
+The noteworthy efficiency gains our protocol achieves over ALBATROSS is in the communication 
+complexity, which does not depend on the number of secrets at all in contrast to ALBATROSS 
+which depends linearly. Also, our protocol is better efficient in terms of time complexity in 
+most of the realistic cases where the number of secrets is roughly bounded by half the number of 
+honest parties. In the next and final chapter, this thesis work is summarized at a higher level 
+and also discusses the potential future scope of it.
 
 %%% Local Variables: 
 %%% mode: latex
